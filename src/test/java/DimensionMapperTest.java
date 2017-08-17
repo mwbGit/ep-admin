@@ -1,9 +1,8 @@
 import java.util.List;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ep.dao.mapper.DimensionMapper;
+import com.ep.dao.mapper.ComplainMapper;
 import com.ep.dao.model.complain.Dimension;
 
 /**
@@ -12,7 +11,7 @@ import com.ep.dao.model.complain.Dimension;
 public class DimensionMapperTest extends AbstractMapperTest {
 
     @Autowired
-    private DimensionMapper mapper;
+    private ComplainMapper mapper;
 
 //    @Test
     public void  select(){

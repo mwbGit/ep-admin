@@ -807,7 +807,9 @@
 								</div>
 
 							</li>
-
+							<li style="float: right"><a href="#add-item-config" data-toggle="modal" onclick="addItem()" >
+								<button id="showAddItem" class="btn green" style="display: none"></button>
+							</a></li>
 						</ul>
 
 						<!-- END PAGE TITLE & BREADCRUMB-->

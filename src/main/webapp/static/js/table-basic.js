@@ -15,6 +15,7 @@ function modifyItem(id) {
     $('#itemId').val(itemId);
     $('#itemName').val(item);
     $('#ratio').val(ratio);
+    addItem();
 }
 
 function deleteDimension(id) {
@@ -35,11 +36,57 @@ function modifyDimension(id, name, ratio) {
     $('#dimensionId').val(id);
     $('#dimensionName').val(name);
     $('#dimensionRatio').val(ratio);
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        contentType:'application/json',
+        url: "/resource/list",
+        // data: {},
+        success: function (data) {
+            var trs = "";
+            $.each(data.dimensions, function (n, value) {
+                trs += '<option value='+value.value +'>' +value.label + '</option>';
+            });
+
+            $(".dimensionTypes").html(trs);
+        }
+    });
 }
 
 function addDimension(itemId) {
-    alert(0);
     $('#addItemId').val(itemId);
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        contentType:'application/json',
+        url: "/resource/list",
+        // data: {},
+        success: function (data) {
+            var trs = "";
+            $.each(data.dimensions, function (n, value) {
+                trs += '<option value='+value.value +'>' +value.label + '</option>';
+            });
+
+            $(".dimensionTypes").html(trs);
+        }
+    });
+}
+function addItem() {
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        contentType:'application/json',
+        url: "/resource/list",
+        // data: {},
+        success: function (data) {
+            var trs = "";
+            $.each(data.items, function (n, value) {
+                trs += '<option value='+value.value +'>' +value.label + '</option>';
+            });
+
+            $(".itemTypes").html(trs);
+        }
+    });
 }
 
 function init(id, two, itemId, itemName, itemRatio) {
@@ -52,6 +99,7 @@ function init(id, two, itemId, itemName, itemRatio) {
         '<span id="service-item' + id + '"> ' + itemName + '</span>(<span id="service-ratio' + id + '">' + itemRatio + '</span>%)' +
         '</div><div class="tools"><input type="hidden" value="true" id="collapse_hidden' + id + '">' +
         '<a href="javascript:;" class="collapse" onclick="collapse1(' + id + ')"></a>' +
+        '<a href="#add-config" data-toggle="modal"  onclick="addDimension(' + itemId + ')"><i class="icon-plus"></i></a>' +
         '&nbsp<i class="icon-plus" onclick="addDimension(' + itemId + ')"></i>' +
         '<a href="#portlet-config" data-toggle="modal" class="config" onclick="modifyItem(' + id + ')"></a>' +
         '<a href="javascript:;" class="remove" onclick="deleteItem(' + itemId + ')"></a></div></div>' +
@@ -123,7 +171,7 @@ function init(id, two, itemId, itemName, itemRatio) {
         // set the initial value
         "sDom": '<"top"ifl<"clear">>rt<"bottom"ilp<"clear">><"span6"pi>',
         "bServerSide": true,
-        "sAjaxSource": "/dimension/list",
+        "sAjaxSource": "/complain/dimension/list",
         //"fnRowCallback": function (nRow, aData, iDisplayIndex) {
         //    ///* 用来改写用户权限的 */
         //    //if (aData.ISADMIN == '1')

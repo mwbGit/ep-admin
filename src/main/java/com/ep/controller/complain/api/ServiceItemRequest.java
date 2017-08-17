@@ -1,18 +1,14 @@
-package com.ep.dao.model.complain;
+package com.ep.controller.complain.api;
 
 /**
- * Created by MengWeiBo on 2017-08-09
+ * Created by MengWeiBo on 2017-08-17
  */
-public class Dimension {
-    private static final long serialVersionUID = 1549226849768969923L;
-
+public class ServiceItemRequest {
     private Integer id;
     private String name;
     private Integer ratio;
-    private DimensionType type;
-    private ProjectType projectType;
+    private String type;
     private Integer itemId;
-    private ServiceItem item;
 
     public Integer getId() {
         return id;
@@ -38,20 +34,12 @@ public class Dimension {
         this.ratio = ratio;
     }
 
-    public DimensionType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(DimensionType type) {
+    public void setType(String type) {
         this.type = type;
-    }
-
-    public ProjectType getProjectType() {
-        return projectType;
-    }
-
-    public void setProjectType(ProjectType projectType) {
-        this.projectType = projectType;
     }
 
     public Integer getItemId() {
@@ -60,13 +48,5 @@ public class Dimension {
 
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
-    }
-
-    public ServiceItem getItem() {
-        return item;
-    }
-
-    public void setItem(ServiceItem item) {
-        this.item = item;
     }
 }
