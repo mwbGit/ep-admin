@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ep.dao.model.complain.Complain;
 import com.ep.dao.model.complain.Dimension;
 import com.ep.dao.model.complain.ServiceItem;
 
@@ -14,15 +15,19 @@ import com.ep.dao.model.complain.ServiceItem;
 public interface ComplainMapper {
 
 
-//    void insert(Dimension dimension);
+    List<Complain> selectComplain(@Param("typeId") Integer typeId, @Param("start") Integer start, @Param("size") Integer size);
 
-    List<Dimension> selectDimension();
+    int countComplain(@Param("typeId") Integer typeId);
+
+    List<Dimension> selectDimension(@Param("itemId") Integer itemId);
 
     void insertDimension(Dimension dimension);
 
     void updateDimension(Dimension dimension);
 
-    void deleteDimension(@Param("id") Integer id);
+    void deleteDimensionById(@Param("id") Integer id);
+
+    void deleteDimensionByItemId(@Param("itemId") Integer itemId);
 
     List<ServiceItem> selectItem();
 

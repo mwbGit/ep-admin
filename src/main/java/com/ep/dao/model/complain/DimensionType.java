@@ -8,10 +8,10 @@ import java.util.Map;
 import com.ep.dao.model.common.IdInterface;
 
 public enum DimensionType implements IdInterface {
-    ACTIVE(1, "ACTIVE", "Active"),
-    LOCKED(2, "LOCKED", "Locked"),
-    SUSPENDED(3, "SUSPENDED", "Suspended"),
-    CANCELLED(4, "CANCELLED", "Cancelled");
+    ACTIVE(1, "ACTIVE", "维度1"),
+    LOCKED(2, "LOCKED", "维度1132"),
+    SUSPENDED(3, "SUSPENDED", "维度11"),
+    CANCELLED(4, "CANCELLED", "维度231");
 
     private static final Map<String, DimensionType> code2DimensionTypes;
     private static final List<Integer> unQuitStatusIds;

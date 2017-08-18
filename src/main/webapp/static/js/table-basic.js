@@ -1,10 +1,21 @@
 jQuery(document).ready(function () {
     // initiate layout and plugins
-
-
-    init("1", true, 1, "生理需求", 20);
-    init("2", false, 2, "安全需求", 40);
-    init("12", true, 2, "安全需求", 40);
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        contentType: 'application/json',
+        url: "/complain/item/list",
+        // data: data,
+        success: function (data) {
+            if (data.empty) {
+                return;
+            }
+            $.each(data.data, function (n, value) {
+                init(n, value.id, value.name, value.ratio);
+            });
+        }
+    });
 
 });
 
@@ -17,18 +28,63 @@ function modifyItem(id) {
     $('#ratio').val(ratio);
     addItem();
 }
+function reLoad() {
+    $('.close').click();
+    $('#dashboard').load("/views/table_basic.jsp");
+}
+function modifyItemSub() {
+    var data = $("#itemModify").serialize();
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        // contentType:'application/json',
+        url: "/complain/item/modify",
+        data: data,
+        success: function (data) {
+            alert("成功")
+            reLoad();
+        }
+    });
+}
 
 function deleteDimension(id) {
 
     if (window.confirm("确定删除？")) {
-        alert("成功")
+        $.ajax({
+            dataType: 'json',
+            type: "POST",
+            async: false,
+            // contentType:'application/json',
+            url: "/complain/dimension/delete?id=" + id,
+            // data: data,
+            success: function (data) {
+                alert("成功");
+                reLoad();
+            }
+        });
+    } else {
+        return false;
     }
 }
 
 function deleteItem(id) {
-
+    // return false;
     if (window.confirm("确定删除此服务项？")) {
-        alert("成功")
+        $.ajax({
+            dataType: 'json',
+            type: "POST",
+            async: false,
+            // contentType:'application/json',
+            url: "/complain/item/delete?id=" + id,
+            // data: data,
+            success: function (data) {
+                alert("成功");
+                reLoad();
+            }
+        });
+    } else {
+        return false;
     }
 }
 
@@ -39,13 +95,14 @@ function modifyDimension(id, name, ratio) {
     $.ajax({
         dataType: 'json',
         type: "POST",
-        contentType:'application/json',
+        async: false,
+        contentType: 'application/json',
         url: "/resource/list",
         // data: {},
         success: function (data) {
             var trs = "";
             $.each(data.dimensions, function (n, value) {
-                trs += '<option value='+value.value +'>' +value.label + '</option>';
+                trs += '<option value=' + value.value + '>' + value.label + '</option>';
             });
 
             $(".dimensionTypes").html(trs);
@@ -58,30 +115,81 @@ function addDimension(itemId) {
     $.ajax({
         dataType: 'json',
         type: "POST",
-        contentType:'application/json',
+        async: false,
+        contentType: 'application/json',
         url: "/resource/list",
         // data: {},
         success: function (data) {
             var trs = "";
             $.each(data.dimensions, function (n, value) {
-                trs += '<option value='+value.value +'>' +value.label + '</option>';
+                trs += '<option value=' + value.value + '>' + value.label + '</option>';
             });
 
             $(".dimensionTypes").html(trs);
         }
     });
 }
+function addItemSub() {
+    var data = $("#addItemFrom").serialize();
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        // contentType:'application/json',
+        url: "/complain/item/add",
+        data: data,
+        success: function (data) {
+            alert("成功")
+            reLoad();
+        }
+    });
+}
+
+function addDimensionSub() {
+    var data = $("#addDimensionFrom").serialize();
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        // contentType:'application/json',
+        url: "/complain/dimension/add",
+        data: data,
+        success: function (data) {
+            alert("成功")
+            reLoad();
+        }
+    });
+}
+
+function modifyDimensionSub() {
+    var data = $("#modifyDimensionFrom").serialize();
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        // contentType:'application/json',
+        url: "/complain/dimension/modify",
+        data: data,
+        success: function (data) {
+            alert("成功");
+            reLoad();
+        }
+    });
+}
+
+
 function addItem() {
     $.ajax({
         dataType: 'json',
         type: "POST",
-        contentType:'application/json',
+        async: false,
+        contentType: 'application/json',
         url: "/resource/list",
         // data: {},
         success: function (data) {
             var trs = "";
             $.each(data.items, function (n, value) {
-                trs += '<option value='+value.value +'>' +value.label + '</option>';
+                trs += '<option value=' + value.value + '>' + value.label + '</option>';
             });
 
             $(".itemTypes").html(trs);
@@ -89,23 +197,22 @@ function addItem() {
     });
 }
 
-function init(id, two, itemId, itemName, itemRatio) {
+function init(id, itemId, itemName, itemRatio) {
     var initContent = '';
-    if (two) {
+    if ((id % 2) == 0) {
         initContent += '<div class="row-fluid" id="row-fluid' + id + '">';
     }
-    initContent += '<div class="span6"><div class="portlet box red"><div class="portlet-title">' +
+    initContent += '<div class="span6" id="aa"><div class="portlet box red"><div class="portlet-title">' +
         '<div class="caption"><i class="icon-cogs"></i><input type="hidden" id="item-id' + id + '" value="' + itemId + '">' +
         '<span id="service-item' + id + '"> ' + itemName + '</span>(<span id="service-ratio' + id + '">' + itemRatio + '</span>%)' +
         '</div><div class="tools"><input type="hidden" value="true" id="collapse_hidden' + id + '">' +
         '<a href="javascript:;" class="collapse" onclick="collapse1(' + id + ')"></a>' +
-        '<a href="#add-config" data-toggle="modal"  onclick="addDimension(' + itemId + ')"><i class="icon-plus"></i></a>' +
-        '&nbsp<i class="icon-plus" onclick="addDimension(' + itemId + ')"></i>' +
+        '<a href="#add-config" style="color: white" data-toggle="modal"  onclick="addDimension(' + itemId + ')"><i style="color: white" class="icon-plus"></i></a>' +
         '<a href="#portlet-config" data-toggle="modal" class="config" onclick="modifyItem(' + id + ')"></a>' +
         '<a href="javascript:;" class="remove" onclick="deleteItem(' + itemId + ')"></a></div></div>' +
-        '<div id="tablesDiv' + id + '"></div></div></div>';
+        '<div id="tablesDiv' + id + '"></div    ></div></div>';
 
-    if (two) {
+    if ((id % 2) == 0) {
         initContent += '</div>';
         $('#show-content').append(initContent);
     } else {
@@ -149,7 +256,10 @@ function init(id, two, itemId, itemName, itemRatio) {
                 "mDataProp": "ratio",
                 "sTitle": "所占为例",
                 "sDefaultContent": "",
-                "sClass": "center"
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    return full.ratio + "%";
+                }
             }, {
                 "mDataProp": "type",
                 "sTitle": "所属类别",
@@ -171,7 +281,7 @@ function init(id, two, itemId, itemName, itemRatio) {
         // set the initial value
         "sDom": '<"top"ifl<"clear">>rt<"bottom"ilp<"clear">><"span6"pi>',
         "bServerSide": true,
-        "sAjaxSource": "/complain/dimension/list",
+        "sAjaxSource": "/complain/dimension/list?itemId=" + itemId,
         //"fnRowCallback": function (nRow, aData, iDisplayIndex) {
         //    ///* 用来改写用户权限的 */
         //    //if (aData.ISADMIN == '1')
@@ -184,9 +294,23 @@ function init(id, two, itemId, itemName, itemRatio) {
         //    //alert(aData);
         //    return nRow;
         //},
+        "oLanguage": {
+            "sProcessing": "正在加载中......",
+            "sZeroRecords": "对不起，查询不到相关数据！",
+            "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
+            "sLengthMenu": "显示 _MENU_ 条",
+            "sInfoEmpty": "记录数为0",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上一页",
+                "sNext": "下一页",
+                "sLast": "末页"
+            }
+        },
         "fnServerData": function (sSource, aDataSet, fnCallback, oSettings) {
             $.ajax({
                 dataType: 'json',
+                async: false,
                 type: "POST",
                 //contentType:'application/json',
                 url: sSource,

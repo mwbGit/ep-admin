@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ep.dao.mapper.ComplainMapper">
+	
+	<resultMap id="dimensionResult" type="Dimension">
+		<id property="id" column="dimension_id"/>
+		<result property="name" column="dimension_name"/>
+		<result property="ratio" column="dimension_ratio"/>
+		<!--<result property="type" column="dimension_type_id" javaType="dimensionType" typeHandler="EnumIdTypeHandler" />-->
+		<result property="type" column="dimension_type_id" javaType="DimensionType" typeHandler="EnumIdTypeHandler" />
+		<association property="item" javaType="ServiceItem" resultMap="itemResult" />
+	</resultMap>
+
+	<resultMap id="itemResult" type="ServiceItem">
+		<id property="id" column="item_id"/>
+		<result property="name" column="item_name"/>
+		<result property="ratio" column="item_ratio"/>
+		<!--<result property="type" column="dimension_type_id" javaType="dimensionType" typeHandler="EnumIdTypeHandler" />-->
+		<!--<result property="type" column="dimension_project_type_id" javaType="DimensionType" typeHandler="EnumIdTypeHandler" />-->
+	</resultMap>
+
+	<resultMap id="complainResult" type="Complain">
+		<id property="id" column="complain_id"/>
+		<result property="content" column="complain_content"/>
+		<result property="grade" column="complain_grade"/>
+		<result property="createTime" column="complain_create_time"/>
+		<result property="img" column="complain_img"/>
+		<result property="dimensionId" column="complain_dimension_id"/>
+
+		<association property="dimension" javaType="Dimension" resultMap="dimensionResult" />
+	</resultMap>
+
+	<sql id="dimensionColumns">
+		d.id AS dimension_id,
+		d.name AS dimension_name,
+		d.ratio AS dimension_ratio,
+		d.type_id AS dimension_type_id
+	</sql>
+
+	<sql id="itemColumns">
+		si.id AS item_id,
+		si.name AS item_name,
+		si.ratio AS item_ratio
+	</sql>
+	<sql id="complainColumns">
+		c.id AS complain_id,
+		c.content AS complain_content,
+		c.grade AS complain_grade,
+		c.create_time AS complain_create_time,
+		c.img AS complain_img,
+		c.dimension_id AS complain_dimension_id
+	</sql>
+
+	<select id="selectComplain" resultMap="complainResult">
+		SELECT
+		<include refid="dimensionColumns"/>,
+		<include refid="itemColumns"/>,
+		<include refid="complainColumns"/>
+		FROM
+			t_complain c
+			INNER JOIN t_dimension d ON c.dimension_id = d.id
+			INNER JOIN t_service_item si ON d.item_id = si.id
+		<where>
+			<if test="typeId != null">
+				d.type_id = #{typeId}
+			</if>
+		</where>
+		limit #{start},#{size}
+	</select>
+
+	<select id="countComplain" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_complain c
+		INNER JOIN t_dimension d ON c.dimension_id = d.id
+		INNER JOIN t_service_item si ON d.item_id = si.id
+
+		<where>
+			<if test="typeId != null">
+				d.type_id = #{typeId}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectDimension" resultMap="dimensionResult">
+		SELECT
+			<include refid="dimensionColumns"/>
+		FROM
+			t_dimension d
+		<where>
+			<if test="itemId != null">
+				d.item_id = #{itemId}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertDimension"
+			parameterType="Dimension"
+			useGeneratedKeys="true">
+		INSERT INTO t_dimension(
+			id,
+			`name`,
+			ratio,
+			type_id,
+			item_id
+		) VALUES (
+			#{id},
+			#{name},
+			#{ratio},
+			#{type.id},
+			#{itemId}
+		)
+	</insert>
+
+	<update id="updateDimension"
+			parameterType="Dimension">
+		UPDATE t_dimension
+		<set>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+
+			<if test="ratio != null">
+				ratio = #{ratio},
+			</if>
+
+			<if test="type != null">
+				type_id = #{type.id}
+			</if>
+
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="deleteDimensionById">
+		DELETE FROM t_dimension
+		WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteDimensionByItemId">
+		DELETE FROM t_dimension
+		WHERE item_id = #{itemId}
+	</delete>
+
+	<delete id="deleteServiceItem">
+		DELETE FROM t_service_item
+		WHERE id = #{id}
+	</delete>
+
+	<update id="updateServiceItem"
+			parameterType="ServiceItem">
+		UPDATE t_service_item
+		<set>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+
+			<if test="ratio != null">
+				ratio = #{ratio}
+			</if>
+
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<insert id="insertServiceItem"
+			parameterType="ServiceItem"
+			useGeneratedKeys="true">
+		INSERT INTO t_service_item(
+			id,
+			`name`,
+			ratio
+			) VALUES (
+			#{id},
+			#{name},
+			#{ratio}
+		)
+	</insert>
+
+	<select id="selectItem" resultMap="itemResult">
+		SELECT
+		<include refid="itemColumns"/>
+		FROM
+			t_service_item si
+	</select>
+
+
+</mapper>   

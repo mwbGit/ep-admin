@@ -15,8 +15,8 @@ public class DimensionMapperTest extends AbstractMapperTest {
 
 //    @Test
     public void  select(){
-      List<Dimension> list =  mapper.selectDimension();
-        System.out.println(list.size());
+//      List<Dimension> list =  mapper.selectDimension();
+//        System.out.println(list.size());
     }
 
 }

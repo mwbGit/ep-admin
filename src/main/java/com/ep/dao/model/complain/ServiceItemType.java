@@ -8,10 +8,10 @@ import java.util.Map;
 import com.ep.dao.model.common.IdInterface;
 
 public enum ServiceItemType implements IdInterface {
-    ACTIVE(1, "ACTIVE", "Active"),
-    LOCKED(2, "LOCKED", "Locked"),
-    SUSPENDED(3, "SUSPENDED", "Suspended"),
-    CANCELLED(4, "CANCELLED", "Cancelled");
+    ACTIVE(1, "ACTIVE", "服务项1"),
+    LOCKED(2, "LOCKED", "服务项2"),
+    SUSPENDED(3, "SUSPENDED", "服务项3"),
+    CANCELLED(4, "CANCELLED", "服务项4");
 
     private static final Map<String, ServiceItemType> code2DimensionTypes;
     private static final List<Integer> unQuitStatusIds;

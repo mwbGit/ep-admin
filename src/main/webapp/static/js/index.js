@@ -13,6 +13,6 @@ function loadJsp() {
 
 }function loadJsp1() {
     //$('#_zscq').attr("class", "active");
-    $('#dashboard').load("/views/test.jsp");
-    $('#menuTitle').html("吐槽管理");
+    $('#dashboard').load("/views/data_analysis.jsp");
+    $('#menuTitle').html("数据分析");
 }

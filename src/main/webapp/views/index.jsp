@@ -63,6 +63,13 @@
 
 	<link rel="shortcut icon" href="${ctx }/static/media/image/favicon.ico" />
 
+	link rel="stylesheet" type="text/css" href="${ctx }/static/media/css/select2_metro.css" />
+
+	<link rel="stylesheet" href="${ctx }/static/media/css/DT_bootstrap.css" />
+
+	<!-- END PAGE LEVEL STYLES -->
+
+	<link rel="shortcut icon" href="${ctx }/static/media/image/favicon.ico" />
 </head>
 
 <!-- END HEAD -->
@@ -945,7 +952,9 @@
 	<script src="${ctx }/static/media/js/index.js" type="text/javascript"></script>
 	<script src="${ctx }/static/js/index.js" type="text/javascript"></script>
 
-	<!-- END PAGE LEVEL SCRIPTS -->  
+	<script type="text/javascript" src="${ctx }/static/media/js/jquery.dataTables.js"></script>
+
+	<!-- END PAGE LEVEL SCRIPTS -->
 
 	<script>
 
@@ -963,3 +972,4 @@
 <!-- END BODY -->
 
 </html>
+
