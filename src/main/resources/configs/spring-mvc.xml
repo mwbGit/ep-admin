@@ -14,24 +14,24 @@
         <context:include-filter type="annotation"
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
-    <!-- 拦截器-->
-    <!--<mvc:interceptors>-->
-        <!--&lt;!&ndash;前台用户拦截器&ndash;&gt;-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--<mvc:exclude-mapping path="/assets/**"/>-->
-            <!--<bean class="com.mwb.controller.interceptor.EmployeeInterceptor">-->
-                <!--<property name="allowUrls">-->
-                    <!--<list>-->
-                        <!--<value>/assets</value>-->
-                        <!--<value>/login</value>-->
-                        <!--<value>/login.html</value>-->
-                        <!--<value>404</value>-->
-                    <!--</list>-->
-                <!--</property>-->
-            <!--</bean>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/**"/>
+            <bean class="com.ep.controller.interceptor.UserInterceptor">
+                <property name="allowUrls">
+                    <list>
+                        <value>/assets</value>
+                        <value>/login</value>
+                        <value>/index.jsp</value>
+                        <value>/login.html</value>
+                        <value>404</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

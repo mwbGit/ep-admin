@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by fangchen.chai on 2017/4/5.
  */
-public class EmployeeInterceptor implements HandlerInterceptor {
+public class UserInterceptor implements HandlerInterceptor {
     public String[] allowUrls;
 //    @Autowired
 //    private IEmployeeService employeeService;
@@ -24,6 +24,10 @@ public class EmployeeInterceptor implements HandlerInterceptor {
 //        Employee employee = employeeService.getAllEmployee().get(0);
 //        ApplicationContextUtils.getSession().setAttribute("employee", employee);
 
+//        if (requestUrl.contains("index.html")){
+//            request.getRequestDispatcher("/views/index.jsp").forward(request, response);
+//            return true;
+//        }
 //        return true;
         if (null != allowUrls && allowUrls.length >= 1)
             for (String url : allowUrls) {

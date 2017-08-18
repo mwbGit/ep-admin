@@ -815,7 +815,7 @@
 
 							</li>
 							<li style="float: right"><a href="#add-item-config" data-toggle="modal" onclick="addItem()" >
-								<button id="showAddItem" class="btn green" style="display: none"></button>
+								<button id="showAddItem" class="btn green" style="display: none">添加服务项</button>
 							</a></li>
 						</ul>
 
