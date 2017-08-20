@@ -1,9 +1,12 @@
 package com.ep.controller.order;
 
 import com.ep.controller.api.ServiceResponse;
+import com.ep.controller.order.api.CreateOrderRequest;
+import com.ep.service.we_chat.pay.api.WxPayConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/e_parke")
 public class EparkeOrderController {
 
+    @Autowired
+    private WxPayConfig wxPayConfig;
 
     @RequestMapping(value = "/order")
     @ResponseBody
-    public ServiceResponse createOrder(@RequestParam Integer  id) {
+    public ServiceResponse createOrder(@RequestBody CreateOrderRequest request) {
 
         return new ServiceResponse();
     }

@@ -21,6 +21,9 @@
     <poi-ooxml.version>3.8</poi-ooxml.version>
     <org.apache.ant.version>1.9.4</org.apache.ant.version>
     <org.slf4j.version>1.7.16</org.slf4j.version>
+    <httpcomponents.httpclient>4.5.2</httpcomponents.httpclient>
+    <httpcomponents.httpcore>4.4.4</httpcomponents.httpcore>
+    <ning.asnchttpclient>1.9.40</ning.asnchttpclient>
 
     <!-- other version properties -->
     <compile.encoding>UTF8</compile.encoding>
@@ -320,6 +323,21 @@
       <version>1.1.2</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>${httpcomponents.httpcore}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${httpcomponents.httpclient}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ning</groupId>
+      <artifactId>async-http-client</artifactId>
+      <version>${ning.asnchttpclient}</version>
+    </dependency>
   </dependencies>
 
   <build>
