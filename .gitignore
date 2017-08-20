@@ -6,3 +6,4 @@ application.pid
 generatorConfig.xml
 /**/target
 *test*
+mysqldb.properties
