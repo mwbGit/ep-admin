@@ -239,10 +239,10 @@ function init(id, itemId, itemName, itemRatio) {
             //    "bVisible": false //此列不显示
             //},
             {
-                "mDataProp": "id",
+                "mDataProp": "orderId",
                 "sTitle": "序号",
                 "sDefaultContent": "",
-                "sClass": "center",
+                "sClass": "center"
                 //"sWidth": "20%"
             }, {
                 "mDataProp": "name",

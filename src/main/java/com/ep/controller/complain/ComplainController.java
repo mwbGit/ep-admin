@@ -129,7 +129,7 @@ public class ComplainController {
         item.setRatio(request.getRatio());
         item.setType(ServiceItemType.fromCode(request.getType()));
 
-//        complainMapper.updateServiceItem(item);
+        complainMapper.updateServiceItem(item);
 
         return new ServiceResponse();
     }

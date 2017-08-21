@@ -15,13 +15,16 @@ public class DimensionVO {
     private String name;
     private Integer ratio;
     private String type;
+    private Integer orderId;
 
     public static List<DimensionVO> toVOs(List<Dimension> dimensions) {
         List<DimensionVO> vos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(dimensions)) {
+            int order = 1;
             for (Dimension dimension : dimensions) {
                 DimensionVO vo = new DimensionVO();
                 vo.setId(dimension.getId());
+                vo.setOrderId(order++);
                 vo.setName(dimension.getName());
                 vo.setRatio(dimension.getRatio());
                 vo.setType(dimension.getType().getDescription());
@@ -32,6 +35,15 @@ public class DimensionVO {
 
         return vos;
     }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
     public Integer getId() {
         return id;
     }
