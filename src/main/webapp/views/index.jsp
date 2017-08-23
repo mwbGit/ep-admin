@@ -92,7 +92,7 @@
 
 				<!-- BEGIN LOGO -->
 
-				<a class="brand" href="/views/index.jsp">
+				<a class="brand" href="${ctx}/index.html">
 
 				<img src="${ctx }/static/media/image/logo.png" alt="logo"/>
 
@@ -130,9 +130,9 @@
 
 							<li class="divider"></li>
 
-							<li><a href="/views/index.jsp"><i class="icon-lock"></i>修改密码</a></li>
+							<li><a href="${ctx}/index.html"><i class="icon-lock"></i>修改密码</a></li>
 
-							<li><a href="/views/index.jsp"><i class="icon-key"></i> 退出</a></li>
+							<li><a href="${ctx}/index.html"><i class="icon-key"></i> 退出</a></li>
 
 						</ul>
 
@@ -179,7 +179,7 @@
 
 				<li class="start ">
 
-					<a href="/views/index.jsp">
+					<a href="${ctx}/index.html">
 
 					<i class="icon-home"></i> 
 
@@ -262,7 +262,7 @@
 
 								<i class="icon-home"></i>
 
-								<a href="/views/index.jsp">主页</a>
+								<a href="${ctx}/index.html">主页</a>
 
 								<i class="icon-angle-right"></i>
 

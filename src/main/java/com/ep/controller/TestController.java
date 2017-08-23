@@ -13,23 +13,10 @@ public class TestController {
     @Resource
     private UserDao userDao;
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/index.html")
     public String loginHtml() {
 
-        String name = userDao.get("2");
-        System.out.println(name);
-
-        userDao.update("2");
-        String name1 = userDao.get("2");
-        System.out.println(name1);
-
-        userDao.removeAll();
-
-        String name2 = userDao.get("2");
-        System.out.println(name2);
-
-        System.out.println("2111");
-        return "login";
+        return "index";
     }
 
 }
