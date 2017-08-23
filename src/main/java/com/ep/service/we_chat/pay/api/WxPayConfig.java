@@ -7,20 +7,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class WxPayConfig {
 
-	@Value("$(wxpay.openid)")
+//	@Value("$(wxpay.openid)")
 	public String openId;
 	/**
 	 * 公众账号ID
 	 * appId等都是平台的
 	 */
-	@Value("${wxpay.appid}")
+//	@Value("${wxpay.appid}")
 	private String appid;
-	@Value("${wxpay.appsecret}")
+//	@Value("${wxpay.appsecret}")
 	private String appsecret;
 	/**
 	 * 商户号
 	 */
-	@Value("${wxpay.mchid}")
+//	@Value("${wxpay.mchid}")
 	private String mchid;
 /*
 	*//**
@@ -38,19 +38,19 @@ public class WxPayConfig {
 	/**
 	 * 签名
 	 */
-	@Value("${wxpay.sign}")
+//	@Value("${wxpay.sign}")
 	private String sign;
 
 	/**
 	 * 证书
 	 */
-	@Value("${wxpay.cert}")
+//	@Value("${wxpay.cert}")
 	private String cert;
 
 	/**
 	 * 通知地址
 	 */
-	@Value("${wxpay.notifyUrl}")
+//	@Value("${wxpay.notifyUrl}")
 	private String notifyUrl;
 
 	public String getOpenId() {

@@ -36,13 +36,13 @@
                         <input type="text" class="m-wrap medium" id="ratio" name="ratio" />
                     </div>
                 </div>
-                <div class="control-group">
-                    <label class="control-label">类别：</label>
-                    <div class="controls">
-                        <select class="itemTypes" name="type">
-                        </select>
-                    </div>
-                </div>
+                <%--<div class="control-group">--%>
+                    <%--<label class="control-label">类别：</label>--%>
+                    <%--<div class="controls">--%>
+                        <%--<select class="itemTypes" name="type">--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-actions">
 
                     <button type="button" class="btn blue" onclick="modifyItemSub()"><i class="icon-ok"></i> 提交</button>
@@ -164,22 +164,22 @@
                 <div class="control-group">
                     <label class="control-label">名称：</label>
                     <div class="controls">
-                        <input type="text" class="m-wrap medium" name="name" />
+                        <input type="text" class="m-wrap medium"  id="addItemName" name="name" />
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">比例：</label>
                     <div class="controls">
-                        <input type="text" class="m-wrap medium" name="ratio" />
+                        <input type="text" class="m-wrap medium" id="addItemRatio" name="ratio" />
                     </div>
                 </div>
-                <div class="control-group">
-                    <label class="control-label">类别：</label>
-                    <div class="controls">
-                        <select class="itemTypes" name="type">
-                        </select>
-                    </div>
-                </div>
+                <%--<div class="control-group">--%>
+                    <%--<label class="control-label">类别：</label>--%>
+                    <%--<div class="controls">--%>
+                        <%--<select class="itemTypes" name="type">--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-actions">
 
                     <button type="button" onclick="addItemSub()" class="btn blue"><i class="icon-ok"></i> 提交</button>

@@ -1,5 +1,4 @@
 jQuery(document).ready(function () {
-
     $('#sample_2').dataTable({
         // "bScrollInfinite": true,
         // "bScrollCollapse": true,
@@ -75,7 +74,7 @@ jQuery(document).ready(function () {
         ],
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": "/complain/list",
+        "sAjaxSource": $ctx + "/complain/list",
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
             ///* 用来改写用户权限的 */
             //if (aData.ISADMIN == '1')

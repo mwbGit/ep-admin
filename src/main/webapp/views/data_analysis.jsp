@@ -14,10 +14,9 @@
 
 			<div class="btn-group">
 
-				<a class="btn" href="#" data-toggle="dropdown">
+				<a href="${ctx}/complain/queryComplainForExcel" ><button class="btn">
 					导出
-					<i class="icon-angle-down"></i>
-
+				</button>
 				</a>
 
 				<div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
