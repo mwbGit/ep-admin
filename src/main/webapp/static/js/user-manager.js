@@ -1,10 +1,11 @@
 jQuery(document).ready(function () {
-    $('#sample_2').dataTable({
+    $('#user_manager').dataTable({
         // "bScrollInfinite": true,
         // "bScrollCollapse": true,
         // "sScrollY": "200px",//长200像素,
         "bPaginate": true, //是否显示（应用）分页器
         "bLengthChange": true, //开关，是否显示每页大小的下拉框
+        "bSort": false,
 
         "aoColumns": [
             {
@@ -14,40 +15,50 @@ jQuery(document).ready(function () {
                 "sClass": "center",
                 "bVisible": false //此列不显示
             }, {
-                "mDataProp": "name",
-                "sTitle": "服务项",
-                "sDefaultContent": "",
-                "sClass": "center",
-                "mRender": function (val, data, full) {
-                    return full.name;
-                }
-            }, {
-                "mDataProp": "dimensionName",
-                "sTitle": "维度名称",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }, {
-                "mDataProp": "dimensionType",
-                "sTitle": "所属类别",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }, {
-                "mDataProp": "grade",
-                "sTitle": "评分",
-                "sDefaultContent": "",
-                "sClass": "center"
-            },{
-                "mDataProp": "content",
-                "sTitle": "吐槽内容",
-                "sDefaultContent": "",
-                "sClass": "center"
-            },{
                 "mDataProp": "img",
-                "sTitle": "图片",
+                "sTitle": "头像",
                 "sDefaultContent": "",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
                     return '<img style="width: 50px;height: 50px" src="' + val + '"/>';
+                }
+            }, {
+                "mDataProp": "name",
+                "sTitle": "姓名",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "sex",
+                "sTitle": "性别",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "mobile",
+                "sTitle": "手机号",
+                "sDefaultContent": "",
+                "sClass": "center"
+            },{
+                "mDataProp": "mobile",
+                "sTitle": "入住空间",
+                "sDefaultContent": "",
+                "sClass": "center"
+            },{
+                "mDataProp": "updatedByName",
+                "sTitle": "操作人",
+                "sDefaultContent": "",
+                "sClass": "center"
+            },{
+                "mDataProp": "updateDate",
+                "sTitle": "操作时间",
+                "sDefaultContent": "",
+                "sClass": "center"
+            },{
+                "mDataProp": "updateDate",
+                "sTitle": "操作",
+                "sDefaultContent": "aaa",
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    return '操作';
                 }
             }],
         // set the initial value
@@ -70,14 +81,14 @@ jQuery(document).ready(function () {
                 "sLast": "末页"
             }
         },
-        "aoColumnDefs": [{
-            'bSortable': false,
-            'aTargets': [0, 1, 2, 3, 4,5,6]
-        }
-        ],
+        // "aoColumnDefs": [{
+        //     'bSortable': false,
+        //     'aTargets': [0, 1, 2, 3, 4,5,6]
+        // }
+        // ],
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": $ctx + "/complain/list",
+        "sAjaxSource": $ctx + "/user/list",
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
             ///* 用来改写用户权限的 */
             //if (aData.ISADMIN == '1')

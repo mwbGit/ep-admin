@@ -120,7 +120,7 @@
 
 						<img alt="" src="${ctx }/static/media/image/avatar1_small.jpg" />
 
-						<span class="username">魏大胖</span>
+						<span class="username">${user.name}</span>
 
 						<i class="icon-angle-down"></i>
 
@@ -132,7 +132,7 @@
 
 							<li><a href="${ctx}/index.html"><i class="icon-lock"></i>修改密码</a></li>
 
-							<li><a href="${ctx}/index.html"><i class="icon-key"></i> 退出</a></li>
+							<li><a href="${ctx}/logout"><i class="icon-key"></i> 退出</a></li>
 
 						</ul>
 
@@ -226,6 +226,32 @@
 
 				</li>
 
+
+				<li>
+
+					<a href="javascript:;">
+
+						<i class="icon-user"></i>
+
+						<span class="title">用户管理</span>
+
+						<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li id="user-li">
+
+							<a href="#" onclick="loadJsp('user')">
+
+								用户列表</a>
+
+						</li>
+
+					</ul>
+
+				</li>
 			</ul>
 
 			<!-- END SIDEBAR MENU -->

@@ -61,3 +61,23 @@ CREATE TABLE `t_complain` (
   CONSTRAINT `t_complain_ibfk_1` FOREIGN KEY (`dimension_id`) REFERENCES `t_dimension` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE IF EXISTS t_user ;
+CREATE TABLE `t_user` (
+	`id` INT (10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` CHAR (32) NOT NULL,
+	`img` CHAR (128) DEFAULT NULL,
+	`sex` CHAR (4) NOT NULL,
+	`mobile` CHAR (16) NOT NULL,
+	`password` CHAR (16) NOT NULL,
+	`remark` CHAR (16) DEFAULT NULL,
+	`create_date` date NOT NULL,
+	`update_date` date NOT NULL,
+	`updated_by_id` INT (10) NOT NULL,
+	`updated_by_name` CHAR (32) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4;
+
+
+INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/100520024/7cd4acbb91ec56ab77bc2d12583106b2', '男', '1302972767', 'admin', '131', '2017-08-24', '2017-08-24', '1', '孟卫波');
+
+

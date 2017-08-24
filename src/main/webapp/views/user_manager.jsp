@@ -8,7 +8,7 @@
 
 	<div class="portlet-title">
 
-		<div class="caption"><i class="icon-globe"></i>吐槽列表</div>
+		<div class="caption"><i class="icon-globe"></i>用户列表</div>
 
 		<div class="actions">
 
@@ -31,7 +31,7 @@
 
 	<div class="portlet-body">
 
-		<table class="table table-striped table-bordered table-hover table-full-width" id="sample_2">
+		<table class="table table-striped table-bordered table-hover table-full-width" id="user_manager">
 
 		</table>
 	</div>
@@ -39,5 +39,28 @@
 </div>
 
 
+<div class="page-content">
 
-<script src="${ctx }/static/js/data_analysis.js"></script>
+	<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+	<div id="portlet-config" class="modal hide">
+
+		<div class="modal-header">
+
+			<button data-dismiss="modal" class="close" type="button"></button>
+
+			<h3>修改维度</h3>
+
+		</div>
+
+
+	</div>
+
+	<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+	<!-- BEGIN PAGE CONTAINER-->
+
+
+</div>
+
+<script src="${ctx }/static/js/user-manager.js"></script>
