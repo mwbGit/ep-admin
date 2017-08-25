@@ -1,6 +1,5 @@
-package com.ep.controller.api;
+package com.ep.controller.common;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
 /**

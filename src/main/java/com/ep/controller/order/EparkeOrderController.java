@@ -1,6 +1,6 @@
 package com.ep.controller.order;
 
-import com.ep.controller.api.ServiceResponse;
+import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.order.api.CreateOrderRequest;
 import com.ep.service.we_chat.pay.api.WxPayConfig;
 import org.springframework.beans.factory.annotation.Autowired;

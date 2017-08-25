@@ -22,29 +22,9 @@ public class UserVO {
     private String updateDate;
     private String updatedByName;
     private Boolean deleted;
+    private String spaceNames;
 
-    public static List<UserVO> toVOs(List<User> users) {
-        List<UserVO> vos = new ArrayList<>();
-        if (CollectionUtils.isNotEmpty(users)) {
-            for (User user : users) {
-                UserVO vo = new UserVO();
-                vo.setId(user.getId());
-                vo.setName(user.getName());
-                vo.setImg(user.getImg());
-                vo.setSex(user.getSex());
-                vo.setMobile(user.getMobile());
-                vo.setRemark(user.getRemark());
-                vo.setCreateDate(DateTimeUtility.formatYYYYMMDD(user.getCreateDate()));
-                vo.setUpdateDate(DateTimeUtility.formatYYYYMMDD(user.getUpdateDate()));
-                vo.setUpdatedByName(user.getUpdatedByName());
-                vo.setDeleted(user.getDeleted().getValue());
 
-                vos.add(vo);
-            }
-        }
-
-        return vos;
-    }
     public Integer getId() {
         return id;
     }
@@ -123,5 +103,13 @@ public class UserVO {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getSpaceNames() {
+        return spaceNames;
+    }
+
+    public void setSpaceNames(String spaceNames) {
+        this.spaceNames = spaceNames;
     }
 }

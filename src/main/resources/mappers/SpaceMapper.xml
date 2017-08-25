@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ep.dao.mapper.SpaceMapper">
+	<resultMap id="userResult" type="User" extends="com.ep.dao.mapper.UserMapper.userResult" />
+
+    <resultMap id="spaceResult" type="Space">
+        <id property="id" column="space_id"/>
+        <result property="name" column="space_name"/>
+        <result property="grade" column="space_grade"/>
+    </resultMap>
+
+	<resultMap id="userSpaceResult" type="UserSpace">
+		<id property="id" column="user_space_id"/>
+		<result property="userId" column="user_space_user_id"/>
+		<result property="spaceId" column="user_space_space_id"/>
+		<association property="user" javaType="User" resultMap="userResult" />
+		<association property="space" javaType="Space" resultMap="spaceResult" />
+	</resultMap>
+
+	<sql id="userColumns" >
+		<include refid="com.ep.dao.mapper.UserMapper.userColumns"/>
+	</sql>
+
+	<sql id="spaceColumns">
+		s.id AS space_id,
+		s.name AS space_name,
+		s.grade AS space_grade
+	</sql>
+
+	<sql id="userSpaceColumns">
+		us.id AS user_space_id,
+		us.user_id AS user_space_user_id,
+		us.space_id AS user_space_space_id
+	</sql>
+
+    <insert id="batchInsertUserSpace">
+		INSERT INTO t_user_space(
+			`user_id`,
+			space_id
+		) VALUES
+		<foreach collection="spaces" item="spaceId" index="index" separator=",">
+			(#{userId},
+			#{spaceId})
+		</foreach>
+	</insert>
+
+    <delete id="deleteUserSpaceByUserId" >
+        DELETE
+        FROM
+			t_user_space
+      WHERE user_id = #{userId}
+
+    </delete>
+
+	<select id="selectUserSpaceByUserId" resultMap="userSpaceResult">
+		SELECT
+		<include refid="userColumns"/>,
+		<include refid="spaceColumns"/>,
+		<include refid="userSpaceColumns"/>
+		FROM
+		t_user_space us
+		INNER JOIN t_user u ON u.id = us.user_id
+		INNER JOIN t_space s ON s.id = us.space_id
+		WHERE us.user_id = #{userId}
+
+	</select>
+
+	<select id="selectSpaceList" resultMap="spaceResult">
+		SELECT
+		<include refid="spaceColumns"/>
+		FROM
+		t_space s
+
+	</select>
+
+
+</mapper>
