@@ -141,7 +141,7 @@ function deleteUser(id) {
         dataType: 'json',
         async: false,
         url: $ctx + "/user/delete?id=" + id,
-        data: "{}",
+        // data: "{}",
         success: function (data) {
             alert("成功");
             reLoad();
