@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ep.controller.api.ServiceResponse;
+import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.util.ApplicationContextUtils;
 import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.model.user.User;

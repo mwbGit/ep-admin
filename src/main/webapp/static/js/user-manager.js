@@ -38,7 +38,7 @@ jQuery(document).ready(function () {
                 "sDefaultContent": "",
                 "sClass": "center"
             },{
-                "mDataProp": "mobile",
+                "mDataProp": "spaceNames",
                 "sTitle": "入住空间",
                 "sDefaultContent": "",
                 "sClass": "center"
@@ -110,6 +110,25 @@ jQuery(document).ready(function () {
     });
 
 });
+
+function modifyUserBut() {
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        contentType: 'application/json',
+        url: "/resource/space/list",
+        // data: {},
+        success: function (data) {
+            var trs = "";
+            $.each(data.data, function (n, value) {
+                trs += '<option value=' + value.value + '>' + value.label + '</option>';
+            });
+
+            $(".dimensionTypes").html(trs);
+        }
+    });
+}
 
 function reLoad() {
     $('.close').click();
