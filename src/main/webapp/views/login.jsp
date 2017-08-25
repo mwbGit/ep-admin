@@ -229,7 +229,7 @@
                       type: "POST",
                       async: false,
 //                      contentType: 'application/json',
-                      url: $ctx + "/login/",
+                      url: $ctx + "/login",
                        data: data,
                       success: function (data) {
                           if (data.code != "0"){

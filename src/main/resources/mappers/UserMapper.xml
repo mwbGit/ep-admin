@@ -16,6 +16,7 @@
         <result property="updateDate" column="user_update_date"/>
         <result property="updatedById" column="user_updated_by_id"/>
         <result property="updatedByName" column="user_updated_by_name"/>
+        <result property="deleted" column="user_is_deleted" jdbcType="CHAR" javaType="Bool"/>
         <!--<association property="item" javaType="ServiceItem" resultMap="itemResult" />-->
     </resultMap>
 
@@ -30,7 +31,8 @@
 		u.create_date AS user_create_date,
 		u.update_date AS user_update_date,
 		u.updated_by_id AS user_updated_by_id,
-		u.updated_by_name AS user_updated_by_name
+		u.updated_by_name AS user_updated_by_name,
+		u.is_deleted AS user_is_deleted
 	</sql>
 
     <insert id="insertOrUpdateUser"
@@ -44,6 +46,7 @@
 			mobile,
 			password,
 			remark,
+			is_deleted,
 			create_date,
 			update_date,
 			updated_by_id,
@@ -56,13 +59,14 @@
 			#{mobile},
 			#{password},
 			#{remark},
+			#{deleted.code},
 			#{createDate},
 			#{updateDate},
-			#{createDate},
 			#{updatedById},
 			#{updatedByName}
 		) ON DUPLICATE KEY UPDATE
         	update_date = NOW(),
+        	is_deleted = #{deleted.code},
         	updated_by_id = #{updatedById},
         	updated_by_name = #{updatedByName}
 	</insert>
@@ -77,6 +81,15 @@
         </if>
 
     </select>
+
+	<select id="selectUserById" resultMap="userResult">
+		SELECT
+		<include refid="userColumns"/>
+		FROM
+			t_user u
+		WHERE `id` = #{id}
+
+	</select>
 
 	<select id="selectUser" resultMap="userResult">
 		SELECT

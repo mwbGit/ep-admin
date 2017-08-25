@@ -21,6 +21,7 @@ public class UserVO {
     private String createDate;
     private String updateDate;
     private String updatedByName;
+    private Boolean deleted;
 
     public static List<UserVO> toVOs(List<User> users) {
         List<UserVO> vos = new ArrayList<>();
@@ -36,6 +37,7 @@ public class UserVO {
                 vo.setCreateDate(DateTimeUtility.formatYYYYMMDD(user.getCreateDate()));
                 vo.setUpdateDate(DateTimeUtility.formatYYYYMMDD(user.getUpdateDate()));
                 vo.setUpdatedByName(user.getUpdatedByName());
+                vo.setDeleted(user.getDeleted().getValue());
 
                 vos.add(vo);
             }
@@ -113,5 +115,13 @@ public class UserVO {
 
     public void setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

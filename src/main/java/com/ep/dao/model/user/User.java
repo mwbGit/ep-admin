@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
+import com.ep.dao.model.common.Bool;
+
 /**
  * Created by MengWeiBo on 2017-08-07
  */
@@ -22,6 +24,7 @@ public class User implements Serializable{
     private Date updateDate;
     private Integer updatedById;
     private String updatedByName;
+    private Bool deleted;
 
     public Integer getId() {
         return id;
@@ -110,6 +113,15 @@ public class User implements Serializable{
     public void setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
     }
+
+    public Bool getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Bool deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);

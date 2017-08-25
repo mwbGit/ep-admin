@@ -13,6 +13,8 @@ public interface UserMapper {
 
     public User selectUser(@Param("name") String name, @Param("password") String password);
 
+    public User selectUserById(@Param("id") Integer id);
+
     public List<User> selectUserList(@Param("start") Integer start, @Param("size") Integer size);
 
     public int countUserList();

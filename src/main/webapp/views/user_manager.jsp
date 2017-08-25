@@ -10,23 +10,6 @@
 
 		<div class="caption"><i class="icon-globe"></i>用户列表</div>
 
-		<div class="actions">
-
-			<div class="btn-group">
-
-				<a href="${ctx}/complain/queryComplainForExcel" ><button class="btn">
-					导出
-				</button>
-				</a>
-
-				<div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-
-				</div>
-
-			</div>
-
-		</div>
-
 	</div>
 
 	<div class="portlet-body">

@@ -6,9 +6,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-/**
- * Created by fangchen.chai on 2017/4/3.
- */
+import com.ep.dao.model.user.User;
+
 public class ApplicationContextUtils {
 
     public static HttpSession getSession() {
@@ -19,8 +18,14 @@ public class ApplicationContextUtils {
         return session;
     }
 
+    public static User getUser() {
+        return (User) getSession().getAttribute("user");
+    }
+
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return attrs.getRequest();
     }
+
+
 }

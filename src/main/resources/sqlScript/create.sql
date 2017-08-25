@@ -70,6 +70,7 @@ CREATE TABLE `t_user` (
 	`mobile` CHAR (16) NOT NULL,
 	`password` CHAR (16) NOT NULL,
 	`remark` CHAR (16) DEFAULT NULL,
+	`is_deleted` CHAR (1) NOT NULL,
 	`create_date` date NOT NULL,
 	`update_date` date NOT NULL,
 	`updated_by_id` INT (10) NOT NULL,

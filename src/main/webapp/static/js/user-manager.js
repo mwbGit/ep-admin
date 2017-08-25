@@ -53,12 +53,25 @@ jQuery(document).ready(function () {
                 "sDefaultContent": "",
                 "sClass": "center"
             },{
-                "mDataProp": "updateDate",
+                "mDataProp": "deleted",
                 "sTitle": "操作",
-                "sDefaultContent": "aaa",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
-                    return '操作';
+                    var str = '';
+
+                    if (val) {
+                        str += '<a href="#"  onclick="deleteUser('+full.id +')">' +
+                            '<span  style="color: red"  data-toggle="tooltip"  title="用户已被禁用,点击启用" > ' +
+                            '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
+                    } else {
+
+                    str += '<a href="#"  onclick="deleteUser('+full.id +')"><span  style="color: blue"  data-toggle="tooltip"  title="点击禁用" > ' +
+                        '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
+                    }
+
+                    str +='&nbsp&nbsp<i class="icon-edit" style="width: 50px;height: 50px"></i></span>';
+
+                    return str;
                 }
             }],
         // set the initial value
@@ -81,26 +94,9 @@ jQuery(document).ready(function () {
                 "sLast": "末页"
             }
         },
-        // "aoColumnDefs": [{
-        //     'bSortable': false,
-        //     'aTargets': [0, 1, 2, 3, 4,5,6]
-        // }
-        // ],
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": $ctx + "/user/list",
-        "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-            ///* 用来改写用户权限的 */
-            //if (aData.ISADMIN == '1')
-            //    $('td:eq(5)', nRow).html('管理员');
-            //if (aData.ISADMIN == '2')
-            //    $('td:eq(5)', nRow).html('资料下载');
-            //if (aData.ISADMIN == '3')
-            //    $('td:eq(5)', nRow).html('一般用户');
-
-            //alert(aData);
-            return nRow;
-        },
         "fnServerData": function (sSource, aDataSet, fnCallback, oSettings) {
             oSettings.jqXHR = $.ajax({
                 dataType: 'json',
@@ -110,17 +106,26 @@ jQuery(document).ready(function () {
                 data: aDataSet,
                 success: fnCallback
             });
-
-
-            //$.post( sSource, aoData, function (json) {
-            //    /* Do whatever additional processing you want on the callback, then tell DataTables */
-            //    fnCallback(json)
-            //} );
-
-            //$.each(data.value, function(i,item){
-            //    table.fnAddData(item);
-            //});
         }
     });
 
 });
+
+function reLoad() {
+    $('.close').click();
+    $('#dashboard').load("/views/user_manager.jsp");
+}
+
+function deleteUser(id) {
+    debugger;
+    $.ajax({
+        dataType: 'json',
+        async: false,
+        url: $ctx + "/user/delete?id=" + id,
+        data: "{}",
+        success: function (data) {
+            alert("成功");
+            reLoad();
+        }
+    });
+}
