@@ -136,7 +136,6 @@ function reLoad() {
 }
 
 function deleteUser(id) {
-    debugger;
     $.ajax({
         dataType: 'json',
         async: false,
