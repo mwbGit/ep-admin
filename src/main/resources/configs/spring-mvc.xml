@@ -18,14 +18,13 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/static/**"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/static/media/**"/>
             <bean class="com.ep.controller.interceptor.UserInterceptor">
                 <property name="allowUrls">
                     <list>
-                        <value>/assets</value>
+                        <value>/media</value>
                         <value>/login</value>
-                        <value>/index.jsp</value>
-                        <value>/login.html</value>
                         <value>404</value>
                     </list>
                 </property>
