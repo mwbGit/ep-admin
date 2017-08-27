@@ -1,34 +1,28 @@
 package com.ep.controller.interceptor;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ep.controller.util.ApplicationContextUtils;
+import com.ep.dao.model.user.User;
+
 /**
  * Created by fangchen.chai on 2017/4/5.
  */
 public class UserInterceptor implements HandlerInterceptor {
     public String[] allowUrls;
-//    @Autowired
-//    private IEmployeeService employeeService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
         String requestUrl = request.getRequestURI().replace(
                 request.getContextPath(), "");
-//todo
-//        Employee employee = employeeService.getAllEmployee().get(0);
-//        ApplicationContextUtils.getSession().setAttribute("employee", employee);
 
-//        if (requestUrl.contains("index.html")){
-//            request.getRequestDispatcher("/views/index.jsp").forward(request, response);
-//            return true;
-//        }
-//        return true;
         if (null != allowUrls && allowUrls.length >= 1)
             for (String url : allowUrls) {
                 if (requestUrl.contains(url)) {
@@ -36,16 +30,14 @@ public class UserInterceptor implements HandlerInterceptor {
                 }
             }
 
-//        Employee employee = (Employee) request.getSession().getAttribute("employee");
-//
-//        if (employee != null) {
-//            return true;
-//        } else {
-//            response.sendRedirect(request.getContextPath() + "/login.html");
-//            return false;
-//        }
+        User user = (User) request.getSession().getAttribute("user");
 
-        return true;
+        if (user != null) {
+            return true;
+        } else {
+            response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+            return false;
+        }
     }
 
     @Override

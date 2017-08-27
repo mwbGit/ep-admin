@@ -67,7 +67,10 @@
 				d.type_id = #{typeId}
 			</if>
 		</where>
-		limit #{start},#{size}
+		<if test="start != null and size != null" >
+			limit #{start},#{size}
+		</if>
+
 	</select>
 
 	<select id="countComplain" resultType="int">

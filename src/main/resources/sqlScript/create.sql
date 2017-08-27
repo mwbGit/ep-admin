@@ -16,25 +16,22 @@ Date: 2017-08-18 18:22:53
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `t_service_item`
+-- 服务项
 -- ----------------------------
 DROP TABLE IF EXISTS `t_service_item`;
 CREATE TABLE `t_service_item` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+	`id` INT (10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `ratio` int(2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of t_service_item
--- ----------------------------
--- ----------------------------
--- Table structure for `t_dimension`
+-- 维度
 -- ----------------------------
 DROP TABLE IF EXISTS `t_dimension`;
 CREATE TABLE `t_dimension` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+	`id` INT (10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(36) NOT NULL,
   `ratio` int(10) NOT NULL,
   `type_id` int(10) NOT NULL,
@@ -46,18 +43,68 @@ CREATE TABLE `t_dimension` (
 
 
 -- ----------------------------
--- Table structure for `t_complain`
+-- 吐槽
 -- ----------------------------
 DROP TABLE IF EXISTS `t_complain`;
 CREATE TABLE `t_complain` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+	`id` INT (10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `content` text NOT NULL,
   `grade` int(2) NOT NULL,
   `img` varchar(128) DEFAULT NULL,
   `create_time` datetime NOT NULL,
-  `dimension_id` int(10) NOT NULL,
+  `dimension_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `dimension_id` (`dimension_id`),
-  CONSTRAINT `t_complain_ibfk_1` FOREIGN KEY (`dimension_id`) REFERENCES `t_dimension` (`id`)
+  KEY `idx_complain_dimension` (`dimension_id`),
+  CONSTRAINT `fk_complain_dimension` FOREIGN KEY (`dimension_id`) REFERENCES `t_dimension` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- 用户
+-- ----------------------------
+DROP TABLE IF EXISTS t_user ;
+CREATE TABLE `t_user` (
+	`id` INT (10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` CHAR (32) NOT NULL,
+	`img` CHAR (128) DEFAULT NULL,
+	`sex` CHAR (4) NOT NULL,
+	`mobile` CHAR (16) NOT NULL,
+	`password` CHAR (16) NOT NULL,
+	`remark` CHAR (16) DEFAULT NULL,
+	`is_deleted` CHAR (1) NOT NULL,
+	`create_date` date NOT NULL,
+	`update_date` date NOT NULL,
+	`updated_by_id` INT (10) NOT NULL,
+	`updated_by_name` CHAR (32) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4;
+
+-- ----------------------------
+-- 空间
+-- ----------------------------
+DROP TABLE IF EXISTS `t_space` ;
+CREATE TABLE `t_space` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `grade` decimal(18,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- 入住空间
+-- ----------------------------
+DROP TABLE IF EXISTS t_user_space ;
+CREATE TABLE `t_user_space` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL ,
+  `space_id` int(10) unsigned NOT NULL ,
+  PRIMARY KEY (`id`),
+  KEY `idx_user_space_user` (`user_id`),
+  KEY `idx_user_space_space` (`space_id`),
+  CONSTRAINT `fk_user_space_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
+  CONSTRAINT `fk_user_space_space` FOREIGN KEY (`space_id`) REFERENCES `t_space` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/100520024/7cd4acbb91ec56ab77bc2d12583106b2', '男', '1302972767', 'admin', '131', '2017-08-24', '2017-08-24', '1', '孟卫波');
+
 

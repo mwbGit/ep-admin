@@ -1,17 +1,18 @@
-package com.ep.controller;
+package com.ep.controller.space;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.user.UserDao;
 
 @Controller
-public class TestController {
+@RequestMapping(value = "/space")
+public class SpaceController {
 
-    @Resource
-    private UserDao userDao;
+    @Autowired
+    private UserMapper userDao;
 
     @RequestMapping(value = "/index.html")
     public String loginHtml() {

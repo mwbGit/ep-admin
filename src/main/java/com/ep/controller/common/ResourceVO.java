@@ -1,4 +1,4 @@
-package com.ep.controller.api;
+package com.ep.controller.common;
 
 /**
  * Created by MengWeiBo on 2017-08-17

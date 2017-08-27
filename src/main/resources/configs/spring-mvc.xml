@@ -18,14 +18,12 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/static/**"/>
+            <mvc:exclude-mapping path="/login"/>
             <bean class="com.ep.controller.interceptor.UserInterceptor">
                 <property name="allowUrls">
                     <list>
-                        <value>/assets</value>
+                        <value>/media</value>
                         <value>/login</value>
-                        <value>/index.jsp</value>
-                        <value>/login.html</value>
                         <value>404</value>
                     </list>
                 </property>
@@ -35,11 +33,12 @@
 
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"></property>
+        <property name="prefix" value="/views/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
     <!-- 静态资源的访问 -->
-    <mvc:resources mapping="/static/**" location="/static/" />
+    <mvc:resources mapping="/static/js/**" location="/static/js/" />
+    <mvc:resources mapping="/static/media/**" location="/static/media/" />
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven></mvc:annotation-driven>
 

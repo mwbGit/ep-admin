@@ -1,5 +1,4 @@
 jQuery(document).ready(function () {
-
     $('#sample_2').dataTable({
         // "bScrollInfinite": true,
         // "bScrollCollapse": true,
@@ -46,7 +45,10 @@ jQuery(document).ready(function () {
                 "mDataProp": "img",
                 "sTitle": "图片",
                 "sDefaultContent": "",
-                "sClass": "center"
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    return '<img style="width: 50px;height: 50px" src="' + val + '"/>';
+                }
             }],
         // set the initial value
         "iDisplayLength": 5,
@@ -70,12 +72,12 @@ jQuery(document).ready(function () {
         },
         "aoColumnDefs": [{
             'bSortable': false,
-            'aTargets': [0, 1, 2, 3, 4]
+            'aTargets': [0, 1, 2, 3, 4,5,6]
         }
         ],
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": "/complain/list",
+        "sAjaxSource": $ctx + "/complain/list",
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
             ///* 用来改写用户权限的 */
             //if (aData.ISADMIN == '1')

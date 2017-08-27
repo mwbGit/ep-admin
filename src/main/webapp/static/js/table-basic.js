@@ -5,7 +5,7 @@ jQuery(document).ready(function () {
         type: "POST",
         async: false,
         contentType: 'application/json',
-        url: "/complain/item/list",
+        url: $ctx + "/complain/item/list",
         // data: data,
         success: function (data) {
             if (data.empty) {
@@ -18,6 +18,24 @@ jQuery(document).ready(function () {
     });
 
 });
+
+function testNumber(number) {
+    var re = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+    if (number== null || number =='' || !re.test(number)) {
+        alert("非法数字！");
+        return false;
+    }
+
+    return true;
+}
+
+function testStr(itemName) {
+    if (itemName== null || itemName ==''){
+        alert("输入不正确！");
+        return;
+    }
+    return true;
+}
 
 function modifyItem(id) {
     var itemId = $('#item-id' + id).val();
@@ -33,13 +51,19 @@ function reLoad() {
     $('#dashboard').load("/views/table_basic.jsp");
 }
 function modifyItemSub() {
+    var  ratio = $("#ratio").val();
+    var  itemName = $("#itemName").val().trim();
+    if (!testNumber(ratio) || !testStr(itemName)){
+        return;
+    }
+
     var data = $("#itemModify").serialize();
     $.ajax({
         dataType: 'json',
         type: "POST",
         async: false,
         // contentType:'application/json',
-        url: "/complain/item/modify",
+        url: $ctx + "/complain/item/modify",
         data: data,
         success: function (data) {
             alert("成功")
@@ -56,7 +80,7 @@ function deleteDimension(id) {
             type: "POST",
             async: false,
             // contentType:'application/json',
-            url: "/complain/dimension/delete?id=" + id,
+            url: $ctx + "/complain/dimension/delete?id=" + id,
             // data: data,
             success: function (data) {
                 alert("成功");
@@ -76,7 +100,7 @@ function deleteItem(id) {
             type: "POST",
             async: false,
             // contentType:'application/json',
-            url: "/complain/item/delete?id=" + id,
+            url: $ctx + "/complain/item/delete?id=" + id,
             // data: data,
             success: function (data) {
                 alert("成功");
@@ -130,13 +154,19 @@ function addDimension(itemId) {
     });
 }
 function addItemSub() {
+    var  ratio = $("#addItemRatio").val();
+    var  itemName = $("#addItemName").val().trim();
+    if (!testNumber(ratio) || !testStr(itemName)){
+        return;
+    }
+
     var data = $("#addItemFrom").serialize();
     $.ajax({
         dataType: 'json',
         type: "POST",
         async: false,
         // contentType:'application/json',
-        url: "/complain/item/add",
+        url: $ctx + "/complain/item/add",
         data: data,
         success: function (data) {
             alert("成功")
@@ -146,13 +176,18 @@ function addItemSub() {
 }
 
 function addDimensionSub() {
+    var  ratio = $("#addDimensionRatio").val();
+    var  itemName = $("#addDimensionName").val().trim();
+    if (!testNumber(ratio) || !testStr(itemName)){
+        return;
+    }
     var data = $("#addDimensionFrom").serialize();
     $.ajax({
         dataType: 'json',
         type: "POST",
         async: false,
         // contentType:'application/json',
-        url: "/complain/dimension/add",
+        url: $ctx + "/complain/dimension/add",
         data: data,
         success: function (data) {
             alert("成功")
@@ -162,13 +197,18 @@ function addDimensionSub() {
 }
 
 function modifyDimensionSub() {
+    var  ratio = $("#dimensionRatio").val();
+    var  itemName = $("#dimensionName").val().trim();
+    if (!testNumber(ratio) || !testStr(itemName)){
+        return;
+    }
     var data = $("#modifyDimensionFrom").serialize();
     $.ajax({
         dataType: 'json',
         type: "POST",
         async: false,
         // contentType:'application/json',
-        url: "/complain/dimension/modify",
+        url: $ctx + "/complain/dimension/modify",
         data: data,
         success: function (data) {
             alert("成功");
@@ -179,22 +219,23 @@ function modifyDimensionSub() {
 
 
 function addItem() {
-    $.ajax({
-        dataType: 'json',
-        type: "POST",
-        async: false,
-        contentType: 'application/json',
-        url: "/resource/list",
-        // data: {},
-        success: function (data) {
-            var trs = "";
-            $.each(data.items, function (n, value) {
-                trs += '<option value=' + value.value + '>' + value.label + '</option>';
-            });
-
-            $(".itemTypes").html(trs);
-        }
-    });
+    return;
+    // $.ajax({
+    //     dataType: 'json',
+    //     type: "POST",
+    //     async: false,
+    //     contentType: 'application/json',
+    //     url: "/resource/list",
+    //     // data: {},
+    //     success: function (data) {
+    //         var trs = "";
+    //         $.each(data.items, function (n, value) {
+    //             trs += '<option value=' + value.value + '>' + value.label + '</option>';
+    //         });
+    //
+    //         $(".itemTypes").html(trs);
+    //     }
+    // });
 }
 
 function init(id, itemId, itemName, itemRatio) {
@@ -239,10 +280,10 @@ function init(id, itemId, itemName, itemRatio) {
             //    "bVisible": false //此列不显示
             //},
             {
-                "mDataProp": "id",
+                "mDataProp": "orderId",
                 "sTitle": "序号",
                 "sDefaultContent": "",
-                "sClass": "center",
+                "sClass": "center"
                 //"sWidth": "20%"
             }, {
                 "mDataProp": "name",
@@ -281,7 +322,7 @@ function init(id, itemId, itemName, itemRatio) {
         // set the initial value
         "sDom": '<"top"ifl<"clear">>rt<"bottom"ilp<"clear">><"span6"pi>',
         "bServerSide": true,
-        "sAjaxSource": "/complain/dimension/list?itemId=" + itemId,
+        "sAjaxSource": $ctx + "/complain/dimension/list?itemId=" + itemId,
         //"fnRowCallback": function (nRow, aData, iDisplayIndex) {
         //    ///* 用来改写用户权限的 */
         //    //if (aData.ISADMIN == '1')
