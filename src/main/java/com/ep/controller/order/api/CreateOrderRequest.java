@@ -10,7 +10,7 @@ public class CreateOrderRequest {
 
     private String tel;
 
-    private BigDecimal pay;
+    private Float pay;
 
     public String getTel() {
         return tel;
@@ -20,11 +20,11 @@ public class CreateOrderRequest {
         this.tel = tel;
     }
 
-    public BigDecimal getPay() {
+    public Float getPay() {
         return pay;
     }
 
-    public void setPay(BigDecimal pay) {
+    public void setPay(Float pay) {
         this.pay = pay;
     }
 }
