@@ -37,22 +37,22 @@ jQuery(document).ready(function () {
                 "sTitle": "手机号",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
+            }, {
                 "mDataProp": "spaceNames",
                 "sTitle": "入住空间",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
+            }, {
                 "mDataProp": "updatedByName",
                 "sTitle": "操作人",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
+            }, {
                 "mDataProp": "updateDate",
                 "sTitle": "操作时间",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
+            }, {
                 "mDataProp": "deleted",
                 "sTitle": "操作",
                 "sClass": "center",
@@ -60,16 +60,16 @@ jQuery(document).ready(function () {
                     var str = '';
 
                     if (val) {
-                        str += '<a href="#"  onclick="deleteUser('+full.id +')">' +
+                        str += '<a href="#"  onclick="deleteUser(' + full.id + ')">' +
                             '<span  style="color: red"  data-toggle="tooltip"  title="用户已被禁用,点击启用" > ' +
                             '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
                     } else {
 
-                    str += '<a href="#"  onclick="deleteUser('+full.id +')"><span  style="color: blue"  data-toggle="tooltip"  title="点击禁用" > ' +
-                        '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
+                        str += '<a href="#"  onclick="deleteUser(' + full.id + ')"><span  style="color: blue"  data-toggle="tooltip"  title="点击禁用" > ' +
+                            '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
                     }
 
-                    str +='&nbsp&nbsp<i class="icon-edit" style="width: 50px;height: 50px"></i></span>';
+                    str += '&nbsp&nbsp<span><a href="#userModify" data-toggle="modal"  onclick="modifyUserBut(' +full.id + ')"><i class="icon-edit" style="width: 50px;height: 50px"></i></span></a>';
 
                     return str;
                 }
@@ -111,7 +111,7 @@ jQuery(document).ready(function () {
 
 });
 
-function modifyUserBut() {
+function modifyUserBut(id) {
     $.ajax({
         dataType: 'json',
         type: "POST",
@@ -120,12 +120,14 @@ function modifyUserBut() {
         url: "/resource/space/list",
         // data: {},
         success: function (data) {
-            var trs = "";
+            var str = '';
             $.each(data.data, function (n, value) {
-                trs += '<option value=' + value.value + '>' + value.label + '</option>';
+                str += '<div class="checkbox line">' +
+                    '<input type="checkbox" name="spaceIds" value="' + value.value + '"> ' + value.label + '</div>';
             });
 
-            $(".dimensionTypes").html(trs);
+            $("#userId").val(id);
+            $("#spaces").html(str);
         }
     });
 }
@@ -136,7 +138,6 @@ function reLoad() {
 }
 
 function deleteUser(id) {
-    debugger;
     $.ajax({
         dataType: 'json',
         async: false,
@@ -147,4 +148,21 @@ function deleteUser(id) {
             reLoad();
         }
     });
+}
+
+function modifyUser() {
+        var data = $("#modifyUserFrom").serialize();
+        $.ajax({
+            dataType: 'json',
+            type: "POST",
+            async: false,
+            // contentType:'application/json',
+            url: $ctx + "/user/modify",
+            data: data,
+            success: function (data) {
+                alert("成功");
+                reLoad();
+            }
+        });
+
 }

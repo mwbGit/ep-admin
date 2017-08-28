@@ -1,13 +1,5 @@
 package com.ep.controller.user.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-
-import com.ep.dao.model.user.User;
-import com.ep.util.DateTimeUtility;
-
 /**
  * Created by MengWeiBo on 2017-08-24
  */

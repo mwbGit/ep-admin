@@ -103,7 +103,7 @@ public class UserController {
 
     @RequestMapping(value = "/modify")
     @ResponseBody
-    public ServiceResponse modify(List<Integer> spaceIds, @RequestParam(value = "id") Integer id) {
+    public ServiceResponse modify(Integer[] spaceIds, @RequestParam(value = "id") Integer id) {
 
         User curUser = ApplicationContextUtils.getUser();
         User user = userMapper.selectUserById(id);
@@ -115,7 +115,10 @@ public class UserController {
 
         spaceMapper.deleteUserSpaceByUserId(id);
 
-        spaceMapper.batchInsertUserSpace(spaceIds, id);
+        if (spaceIds != null && spaceIds.length > 0) {
+            List<Integer> list = Arrays.asList(spaceIds);
+            spaceMapper.batchInsertUserSpace(list, id);
+        }
 
         return new ServiceResponse();
     }
