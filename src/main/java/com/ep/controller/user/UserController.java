@@ -18,6 +18,7 @@ import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.space.UserSpace;
 import com.ep.dao.model.user.User;
 import com.ep.util.DateTimeUtility;
+import com.ep.util.MD5;
 
 @RequestMapping(value = "/user")
 @Controller
@@ -119,6 +120,18 @@ public class UserController {
             List<Integer> list = Arrays.asList(spaceIds);
             spaceMapper.batchInsertUserSpace(list, id);
         }
+
+        return new ServiceResponse();
+    }
+
+    @RequestMapping(value = "/reset/password")
+    @ResponseBody
+    public ServiceResponse modifyPassword(@RequestParam(value = "password") String password) {
+
+        User user = ApplicationContextUtils.getUser();
+        user.setPassword(MD5.md5(password));
+
+        userMapper.insertOrUpdateUser(user);
 
         return new ServiceResponse();
     }

@@ -48,7 +48,7 @@ function modifyItem(id) {
 }
 function reLoad() {
     $('.close').click();
-    $('#dashboard').load("/views/table_basic.jsp");
+    $('#dashboard').load("/views/dimension.jsp");
 }
 function modifyItemSub() {
     var  ratio = $("#ratio").val();
@@ -73,7 +73,7 @@ function modifyItemSub() {
 }
 
 function deleteDimension(id) {
-
+    return false;
     if (window.confirm("确定删除？")) {
         $.ajax({
             dataType: 'json',
@@ -108,50 +108,34 @@ function deleteItem(id) {
             }
         });
     } else {
-        return false;
+        reLoad();
     }
+
 }
 
 function modifyDimension(id, name, ratio) {
     $('#dimensionId').val(id);
     $('#dimensionName').val(name);
     $('#dimensionRatio').val(ratio);
-    $.ajax({
-        dataType: 'json',
-        type: "POST",
-        async: false,
-        contentType: 'application/json',
-        url: "/resource/list",
-        // data: {},
-        success: function (data) {
-            var trs = "";
-            $.each(data.dimensions, function (n, value) {
-                trs += '<option value=' + value.value + '>' + value.label + '</option>';
-            });
 
-            $(".dimensionTypes").html(trs);
-        }
+    var trs = "";
+    $.each(resourceList.dimensions, function (n, value) {
+        trs += '<option value=' + value.value + '>' + value.label + '</option>';
     });
+
+    $(".dimensionTypes").html(trs);
 }
+
+
 
 function addDimension(itemId) {
     $('#addItemId').val(itemId);
-    $.ajax({
-        dataType: 'json',
-        type: "POST",
-        async: false,
-        contentType: 'application/json',
-        url: "/resource/list",
-        // data: {},
-        success: function (data) {
-            var trs = "";
-            $.each(data.dimensions, function (n, value) {
-                trs += '<option value=' + value.value + '>' + value.label + '</option>';
-            });
-
-            $(".dimensionTypes").html(trs);
-        }
+    var trs = "";
+    $.each(resourceList.dimensions, function (n, value) {
+        trs += '<option value=' + value.value + '>' + value.label + '</option>';
     });
+
+    $(".dimensionTypes").html(trs);
 }
 function addItemSub() {
     var  ratio = $("#addItemRatio").val();

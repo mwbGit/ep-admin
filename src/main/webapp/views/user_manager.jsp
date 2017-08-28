@@ -57,4 +57,4 @@
 
 </div>
 
-<script src="${ctx }/static/js/user-manager.js"></script>
+<script src="${ctx }/static/js/user_manager.js"></script>

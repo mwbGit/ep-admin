@@ -68,7 +68,7 @@ CREATE TABLE `t_user` (
 	`img` CHAR (128) DEFAULT NULL,
 	`sex` CHAR (4) NOT NULL,
 	`mobile` CHAR (16) NOT NULL,
-	`password` CHAR (16) NOT NULL,
+	`password` CHAR (64) NOT NULL,
 	`remark` CHAR (16) DEFAULT NULL,
 	`is_deleted` CHAR (1) NOT NULL,
 	`create_date` date NOT NULL,
@@ -105,6 +105,6 @@ CREATE TABLE `t_user_space` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/100520024/7cd4acbb91ec56ab77bc2d12583106b2', '男', '1302972767', 'admin', '131', '2017-08-24', '2017-08-24', '1', '孟卫波');
+INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/100520024/7cd4acbb91ec56ab77bc2d12583106b2', '男', '1302972767', '21232f297a57a5a743894a0e4a801fc3', '131', '2017-08-24', '2017-08-24', '1', '孟卫波');
 
 

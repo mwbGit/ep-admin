@@ -13,7 +13,7 @@ public class TestController {
     @Resource
     private UserDao userDao;
 
-    @RequestMapping(value = "/index.html")
+    @RequestMapping(value = "/ind222ex.html")
     public String loginHtml() {
 
         return "index";

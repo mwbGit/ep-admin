@@ -32,10 +32,12 @@ public class UserInterceptor implements HandlerInterceptor {
 
         User user = (User) request.getSession().getAttribute("user");
 
+
         if (user != null) {
             return true;
         } else {
             response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+
             return false;
         }
     }
