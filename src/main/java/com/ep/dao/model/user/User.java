@@ -15,7 +15,7 @@ public class User implements Serializable{
 
     private Integer id;
     private String name;
-    private String img;
+    private String company;
     private String sex;
     private String mobile;
     private String password;
@@ -67,12 +67,12 @@ public class User implements Serializable{
         this.remark = remark;
     }
 
-    public String getImg() {
-        return img;
+    public String getCompany() {
+        return company;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getSex() {

@@ -19,6 +19,8 @@ public interface ComplainMapper {
 
     int countComplain(@Param("typeId") Integer typeId);
 
+    void deleteComplain(@Param("dimensionId") Integer dimensionId, @Param("itemId") Integer itemId);
+
     List<Dimension> selectDimension(@Param("itemId") Integer itemId);
 
     void insertDimension(Dimension dimension);

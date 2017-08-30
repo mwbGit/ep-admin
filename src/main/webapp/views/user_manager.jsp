@@ -23,27 +23,38 @@
 
 
 <div class="page-content">
-
-	<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-
-	<div id="portlet-config" class="modal hide">
+	<div id="userModify" class="modal hide">
 
 		<div class="modal-header">
 
 			<button data-dismiss="modal" class="close" type="button"></button>
 
-			<h3>修改维度</h3>
+			<h3>修改入住空间</h3>
 
 		</div>
 
+		<div class="modal-body">
+
+			<form method="post" class="form-horizontal" id="modifyUserFrom">
+				<input type="hidden" id="userId" name="id"/>
+
+				<div class="controls" id="spaces">
+
+				</div>
+				<div class="form-actions">
+
+					<button type="button" class="btn blue" onclick="modifyUser()"><i class="icon-ok"></i> 提交</button>
+
+					<button type="reset" class="btn">重置</button>
+
+				</div>
+			</form>
+
+		</div>
 
 	</div>
-
-	<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-
-	<!-- BEGIN PAGE CONTAINER-->
 
 
 </div>
 
-<script src="${ctx }/static/js/user-manager.js"></script>
+<script src="${ctx }/static/js/user_manager.js"></script>

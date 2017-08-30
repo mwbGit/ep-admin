@@ -40,4 +40,4 @@
 
 
 
-<script src="${ctx }/static/js/data_analysis.js"></script>
+<script src="${ctx }/static/js/analysis.js"></script>
