@@ -2,6 +2,8 @@ package com.ep.controller.user;
 
 import java.util.*;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.space.UserSpace;
 import com.ep.dao.model.user.User;
+import com.ep.service.user.api.IUserService;
 import com.ep.util.DateTimeUtility;
 import com.ep.util.MD5;
 
@@ -29,6 +32,9 @@ public class UserController {
 
     @Autowired
     private SpaceMapper spaceMapper;
+
+    @Resource
+    private IUserService userService;
 
     @RequestMapping(value = "/list")
     @ResponseBody
@@ -45,7 +51,7 @@ public class UserController {
                     UserVO vo = new UserVO();
                     vo.setId(user.getId());
                     vo.setName(user.getName());
-                    vo.setImg(user.getImg());
+                    vo.setCompany(user.getCompany());
                     vo.setSex(user.getSex());
                     vo.setMobile(user.getMobile());
                     vo.setRemark(user.getRemark());
@@ -112,14 +118,7 @@ public class UserController {
         user.setUpdatedById(curUser.getId());
         user.setUpdatedByName(curUser.getName());
 
-        userMapper.insertOrUpdateUser(user);
-
-        spaceMapper.deleteUserSpaceByUserId(id);
-
-        if (spaceIds != null && spaceIds.length > 0) {
-            List<Integer> list = Arrays.asList(spaceIds);
-            spaceMapper.batchInsertUserSpace(list, id);
-        }
+        userService.modifyUser(spaceIds, user);
 
         return new ServiceResponse();
     }

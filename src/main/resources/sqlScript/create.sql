@@ -65,10 +65,10 @@ DROP TABLE IF EXISTS t_user ;
 CREATE TABLE `t_user` (
 	`id` INT (10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` CHAR (32) NOT NULL,
-	`img` CHAR (128) DEFAULT NULL,
 	`sex` CHAR (4) NOT NULL,
 	`mobile` CHAR (16) NOT NULL,
 	`password` CHAR (64) NOT NULL,
+	`company` CHAR (128) DEFAULT NULL,
 	`remark` CHAR (16) DEFAULT NULL,
 	`is_deleted` CHAR (1) NOT NULL,
 	`create_date` date NOT NULL,

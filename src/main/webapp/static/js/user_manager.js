@@ -15,14 +15,6 @@ jQuery(document).ready(function () {
                 "sClass": "center",
                 "bVisible": false //此列不显示
             }, {
-                "mDataProp": "img",
-                "sTitle": "头像",
-                "sDefaultContent": "",
-                "sClass": "center",
-                "mRender": function (val, data, full) {
-                    return '<img style="width: 50px;height: 50px" src="' + val + '"/>';
-                }
-            }, {
                 "mDataProp": "name",
                 "sTitle": "姓名",
                 "sDefaultContent": "",
@@ -35,6 +27,11 @@ jQuery(document).ready(function () {
             }, {
                 "mDataProp": "mobile",
                 "sTitle": "手机号",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "company",
+                "sTitle": "公司",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {

@@ -73,7 +73,6 @@ function modifyItemSub() {
 }
 
 function deleteDimension(id) {
-    return false;
     if (window.confirm("确定删除？")) {
         $.ajax({
             dataType: 'json',
