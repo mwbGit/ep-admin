@@ -7,3 +7,4 @@ generatorConfig.xml
 /**/target
 *test*
 mysqldb.properties
+config.properties

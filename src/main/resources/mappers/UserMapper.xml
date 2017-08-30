@@ -11,6 +11,7 @@
         <result property="sex" column="user_sex"/>
         <result property="mobile" column="user_mobile"/>
         <result property="password" column="user_password"/>
+        <result property="openId" column="user_open_id"/>
         <result property="remark" column="user_remark"/>
         <result property="createDate" column="user_create_date"/>
         <result property="updateDate" column="user_update_date"/>
@@ -27,6 +28,7 @@
 		u.sex AS user_sex,
 		u.mobile AS user_mobile,
 		u.password AS user_password,
+		u.open_id AS user_open_id,
 		u.remark AS user_remark,
 		u.create_date AS user_create_date,
 		u.update_date AS user_update_date,
@@ -45,6 +47,7 @@
 			sex,
 			mobile,
 			password,
+			open_id,
 			remark,
 			is_deleted,
 			create_date,
@@ -58,6 +61,7 @@
 			#{sex},
 			#{mobile},
 			#{password},
+			#{openId},
 			#{remark},
 			#{deleted.code},
 			#{createDate},

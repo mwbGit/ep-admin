@@ -69,6 +69,7 @@ CREATE TABLE `t_user` (
 	`mobile` CHAR (16) NOT NULL,
 	`password` CHAR (64) NOT NULL,
 	`company` CHAR (128) DEFAULT NULL,
+	`openId` varchar(32) NOT NULL ,
 	`remark` CHAR (16) DEFAULT NULL,
 	`is_deleted` CHAR (1) NOT NULL,
 	`create_date` date NOT NULL,
@@ -106,5 +107,29 @@ CREATE TABLE `t_user_space` (
 
 
 INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/100520024/7cd4acbb91ec56ab77bc2d12583106b2', '男', '1302972767', '21232f297a57a5a743894a0e4a801fc3', '131', '2017-08-24', '2017-08-24', '1', '孟卫波');
+
+CREATE TABLE `t_recharge_detail` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `out_pay_code` varchar(64) DEFAULT NULL COMMENT '外部订单',
+  `order` varchar(32) NOT NULL,
+  `date` datetime NOT NULL COMMENT '充值时间',
+  `name` varchar(32) DEFAULT NULL COMMENT '姓名',
+  `user_id` int(10) NOT NULL,
+  `tel` varchar(16) NOT NULL,
+  `recharge_amount` float(14,4) NOT NULL COMMENT '充值金额',
+  `discounts_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否使用优惠券,默认不使用',
+  `discounts_amount` float(14,4) NOT NULL DEFAULT '0.0000' COMMENT '优惠金额,现在都默认为0',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 待支付 1已取消 2 已支付',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_RECHARGE_DETAIL_ORDER` (`order`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='充值流水';
+
+
+
+
+
+
+
+
 
 

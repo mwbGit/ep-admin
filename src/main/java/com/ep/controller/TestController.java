@@ -13,8 +13,16 @@ public class TestController {
     @Resource
     private UserDao userDao;
 
-    @RequestMapping(value = "/ind222ex.html")
+    @RequestMapping(value = "/test")
     public String loginHtml() {
+
+        String str= userDao.get("2");
+        String str1= userDao.get("2");
+        userDao.update("2");
+        String str11= userDao.get("2");
+        userDao.removeAll();
+        String str111= userDao.get("2");
+
 
         return "index";
     }

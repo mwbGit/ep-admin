@@ -19,6 +19,7 @@ public class User implements Serializable{
     private String sex;
     private String mobile;
     private String password;
+    private String openId;
     private String remark;
     private Date createDate;
     private Date updateDate;
@@ -48,6 +49,14 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
     public String getRemark() {

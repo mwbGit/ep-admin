@@ -1,7 +1,9 @@
 package com.ep.service.we_chat.pay.Impl;
 
 
+import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.model.common.PreOrderResult;
+import com.ep.dao.model.user.User;
 import com.ep.service.we_chat.pay.WeChatPayService;
 import com.ep.service.we_chat.pay.api.PreOrder;
 import com.ep.service.we_chat.pay.api.SignUtils;
@@ -52,26 +54,33 @@ public class WeChatPayServiceImpl implements WeChatPayService{
     private Log logger = LogFactory.getLog(WeChatPayServiceImpl.class);
     @Autowired
     private WxPayConfig wxPayConfig;
+    @Autowired
+    private UserMapper userMapper;
+
     // TODO: 2017/5/11  增加项目的微信支付传参传参
 
     @Override
-    public PreOrderResult getWechatPreOrderResult(Long projectId, Long clientId, Float moneySum, String code, String wxPayNotifyUrl) {
+    public PreOrderResult getWechatPreOrderResult(Integer userId, Float moneySum, String code, String wxPayNotifyUrl) {
         //先判断openid存在性
-        //getOpneId需要的所在的微信项目id,如果是平台悦客会或者购物中心，微信项目id就是项目id，如果是商业或者地产悦客会，微信项目id对应的是商业悦客会的项目id
-//        String openId = wechatOpenIdService.getOpenId(projectId, clientId);
-//        if (openId == null) {
-//            throw new BusinessException(DATA_NOT_EXIST, "会员微信openId获取失败");
-//        }
+        //get openId
+        String openId = null;
+        User user = userMapper.selectUserById(userId);
+        if (user != null) {
+            openId = user.getOpenId();
+        }
+        if (openId == null) {
+            throw new RuntimeException("会员微信openId获取失败");
+        }
         PreOrderResult preOrderResult = new PreOrderResult();
         //涉及金钱，应该等微信支付回调在处理积分
-        preOrderResult.setPayParam(getWechatPayParams(projectId, wxPayConfig.getOpenId(), moneySum, code,wxPayNotifyUrl));
+        preOrderResult.setPayParam(getWechatPayParams(openId, moneySum, code,wxPayNotifyUrl));
         return preOrderResult;
     }
 
-    private Map<String, Object> getWechatPayParams(Long projectId, String openId, float moneySum, String sysOrderCode, String wxPayNotifyUrl) {
+    private Map<String, Object> getWechatPayParams( String openId, float moneySum, String sysOrderCode, String wxPayNotifyUrl) {
         //涉及金钱，应该等微信支付回调在处理积分
         PreOrder preOrder = new PreOrder();
-        preOrder.setBody("悦客会");
+        preOrder.setBody("e_parke");
         preOrder.setOpenId(openId);
         //转成分
         preOrder.setTotalFee((int) Math.ceil(moneySum * 100));

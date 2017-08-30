@@ -11,18 +11,17 @@ import org.springframework.stereotype.Component;
  * Created by MengWeiBo on 2017-08-07
  */
 
-@Component
 public class UserDao {
-    private Map<String, String> usersData = new ConcurrentHashMap<String, String>();
+    private static Map<String, String> usersData = new ConcurrentHashMap<String, String>();
 
-    public UserDao(){
+    static {
         System.out.println("用户数据初始化..开始");
         usersData.put("2", "玄玉");
         usersData.put("3", "我的博客：http://blog.csdn.net/jadyer");
         System.out.println("用户数据初始化..完毕");
     }
 
-    @Cacheable(value="myCache", key="'get'+#userNo")
+    @Cacheable(value="myCache", key="'#userNo")
     public String get(String userNo){
         System.out.println("数据库中查到此用户号[" + userNo + "]对应的用户名为[" + usersData.get(userNo) + "]");
         return usersData.get(userNo);
