@@ -4,29 +4,24 @@
        xmlns:cache="http://www.springframework.org/schema/cache"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-                            http://www.springframework.org/schema/cache
-                            http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
-                            http://www.springframework.org/schema/context
-                            http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <!--<bean id="daoLaoKeService" class="com.mwb.service.dataoke.DaoLaoKeService"-->
-          <!--init-method="init">-->
-        <!--<property name="appKey" value="8jdrk90okh" />-->
-        <!--<property name="mock" value="true"/>-->
-        <!--<property name="maxConnection" value="150"/>-->
-        <!--<property name="connectionTimeout" value="10000"/>-->
-        <!--<property name="socketTimeout" value="10000"/>-->
-    <!--</bean>-->
+    <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
+    <cache:annotation-driven cache-manager="cacheManager" />
 
-    <!--<context:component-scan base-package="com.ep.dao" />-->
-    <!--<cache:annotation-driven cache-manager="cacheManager"/>-->
+    <bean id="userDao" class="com.ep.dao.user.UserDao"/>
+    <!-- cacheManager工厂类，指定ehcache.xml的位置 -->
+    <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation"  value="classpath:configs/ehcache.xml"/>
+    </bean>
 
-    <!--<bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
-        <!--<property name="configLocation" value="classpath:configs/ehcache-config.xml"/>-->
-    <!--</bean>-->
-    <!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">-->
-        <!--<property name="cacheManager" ref="cacheManagerFactory"/>-->
-    <!--</bean>-->
+    <!-- 声明cacheManager -->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="cacheManagerFactory"/>
+    </bean>
 
 </beans>

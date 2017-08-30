@@ -18,7 +18,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+//import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * 
@@ -38,7 +38,8 @@ public class AsymSecurityUtil {
 	public static final String PUBLIC_KEY_FILENAME = "public.key";
 
 	static {
-		Security.addProvider(new BouncyCastleProvider());
+		//todo cfc
+//		Security.addProvider(new BouncyCastleProvider());
 	}
 
 	/**
