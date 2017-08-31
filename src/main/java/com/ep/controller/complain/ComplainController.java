@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ep.controller.api.ServiceResponse;
+import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.complain.api.ComplainVO;
 import com.ep.controller.complain.api.DimensionRequest;
 import com.ep.controller.complain.api.DimensionVO;
 import com.ep.controller.complain.api.ItemRequest;
 import com.ep.dao.mapper.ComplainMapper;
 import com.ep.dao.model.complain.*;
+import com.ep.service.complain.api.IComplainService;
 import com.ep.util.DownloadUtil;
 import com.ep.util.POIUtil;
 
@@ -34,6 +34,9 @@ public class ComplainController {
 
     @Resource
     private ComplainMapper complainMapper;
+
+    @Resource
+    private IComplainService complainService;
 
     @RequestMapping(value = "/list")
     @ResponseBody
@@ -97,7 +100,7 @@ public class ComplainController {
     @ResponseBody
     public ServiceResponse delete(@RequestParam("id") Integer id) {
 
-        complainMapper.deleteDimensionById(id);
+        complainService.deleteDimension(id);
 
         return new ServiceResponse();
     }
@@ -145,8 +148,7 @@ public class ComplainController {
     @ResponseBody
     public ServiceResponse itemDelete(@RequestParam("id") Integer id) {
 
-        complainMapper.deleteDimensionByItemId(id);
-        complainMapper.deleteServiceItem(id);
+        complainService.deleteItem(id);
 
         return new ServiceResponse();
     }

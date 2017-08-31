@@ -153,6 +153,20 @@
 		WHERE id = #{id}
 	</delete>
 
+
+	<delete id="deleteComplain">
+		DELETE tc.* FROM t_complain tc
+		INNER JOIN t_dimension td ON  td.id = tc.dimension_id
+		<where>
+			<if test="dimensionId != null">
+				tc.dimension_id = #{dimensionId}
+			</if>
+			<if test="itemId != null">
+				td.item_id = #{itemId}
+			</if>
+		</where>
+	</delete>
+
 	<update id="updateServiceItem"
 			parameterType="ServiceItem">
 		UPDATE t_service_item

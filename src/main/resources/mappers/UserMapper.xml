@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ep.dao.mapper.UserMapper">
+
+    <resultMap id="userResult" type="User">
+        <id property="id" column="user_id"/>
+        <result property="name" column="user_name"/>
+        <result property="company" column="user_company"/>
+        <result property="sex" column="user_sex"/>
+        <result property="mobile" column="user_mobile"/>
+        <result property="password" column="user_password"/>
+        <result property="openId" column="user_open_id"/>
+        <result property="remark" column="user_remark"/>
+        <result property="createDate" column="user_create_date"/>
+        <result property="updateDate" column="user_update_date"/>
+        <result property="updatedById" column="user_updated_by_id"/>
+        <result property="updatedByName" column="user_updated_by_name"/>
+        <result property="deleted" column="user_is_deleted" jdbcType="CHAR" javaType="Bool"/>
+        <!--<association property="item" javaType="ServiceItem" resultMap="itemResult" />-->
+    </resultMap>
+
+    <sql id="userColumns">
+		u.id AS user_id,
+		u.name AS user_name,
+		u.company AS user_company,
+		u.sex AS user_sex,
+		u.mobile AS user_mobile,
+		u.password AS user_password,
+		u.open_id AS user_open_id,
+		u.remark AS user_remark,
+		u.create_date AS user_create_date,
+		u.update_date AS user_update_date,
+		u.updated_by_id AS user_updated_by_id,
+		u.updated_by_name AS user_updated_by_name,
+		u.is_deleted AS user_is_deleted
+	</sql>
+
+    <insert id="insertOrUpdateUser"
+            parameterType="User"
+            useGeneratedKeys="true">
+		INSERT INTO t_user(
+			id,
+			`name`,
+			company,
+			sex,
+			mobile,
+			password,
+			open_id,
+			remark,
+			is_deleted,
+			create_date,
+			update_date,
+			updated_by_id,
+			updated_by_name
+		) VALUES (
+			#{id},
+			#{name},
+			#{company},
+			#{sex},
+			#{mobile},
+			#{password},
+			#{openId},
+			#{remark},
+			#{deleted.code},
+			#{createDate},
+			#{updateDate},
+			#{updatedById},
+			#{updatedByName}
+		) ON DUPLICATE KEY UPDATE
+        	update_date = NOW(),
+        	is_deleted = #{deleted.code},
+        	password = #{password},
+        	updated_by_id = #{updatedById},
+        	updated_by_name = #{updatedByName}
+	</insert>
+
+    <select id="selectUserList" resultMap="userResult">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        t_user u
+        <if test="start != null and size != null">
+            limit #{start},#{size}
+        </if>
+
+    </select>
+
+	<select id="selectUserById" resultMap="userResult">
+		SELECT
+		<include refid="userColumns"/>
+		FROM
+			t_user u
+		WHERE `id` = #{id}
+
+	</select>
+
+	<select id="selectUser" resultMap="userResult">
+		SELECT
+		<include refid="userColumns"/>
+		FROM
+		t_user u
+		WHERE `name` = #{name}
+		AND password = #{password}
+
+	</select>
+
+    <select id="countUserList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+		t_user u
+	</select>
+
+
+</mapper>

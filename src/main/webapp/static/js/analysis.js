@@ -45,7 +45,10 @@ jQuery(document).ready(function () {
                 "mDataProp": "img",
                 "sTitle": "图片",
                 "sDefaultContent": "",
-                "sClass": "center"
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    return '<img style="width: 50px;height: 50px" src="' + val + '"/>';
+                }
             }],
         // set the initial value
         "iDisplayLength": 5,

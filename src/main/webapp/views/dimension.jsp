@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <%--<c:set var="ua" value="${sessionScope.userAuthorization.authorization}"></c:set>--%>
-<script src="${ctx }/static/js/table-basic.js"></script>
+<script src="${ctx }/static/js/dimension.js"></script>
 <div id="show-content">
 
 </div>

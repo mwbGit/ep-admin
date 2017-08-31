@@ -19,11 +19,10 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/login"/>
-            <mvc:exclude-mapping path="/static/media/**"/>
             <bean class="com.ep.controller.interceptor.UserInterceptor">
                 <property name="allowUrls">
                     <list>
-                        <value>/media</value>
+                        <value>/static</value>
                         <value>/login</value>
                         <value>404</value>
                     </list>
@@ -38,7 +37,8 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
     <!-- 静态资源的访问 -->
-    <mvc:resources mapping="/static/**" location="/static/" />
+    <mvc:resources mapping="/static/js/**" location="/static/js/" />
+    <mvc:resources mapping="/static/media/**" location="/static/media/" />
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven></mvc:annotation-driven>
 
