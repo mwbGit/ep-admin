@@ -16,7 +16,7 @@
 
 	<meta charset="utf-8" />
 
-	<title>Metronic | Login Options - Login Form 2</title>
+	<title>E园</title>
 
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 

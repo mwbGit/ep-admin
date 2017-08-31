@@ -41,7 +41,7 @@ public class LoginController {
 
     @RequestMapping(value = "/logout")
     public String logout() {
-        ApplicationContextUtils.getSession().removeAttribute("user");
+        ApplicationContextUtils.removeUser();
         return "login";
     }
 }

@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 /**
  * Created by MengWeiBo on 2017-08-07
  */
-
-@Configuration
-@EnableCaching
+//
+//@Configuration
+//@EnableCaching
 public class UserDao {
     public static Map<String, String> usersData = new ConcurrentHashMap<String, String>();
 

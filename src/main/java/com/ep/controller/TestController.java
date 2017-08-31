@@ -10,18 +10,15 @@ import com.ep.dao.user.UserDao;
 @Controller
 public class TestController {
 
-    @Resource
+//    @Resource
     private UserDao userDao;
 
     @RequestMapping(value = "/test")
-    public String loginHtml() {
+    public String test(Integer id) throws Exception {
 
-        String str= userDao.get("2");
-        String str1= userDao.get("2");
-        userDao.update("2");
-        String str11= userDao.get("2");
-        userDao.removeAll();
-        String str111= userDao.get("2");
+        if (id != null && id ==1){
+            throw new Exception("aaaaaaaa");
+        }
 
 
         return "index";
