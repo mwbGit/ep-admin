@@ -15,14 +15,6 @@ jQuery(document).ready(function () {
                 "sClass": "center",
                 "bVisible": false //此列不显示
             }, {
-                "mDataProp": "img",
-                "sTitle": "头像",
-                "sDefaultContent": "",
-                "sClass": "center",
-                "mRender": function (val, data, full) {
-                    return '<img style="width: 50px;height: 50px" src="' + val + '"/>';
-                }
-            }, {
                 "mDataProp": "name",
                 "sTitle": "姓名",
                 "sDefaultContent": "",
@@ -37,29 +29,46 @@ jQuery(document).ready(function () {
                 "sTitle": "手机号",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
-                "mDataProp": "mobile",
+            }, {
+                "mDataProp": "company",
+                "sTitle": "公司",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "spaceNames",
                 "sTitle": "入住空间",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
+            }, {
                 "mDataProp": "updatedByName",
                 "sTitle": "操作人",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
+            }, {
                 "mDataProp": "updateDate",
                 "sTitle": "操作时间",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
-                "mDataProp": "updateDate",
+            }, {
+                "mDataProp": "deleted",
                 "sTitle": "操作",
-                "sDefaultContent": "aaa",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
-                    return '<a alt="aaa" href="#" class="btn red icn-only"><i class="icon-remove icon-white"></i></a>' +
-                        '<a href="#" class="btn mini purple"><i class="icon-edit"></i></a>';
+                    var str = '';
+
+                    if (val) {
+                        str += '<a href="#"  onclick="deleteUser(' + full.id + ')">' +
+                            '<span  style="color: red"  data-toggle="tooltip"  title="用户已被禁用,点击启用" > ' +
+                            '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
+                    } else {
+
+                        str += '<a href="#"  onclick="deleteUser(' + full.id + ')"><span  style="color: blue"  data-toggle="tooltip"  title="点击禁用" > ' +
+                            '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
+                    }
+
+                    str += '&nbsp&nbsp<span><a href="#userModify" data-toggle="modal"  onclick="modifyUserBut(' +full.id + ')"><i class="icon-edit" style="width: 50px;height: 50px"></i></span></a>';
+
+                    return str;
                 }
             }],
         // set the initial value
@@ -82,26 +91,9 @@ jQuery(document).ready(function () {
                 "sLast": "末页"
             }
         },
-        // "aoColumnDefs": [{
-        //     'bSortable': false,
-        //     'aTargets': [0, 1, 2, 3, 4,5,6]
-        // }
-        // ],
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": $ctx + "/user/list",
-        "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-            ///* 用来改写用户权限的 */
-            //if (aData.ISADMIN == '1')
-            //    $('td:eq(5)', nRow).html('管理员');
-            //if (aData.ISADMIN == '2')
-            //    $('td:eq(5)', nRow).html('资料下载');
-            //if (aData.ISADMIN == '3')
-            //    $('td:eq(5)', nRow).html('一般用户');
-
-            //alert(aData);
-            return nRow;
-        },
         "fnServerData": function (sSource, aDataSet, fnCallback, oSettings) {
             oSettings.jqXHR = $.ajax({
                 dataType: 'json',
@@ -111,17 +103,63 @@ jQuery(document).ready(function () {
                 data: aDataSet,
                 success: fnCallback
             });
-
-
-            //$.post( sSource, aoData, function (json) {
-            //    /* Do whatever additional processing you want on the callback, then tell DataTables */
-            //    fnCallback(json)
-            //} );
-
-            //$.each(data.value, function(i,item){
-            //    table.fnAddData(item);
-            //});
         }
     });
 
 });
+
+function modifyUserBut(id) {
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        contentType: 'application/json',
+        url: "/resource/space/list",
+        // data: {},
+        success: function (data) {
+            var str = '';
+            $.each(data.data, function (n, value) {
+                str += '<div class="checkbox line">' +
+                    '<input type="checkbox" name="spaceIds" value="' + value.value + '"> ' + value.label + '</div>';
+            });
+
+            $("#userId").val(id);
+            $("#spaces").html(str);
+        }
+    });
+}
+
+function reLoad() {
+    $('.close').click();
+    $('#dashboard').load("/views/user_manager.jsp");
+}
+
+function deleteUser(id) {
+    $.ajax({
+        dataType: 'json',
+        async: false,
+        url: $ctx + "/user/delete?id=" + id,
+        // data: "{}",
+        success: function (data) {
+            alert("成功");
+            reLoad();
+        }
+    });
+}
+
+function modifyUser() {
+        var data = $("#modifyUserFrom").serialize();
+        $.ajax({
+            dataType: 'json',
+            type: "POST",
+            async: false,
+            // contentType:'application/json',
+            url: $ctx + "/user/modify",
+            data: data,
+            success: function (data) {
+                alert("成功");
+                reLoad();
+            }
+        });
+
+}

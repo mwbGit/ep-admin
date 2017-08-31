@@ -63,7 +63,7 @@
 
 	<link rel="shortcut icon" href="${ctx }/static/media/image/favicon.ico" />
 
-	link rel="stylesheet" type="text/css" href="${ctx }/static/media/css/select2_metro.css" />
+	<link rel="stylesheet" type="text/css" href="${ctx }/static/media/css/select2_metro.css" />
 
 	<link rel="stylesheet" href="${ctx }/static/media/css/DT_bootstrap.css" />
 
@@ -92,7 +92,7 @@
 
 				<!-- BEGIN LOGO -->
 
-				<a class="brand" href="${ctx}/index.html">
+				<a class="brand" href="${ctx}/views/index.jsp">
 
 				<img src="${ctx }/static/media/image/logo.png" alt="logo"/>
 
@@ -130,7 +130,7 @@
 
 							<li class="divider"></li>
 
-							<li><a href="${ctx}/index.html"><i class="icon-lock"></i>修改密码</a></li>
+							<li><a href="#password-config" data-toggle="modal"><i class="icon-lock"></i>修改密码</a></li>
 
 							<li><a href="${ctx}/logout"><i class="icon-key"></i> 退出</a></li>
 
@@ -179,7 +179,7 @@
 
 				<li class="start ">
 
-					<a href="${ctx}/index.html">
+					<a href="${ctx}/views/index.jsp">
 
 					<i class="icon-home"></i> 
 
@@ -288,7 +288,7 @@
 
 								<i class="icon-home"></i>
 
-								<a href="${ctx}/index.html">主页</a>
+								<a href="${ctx}/views/index.jsp">主页</a>
 
 								<i class="icon-angle-right"></i>
 
@@ -332,7 +332,59 @@
 
 			</div>
 
-			<!-- END PAGE CONTAINER-->    
+			<!-- END PAGE CONTAINER-->
+
+			<div id="password-config" class="modal hide">
+
+				<div class="modal-header">
+
+					<button data-dismiss="modal" class="close" type="button"></button>
+
+					<h3>修改密码</h3>
+
+				</div>
+
+				<div class="modal-body">
+
+					<form method="post" class="form-horizontal" id="modifyPassword">
+
+						<div class="control-group">
+
+							<label class="control-label">密码<span class="required">*</span></label>
+
+							<div class="controls">
+
+								<input id ="password" type="password" class="medium m-wrap" name="password"/>
+
+								<span class="help-inline" style="color: red;display: none" id="pass">至少六位密码</span>
+
+							</div>
+
+						</div>
+
+						<div class="control-group">
+
+							<label class="control-label">再次输入<span class="required">*</span></label>
+
+							<div class="controls">
+
+								<input type="password" class="medium m-wrap" name="rpassword" id="rpassword"/>
+
+								<span class="help-inline" style="color: red;display: none" id="rpass">两次输入不一致</span>
+
+							</div>
+
+						</div>
+						<div class="form-actions">
+
+							<button type="button" class="btn blue" onclick="subPassword()"><i class="icon-ok"></i> 提交</button>
+
+						</div>
+					</form>
+
+				</div>
+
+			</div>
 
 		</div>
 

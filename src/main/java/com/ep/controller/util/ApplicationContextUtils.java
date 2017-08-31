@@ -22,6 +22,10 @@ public class ApplicationContextUtils {
         return (User) getSession().getAttribute("user");
     }
 
+    public static void removeUser() {
+        getSession().removeAttribute("user");
+    }
+
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return attrs.getRequest();

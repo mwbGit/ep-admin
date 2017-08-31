@@ -10,11 +10,16 @@ import com.ep.dao.user.UserDao;
 @Controller
 public class TestController {
 
-    @Resource
+//    @Resource
     private UserDao userDao;
 
-    @RequestMapping(value = "/index.html")
-    public String loginHtml() {
+    @RequestMapping(value = "/test")
+    public String test(Integer id) throws Exception {
+
+        if (id != null && id ==1){
+            throw new Exception("aaaaaaaa");
+        }
+
 
         return "index";
     }

@@ -7,7 +7,7 @@
     <resultMap id="userResult" type="User">
         <id property="id" column="user_id"/>
         <result property="name" column="user_name"/>
-        <result property="img" column="user_img"/>
+        <result property="company" column="user_company"/>
         <result property="sex" column="user_sex"/>
         <result property="mobile" column="user_mobile"/>
         <result property="password" column="user_password"/>
@@ -24,7 +24,7 @@
     <sql id="userColumns">
 		u.id AS user_id,
 		u.name AS user_name,
-		u.img AS user_img,
+		u.company AS user_company,
 		u.sex AS user_sex,
 		u.mobile AS user_mobile,
 		u.password AS user_password,
@@ -43,7 +43,7 @@
 		INSERT INTO t_user(
 			id,
 			`name`,
-			img,
+			company,
 			sex,
 			mobile,
 			password,
@@ -57,7 +57,7 @@
 		) VALUES (
 			#{id},
 			#{name},
-			#{img},
+			#{company},
 			#{sex},
 			#{mobile},
 			#{password},
@@ -71,6 +71,7 @@
 		) ON DUPLICATE KEY UPDATE
         	update_date = NOW(),
         	is_deleted = #{deleted.code},
+        	password = #{password},
         	updated_by_id = #{updatedById},
         	updated_by_name = #{updatedByName}
 	</insert>

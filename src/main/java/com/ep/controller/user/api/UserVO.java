@@ -1,20 +1,12 @@
 package com.ep.controller.user.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-
-import com.ep.dao.model.user.User;
-import com.ep.util.DateTimeUtility;
-
 /**
  * Created by MengWeiBo on 2017-08-24
  */
 public class UserVO {
     private Integer id;
     private String name;
-    private String img;
+    private String company;
     private String sex;
     private String mobile;
     private String remark;
@@ -41,12 +33,12 @@ public class UserVO {
         this.name = name;
     }
 
-    public String getImg() {
-        return img;
+    public String getCompany() {
+        return company;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getSex() {

@@ -24,6 +24,7 @@ import com.ep.controller.complain.api.DimensionVO;
 import com.ep.controller.complain.api.ItemRequest;
 import com.ep.dao.mapper.ComplainMapper;
 import com.ep.dao.model.complain.*;
+import com.ep.service.complain.api.IComplainService;
 import com.ep.util.DownloadUtil;
 import com.ep.util.POIUtil;
 
@@ -33,6 +34,9 @@ public class ComplainController {
 
     @Resource
     private ComplainMapper complainMapper;
+
+    @Resource
+    private IComplainService complainService;
 
     @RequestMapping(value = "/list")
     @ResponseBody
@@ -96,7 +100,7 @@ public class ComplainController {
     @ResponseBody
     public ServiceResponse delete(@RequestParam("id") Integer id) {
 
-        complainMapper.deleteDimensionById(id);
+        complainService.deleteDimension(id);
 
         return new ServiceResponse();
     }
@@ -144,8 +148,7 @@ public class ComplainController {
     @ResponseBody
     public ServiceResponse itemDelete(@RequestParam("id") Integer id) {
 
-        complainMapper.deleteDimensionByItemId(id);
-        complainMapper.deleteServiceItem(id);
+        complainService.deleteItem(id);
 
         return new ServiceResponse();
     }

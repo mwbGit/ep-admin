@@ -11,6 +11,7 @@ import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.util.ApplicationContextUtils;
 import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.model.user.User;
+import com.ep.util.MD5;
 
 
 @Controller
@@ -24,6 +25,7 @@ public class LoginController {
         ServiceResponse response = new ServiceResponse();
         String username = request.getParameter("username");
         String pwd = request.getParameter("password");
+        pwd = MD5.md5(pwd);
 
         User user = userMapper.selectUser(username, pwd);
 
@@ -39,7 +41,7 @@ public class LoginController {
 
     @RequestMapping(value = "/logout")
     public String logout() {
-        ApplicationContextUtils.getSession().removeAttribute("user");
+        ApplicationContextUtils.removeUser();
         return "login";
     }
 }
