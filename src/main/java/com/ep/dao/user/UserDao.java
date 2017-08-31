@@ -5,14 +5,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by MengWeiBo on 2017-08-07
  */
 
+@Configuration
+@EnableCaching
 public class UserDao {
-    private static Map<String, String> usersData = new ConcurrentHashMap<String, String>();
+    public static Map<String, String> usersData = new ConcurrentHashMap<String, String>();
 
     static {
         System.out.println("用户数据初始化..开始");

@@ -17,6 +17,7 @@
         memoryStoreEvictionPolicy="LFU" 内存存储与释放策略.当达到maxElementsInMemory时
                共有三种策略,分别为LRU(最近最少使用)、LFU(最常用的)、FIFO(先进先出)默认使用"最近使用"策略
     -->
+
     <defaultCache
             eternal="false"
             maxElementsInMemory="3000"
@@ -27,68 +28,30 @@
             diskExpiryThreadIntervalSeconds="100"
             memoryStoreEvictionPolicy="LRU"/>
 
-    <cache name="propConfigCache"
-           eternal="false"
-           maxElementsInMemory="3000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
-
-    <cache name="workTimeCache"
-           eternal="false"
-           maxElementsInMemory="3000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
-
-    <cache name="threeInOneCache"
-           eternal="false"
-           maxElementsInMemory="3000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
-
-    <cache name="transferCache"
-           eternal="false"
+    <cache name="myCache"
            maxElementsInMemory="1000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
-
-    <cache name="threeInOneFavCache"
            eternal="false"
-           maxElementsInMemory="3000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
+           timeToIdleSeconds="200"
+           timeToLiveSeconds="4000"
+           overflowToDisk="true"/>
 
-    <cache name="reserveTimeCache"
-           eternal="false"
-           maxElementsInMemory="3000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
+    <!--分布式缓存）-->
+    <!--<cacheManagerPeerProviderFactory-->
+    <!--class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"-->
+    <!--properties="peerDiscovery=manual,-->
+    <!--rmiUrls=//192.168.0.12:4567/oschina_cache|//192.168.0.13:4567/oschina_cache"-->
+    <!--/>-->
+    <!--<cacheManagerPeerProviderFactory-->
+    <!--class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"-->
+    <!--properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,-->
+    <!--multicastGroupPort=4446, timeToLive=32"-->
+    />
+    <!--<cache name="demoCache"-->
+    <!--maxElementsInMemory="10000"-->
+    <!--eternal="true"-->
+    <!--overflowToDisk="true">-->
+    <!--<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    <!--</cache>-->
 
-    <cache name="mqServerNameCache"
-           eternal="false"
-           maxElementsInMemory="3000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
-
-    <cache name="schWorkTimeCache"
-           eternal="false"
-           maxElementsInMemory="3000"
-           overflowToDisk="true"
-           timeToIdleSeconds="0"
-           timeToLiveSeconds="1440"
-           memoryStoreEvictionPolicy="LFU"/>
 
 </ehcache>
