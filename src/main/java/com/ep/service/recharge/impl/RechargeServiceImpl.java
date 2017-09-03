@@ -2,9 +2,11 @@ package com.ep.service.recharge.impl;
 
 import com.ep.dao.mapper.TRechargeDetailMapper;
 import com.ep.dao.mapper.UserMapper;
+import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PreOrderResult;
 import com.ep.dao.model.generated.TRechargeDetail;
 import com.ep.dao.model.user.User;
+import com.ep.service.epclient.EParkeClient;
 import com.ep.service.recharge.RechargeService;
 import com.ep.service.we_chat.pay.WeChatPayService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -33,8 +35,13 @@ public class RechargeServiceImpl implements RechargeService {
     @Autowired
     private WeChatPayService weChatPayService;
 
+
     @Override
     public PreOrderResult clientOrder(String tel, Float moneySum) {
+        Boolean result = EParkeClient.checkPhone(tel);
+        if (!result) {
+            throw new RuntimeException("不能给该手机号充值");
+        }
         TRechargeDetail detail = createOrder(tel, moneySum);
         PreOrderResult preOrderResult = weChatPayService.getWechatPreOrderResult(detail.getUserId(), moneySum, detail.getOrder(), WX_PAY_NOTIFY_URL);
         return preOrderResult;
@@ -49,7 +56,8 @@ public class RechargeServiceImpl implements RechargeService {
         }
         TRechargeDetail detail = rechargeDetailMapper.selectByPrimaryKey(id);
         setOrderPayed(order, outOrder);
-        return true;
+        Boolean result =  EParkeClient.topUp(detail.getTel(), detail.getTel(), new Date(), detail.getRechargeAmount().doubleValue());
+        return result;
     }
 
     private void setOrderPayed(String orderCode, String outOrderCode) {
