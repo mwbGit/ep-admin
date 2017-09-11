@@ -124,8 +124,21 @@ CREATE TABLE `t_recharge_detail` (
   UNIQUE KEY `UK_RECHARGE_DETAIL_ORDER` (`order`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='充值流水';
 
-
-
+-- ----------------------------
+-- 资讯
+-- ----------------------------
+DROP TABLE IF EXISTS t_information ;
+CREATE TABLE `t_information` (
+	`id` INT (10) NOT NULL AUTO_INCREMENT,
+	`title` varchar (128) NOT NULL,
+	`introduction` varchar (128) NOT NULL,
+	`author` varchar(32) NOT NULL ,
+	`img` varchar (64) NOT NULL,
+	`category` varchar (64) NOT NULL,
+	`totle_count` int (10) NOT NULL,
+	`create_time` datetime NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4;
 
 
 
