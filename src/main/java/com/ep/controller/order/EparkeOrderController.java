@@ -26,7 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  * Created by fangchen.chai on 2017/8/20.
  */
 @Controller
-@RequestMapping(value = "/e_parke")
+@RequestMapping(value = "/eparke")
 public class EparkeOrderController {
 
     @Autowired
