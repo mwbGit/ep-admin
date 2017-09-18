@@ -10,6 +10,7 @@ import com.ep.dao.model.user.User;
 
 public class ApplicationContextUtils {
 
+
     public static HttpSession getSession() {
         HttpSession session = null;
         try {
@@ -20,6 +21,10 @@ public class ApplicationContextUtils {
 
     public static User getUser() {
         return (User) getSession().getAttribute("user");
+    }
+
+    public static void setUser(User user) {
+        getSession().setAttribute("user", user);
     }
 
     public static void removeUser() {

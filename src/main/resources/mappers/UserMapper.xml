@@ -38,10 +38,10 @@
 	</sql>
 
     <insert id="insertOrUpdateUser"
-            parameterType="User"
-            useGeneratedKeys="true">
+		 parameterType="User"
+		 useGeneratedKeys="true"
+		 keyProperty="id">
 		INSERT INTO t_user(
-			id,
 			`name`,
 			company,
 			sex,
@@ -55,7 +55,6 @@
 			updated_by_id,
 			updated_by_name
 		) VALUES (
-			#{id},
 			#{name},
 			#{company},
 			#{sex},
@@ -69,12 +68,32 @@
 			#{updatedById},
 			#{updatedByName}
 		) ON DUPLICATE KEY UPDATE
-        	update_date = NOW(),
-        	is_deleted = #{deleted.code},
-        	password = #{password},
-        	updated_by_id = #{updatedById},
-        	updated_by_name = #{updatedByName}
+			update_date = NOW(),
+			is_deleted = #{deleted.code},
+			password = #{password},
+			updated_by_id = #{updatedById},
+			updated_by_name = #{updatedByName}
 	</insert>
+	<insert id="insertOrUpdateUserToken">
+		INSERT INTO t_user_token(
+		`user_id`,
+		token
+		) VALUES (
+		#{userId},
+		#{token}
+		) ON DUPLICATE KEY UPDATE
+			token =#{token}
+	</insert>
+    <select id="selectUserByToken" resultMap="userResult">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        t_user u
+		INNER JOIN t_user_token ut ON ut.user_id = u.id
+       	WHERE
+			ut.token=#{token}
+		AND u.is_deleted ='N'
+    </select>
 
     <select id="selectUserList" resultMap="userResult">
         SELECT
@@ -96,14 +115,23 @@
 
 	</select>
 
-	<select id="selectUser" resultMap="userResult">
+	<select id="selectUserByPassword" resultMap="userResult">
 		SELECT
 		<include refid="userColumns"/>
 		FROM
 		t_user u
 		WHERE `name` = #{name}
 		AND password = #{password}
+		AND u.is_deleted ='N'
+	</select>
 
+	<select id="selectUserByMobile" resultMap="userResult">
+		SELECT
+		<include refid="userColumns"/>
+		FROM
+		t_user u
+		WHERE `mobile` = #{mobile}
+		AND open_id = #{openId}
 	</select>
 
     <select id="countUserList" resultType="int">

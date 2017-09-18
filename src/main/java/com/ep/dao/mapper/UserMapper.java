@@ -12,15 +12,21 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface UserMapper {
 
-    public User selectUser(@Param("name") String name, @Param("password") String password);
+    public User selectUserByPassword(@Param("name") String name, @Param("password") String password);
+
+    public User selectUserByToken(@Param("token") String token);
 
     public User selectUserById(@Param("id") Integer id);
+
+    public User selectUserByMobile(@Param("openId") String openId, @Param("mobile") String mobile);
 
     public List<User> selectUserList(@Param("start") Integer start, @Param("size") Integer size);
 
     public int countUserList();
 
     public void insertOrUpdateUser(User user);
+
+    public void insertOrUpdateUserToken(@Param("userId") Integer userId, @Param("token") String token);
 
     @Select("select id from t_user where mobile = #{tel}")
     Integer selectUserIdByTel(@Param("tel") String tel);

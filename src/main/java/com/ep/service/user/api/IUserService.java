@@ -7,4 +7,13 @@ import com.ep.dao.model.user.User;
  */
 public interface IUserService {
     public void modifyUser(Integer[] spaceIds, User user);
+
+    public String createUser(String openId, String mobile);
+
+    public User getUserById(Integer id);
+
+    public User getUserByToken(String token);
+
+    public User getUserByPassword(String name, String password);
+
 }
