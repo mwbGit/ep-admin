@@ -63,21 +63,22 @@ CREATE TABLE `t_complain` (
 -- ----------------------------
 DROP TABLE IF EXISTS t_user ;
 CREATE TABLE `t_user` (
-	`id` INT (10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`name` CHAR (32) NOT NULL,
-	`sex` CHAR (4) NOT NULL,
-	`mobile` CHAR (16) NOT NULL,
-	`password` CHAR (64) NOT NULL,
-	`company` CHAR (128) DEFAULT NULL,
-	`openId` varchar(32) NOT NULL ,
-	`remark` CHAR (16) DEFAULT NULL,
-	`is_deleted` CHAR (1) NOT NULL,
-	`create_date` date NOT NULL,
-	`update_date` date NOT NULL,
-	`updated_by_id` INT (10) NOT NULL,
-	`updated_by_name` CHAR (32) NOT NULL,
-	PRIMARY KEY (`id`)
-) ENGINE = INNODB DEFAULT CHARSET = utf8mb4;
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` char(32) NOT NULL,
+  `company` char(128) DEFAULT NULL,
+  `sex` char(4) DEFAULT NULL,
+  `mobile` char(16) NOT NULL,
+  `password` char(64) DEFAULT NULL,
+  `remark` char(16) DEFAULT NULL,
+  `create_date` date DEFAULT NULL,
+  `update_date` date DEFAULT NULL,
+  `updated_by_id` int(10) DEFAULT NULL,
+  `updated_by_name` char(32) DEFAULT NULL,
+  `is_deleted` char(1) NOT NULL,
+  `open_id` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_mobile_open_id` (`mobile`,`open_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- 空间
@@ -124,8 +125,34 @@ CREATE TABLE `t_recharge_detail` (
   UNIQUE KEY `UK_RECHARGE_DETAIL_ORDER` (`order`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='充值流水';
 
+-- ----------------------------
+-- 资讯
+-- ----------------------------
+DROP TABLE IF EXISTS t_information ;
+CREATE TABLE `t_information` (
+	`id` INT (10) NOT NULL AUTO_INCREMENT,
+	`title` varchar (128) NOT NULL,
+	`introduction` varchar (128) NOT NULL,
+	`author` varchar(32) NOT NULL ,
+	`img` varchar (64) NOT NULL,
+	`category` varchar (64) NOT NULL,
+	`totle_count` int (10) NOT NULL,
+	`create_time` datetime NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4;
 
-
+-- ----------------------------
+-- 小程序登录认证
+-- ----------------------------
+DROP TABLE IF EXISTS t_user_token ;
+CREATE TABLE `t_user_token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `token` varchar(64) NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_user_token_user` (`user_id`),
+  CONSTRAINT `ifk_user_token_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
