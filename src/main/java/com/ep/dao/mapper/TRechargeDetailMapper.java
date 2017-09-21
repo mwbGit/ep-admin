@@ -1,6 +1,5 @@
 package com.ep.dao.mapper;
 
-import com.ep.dao.mapper.base.BaseMapper;
 import com.ep.dao.model.generated.TRechargeDetail;
 import com.ep.dao.model.generated.TRechargeDetailExample;
 import org.apache.ibatis.annotations.Param;

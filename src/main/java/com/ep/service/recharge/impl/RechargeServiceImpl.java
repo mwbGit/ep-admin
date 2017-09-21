@@ -2,7 +2,6 @@ package com.ep.service.recharge.impl;
 
 import com.ep.dao.mapper.TRechargeDetailMapper;
 import com.ep.dao.mapper.UserMapper;
-import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PreOrderResult;
 import com.ep.dao.model.generated.TRechargeDetail;
 import com.ep.dao.model.user.User;
@@ -37,7 +36,7 @@ public class RechargeServiceImpl implements RechargeService {
 
 
     @Override
-    public PreOrderResult clientOrder(String tel, Float moneySum) {
+    public PreOrderResult createClientOrder(String tel, Float moneySum) {
         Boolean result = EParkeClient.checkPhone(tel);
         if (!result) {
             throw new RuntimeException("不能给该手机号充值");
@@ -51,7 +50,7 @@ public class RechargeServiceImpl implements RechargeService {
     public Boolean notifyPayed(String order, String outOrder) {
         Long id = rechargeDetailMapper.selectOrderIdByOrder(order);
         if (id == null) {
-            logger.error("卡券订单回调时发现我方单号不存在，返回值为：我方单号：" + order + " 对方单号：" + outOrder);
+            logger.error("订单回调时发现我方单号不存在，返回值为：我方单号：" + order + " 对方单号：" + outOrder);
             return false;
         }
         TRechargeDetail detail = rechargeDetailMapper.selectByPrimaryKey(id);

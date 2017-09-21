@@ -1,4 +1,4 @@
-package com.ep.dao.mapper.base;
+package com.ep.dao.mapper;
 
 import org.apache.ibatis.annotations.Param;
 

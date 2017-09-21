@@ -20,26 +20,27 @@ public class UserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
-        String requestUrl = request.getRequestURI().replace(
-                request.getContextPath(), "");
-
-        if (null != allowUrls && allowUrls.length >= 1)
-            for (String url : allowUrls) {
-                if (requestUrl.contains(url)) {
-                    return true;
-                }
-            }
-
-        User user = (User) request.getSession().getAttribute("user");
-
-
-        if (user != null) {
-            return true;
-        } else {
-            response.sendRedirect(request.getContextPath() + "/views/login.jsp");
-
-            return false;
-        }
+//        String requestUrl = request.getRequestURI().replace(
+//                request.getContextPath(), "");
+//
+//        if (null != allowUrls && allowUrls.length >= 1)
+//            for (String url : allowUrls) {
+//                if (requestUrl.contains(url)) {
+//                    return true;
+//                }
+//            }
+//
+//        User user = (User) request.getSession().getAttribute("user");
+//
+//
+//        if (user != null) {
+//            return true;
+//        } else {
+//            response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+//
+//            return false;
+//        }
+        return true;
     }
 
     @Override
