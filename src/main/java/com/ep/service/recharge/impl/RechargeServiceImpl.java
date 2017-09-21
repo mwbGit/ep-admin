@@ -37,13 +37,13 @@ public class RechargeServiceImpl implements RechargeService {
 
 
     @Override
-    public PreOrderResult clientOrder(String tel, Float moneySum) {
+    public PreOrderResult createClientOrder(String tel, Float moneySum) {
         Boolean result = EParkeClient.checkPhone(tel);
         if (!result) {
             throw new RuntimeException("不能给该手机号充值");
         }
         TRechargeDetail detail = createOrder(tel, moneySum);
-        PreOrderResult preOrderResult = weChatPayService.getWechatPreOrderResult(detail.getUserId(), moneySum, detail.getOrder(), WX_PAY_NOTIFY_URL);
+        PreOrderResult preOrderResult = weChatPayService.getWechatPreOrderResult(detail.getUserId(), moneySum, detail.getSysOrder(), WX_PAY_NOTIFY_URL);
         return preOrderResult;
     }
 
@@ -51,7 +51,7 @@ public class RechargeServiceImpl implements RechargeService {
     public Boolean notifyPayed(String order, String outOrder) {
         Long id = rechargeDetailMapper.selectOrderIdByOrder(order);
         if (id == null) {
-            logger.error("卡券订单回调时发现我方单号不存在，返回值为：我方单号：" + order + " 对方单号：" + outOrder);
+            logger.error("订单回调时发现我方单号不存在，返回值为：我方单号：" + order + " 对方单号：" + outOrder);
             return false;
         }
         TRechargeDetail detail = rechargeDetailMapper.selectByPrimaryKey(id);
@@ -82,9 +82,8 @@ public class RechargeServiceImpl implements RechargeService {
         }
 
         TRechargeDetail detail = new TRechargeDetail();
-        detail.setDate(new Date());
-        detail.setName(user.getName());
-        detail.setOrder(createOrderCode());
+        detail.setUserName(user.getName());
+        detail.setSysOrder(createOrderCode());
         detail.setRechargeAmount(moneySum);
         detail.setTel(user.getMobile());
         detail.setUserId(user.getId());
