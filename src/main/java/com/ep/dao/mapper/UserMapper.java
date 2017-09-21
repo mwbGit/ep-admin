@@ -28,7 +28,5 @@ public interface UserMapper {
 
     public void insertOrUpdateUserToken(@Param("userId") Integer userId, @Param("token") String token);
 
-    @Select("select id from t_user where mobile = #{tel}")
-    Integer selectUserIdByTel(@Param("tel") String tel);
 
 }

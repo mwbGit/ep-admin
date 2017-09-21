@@ -1,9 +1,11 @@
 package com.ep.dao.model.complain;
 
+import java.io.Serializable;
+
 /**
  * Created by MengWeiBo on 2017-08-09
  */
-public class ServiceItem {
+public class ServiceItem  implements Serializable {
     private static final long serialVersionUID = 1549226849768969923L;
 
     private Integer id;

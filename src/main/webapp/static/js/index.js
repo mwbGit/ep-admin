@@ -40,6 +40,9 @@ function loadJsp(item) {
     } else if (item == "user") {
         $('#dashboard').load($ctx + "/views/user_manager.jsp");
         $('#menuTitle').html("用户列表");
+    } else if (item == "activity_type") {
+        $('#dashboard').load($ctx + "/views/activity_type.jsp");
+        $('#menuTitle').html("活动分类管理");
     }
 }
 

@@ -131,7 +131,9 @@
 		FROM
 		t_user u
 		WHERE `mobile` = #{mobile}
-		AND open_id = #{openId}
+		<if test="openId != null" >
+			AND open_id = #{openId}
+		</if>
 	</select>
 
     <select id="countUserList" resultType="int">

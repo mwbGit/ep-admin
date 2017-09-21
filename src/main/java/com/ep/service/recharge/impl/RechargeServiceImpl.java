@@ -76,11 +76,10 @@ public class RechargeServiceImpl implements RechargeService {
         if (moneySum <= 0) {
             throw new RuntimeException("不能充值负数");
         }
-        Integer userId = userMapper.selectUserIdByTel(tel);
-        if (userId == null) {
+        User user = userMapper.selectUserByMobile(null, tel);
+        if (user == null) {
             throw new RuntimeException("用户不存在");
         }
-        User user = userMapper.selectUserById(userId);
 
         TRechargeDetail detail = new TRechargeDetail();
         detail.setDate(new Date());
@@ -88,7 +87,7 @@ public class RechargeServiceImpl implements RechargeService {
         detail.setOrder(createOrderCode());
         detail.setRechargeAmount(moneySum);
         detail.setTel(user.getMobile());
-        detail.setUserId(userId);
+        detail.setUserId(user.getId());
         rechargeDetailMapper.insertSelective(detail);
         return detail;
     }

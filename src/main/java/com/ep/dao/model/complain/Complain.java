@@ -1,11 +1,14 @@
 package com.ep.dao.model.complain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by MengWeiBo on 2017-08-18
  */
-public class Complain {
+public class Complain  implements Serializable {
+    private static final long serialVersionUID = 1549226849768969923L;
+
     private Integer id;
     private String content;
     private Integer grade;

@@ -1,5 +1,6 @@
 package com.ep.dao.model.space;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -7,7 +8,9 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 /**
  * Created by MengWeiBo on 2017-08-25
  */
-public class Space {
+public class Space  implements Serializable {
+    private static final long serialVersionUID = 1549226849768969923L;
+
     private Integer id;
     private String name;
     private BigDecimal grade;

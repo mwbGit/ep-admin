@@ -154,8 +154,17 @@ CREATE TABLE `t_user_token` (
   CONSTRAINT `ifk_user_token_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-
+-- ----------------------------
+-- 活动类别
+-- ----------------------------
+DROP TABLE IF EXISTS  `t_activity_type` ;
+CREATE TABLE `t_activity_type` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `sequence` int(10) NOT NULL,
+  `is_deleted` char(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 
 
