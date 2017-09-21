@@ -47,6 +47,7 @@
 				is_deleted = #{deleted.code}
 			</if>
 		</set>
+		WHERE id = #{id}
 	</update>
 
     <select id="selectActivityTypeList" resultMap="activityTypeResult">
@@ -76,25 +77,46 @@
 		SELECT
 		<include refid="activityTypeColumns"/>
 		FROM
-		t_activity_type
+		t_activity_type u
 		WHERE
 		id= #{id}
+	</select>
+
+	<select id="countActivityByName" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		t_activity_type
+		WHERE
+		name= #{name}
+		<if test="id != null">
+			AND id != #{id}
+		</if>
+	</select>
+
+	<select id="selectMaxActivitySequence" resultType="int">
+		SELECT
+			MAX(sequence) + 1
+		FROM
+			`t_activity_type`
 	</select>
 
 	<select id="selectActivityBySequence" resultMap="activityTypeResult">
 		SELECT
 			<include refid="activityTypeColumns"/>
 		FROM
-		t_activity_type
+		t_activity_type u
 		WHERE
 		is_deleted = 'N'
-
 		<if test="asc == true">
-			AND sequence<![CDATA[ > ]]> #{sequence}
+			AND sequence<![CDATA[ < ]]> #{sequence}
+			ORDER BY sequence DESC
 		</if>
 		<if test="asc == false">
-			AND sequence<![CDATA[ < ]]> #{sequence}
+			AND sequence<![CDATA[ > ]]> #{sequence}
+			ORDER BY sequence ASC
 		</if>
+
 		limit 0,1
 	</select>
 

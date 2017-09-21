@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class ActivityController {
 
                     vo.setId(type.getId());
                     vo.setName(type.getName());
-                    vo.setSequence(type.getSequence());
+                    vo.setSequence(iDisplayStart + i + 1);
                     if (i == 0) {
                         vo.setFirst(true);
                     } else {
@@ -90,31 +91,53 @@ public class ActivityController {
     @RequestMapping(value = "/type/modify")
     @ResponseBody
     public ServiceResponse modify(@RequestParam(value = "id") Integer id, String name, Boolean asc) {
+        ServiceResponse response = new ServiceResponse();
 
         if (asc == null) {
+            int count = activityMapper.countActivityByName(name, id);
+            if (count > 0) {
+                response.setCode("1");
+                response.setMessage("名称重复");
+            }
+
             ActivityType activityType = new ActivityType();
             activityType.setId(id);
             activityType.setName(name);
 
             activityMapper.updateActivityType(activityType);
         } else {
+
+
             activityService.modifyActivityTypeSequence(id, asc);
         }
 
-        return new ServiceResponse();
+        return response;
     }
 
     @RequestMapping(value = "/type/add")
     @ResponseBody
     public ServiceResponse modify(@RequestParam(value = "name") String name) {
+        ServiceResponse response = new ServiceResponse();
+        if (StringUtils.isBlank(name)) {
+            response.setCode("1");
+            response.setMessage("名称为空");
+        }
+        int count = activityMapper.countActivityByName(name, null);
+        if (count > 0) {
+            response.setCode("2");
+            response.setMessage("名称重复");
+        }
+
+        int sequence = activityMapper.selectMaxActivitySequence();
 
         ActivityType activityType = new ActivityType();
         activityType.setName(name);
         activityType.setDeleted(Bool.N);
+        activityType.setSequence(sequence);
 
         activityMapper.insertActivityType(activityType);
 
-        return new ServiceResponse();
+        return response;
     }
 
 }

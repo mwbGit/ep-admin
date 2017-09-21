@@ -2,6 +2,7 @@ package com.ep.dao.mapper;
 
 import java.util.List;
 
+import com.ep.dao.filter.ComplainFilter;
 import org.apache.ibatis.annotations.Param;
 
 import com.ep.dao.model.complain.Complain;
@@ -14,10 +15,9 @@ import com.ep.dao.model.complain.ServiceItem;
 
 public interface ComplainMapper {
 
+    List<Complain> selectComplain(@Param("filter") ComplainFilter filter);
 
-    List<Complain> selectComplain(@Param("typeId") Integer typeId, @Param("start") Integer start, @Param("size") Integer size);
-
-    int countComplain(@Param("typeId") Integer typeId);
+    int countComplain(@Param("filter") ComplainFilter filter);
 
     void deleteComplain(@Param("dimensionId") Integer dimensionId, @Param("itemId") Integer itemId);
 

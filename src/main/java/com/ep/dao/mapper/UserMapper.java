@@ -2,6 +2,7 @@ package com.ep.dao.mapper;
 
 import java.util.List;
 
+import com.ep.dao.filter.UserFilter;
 import org.apache.ibatis.annotations.Param;
 
 import com.ep.dao.model.user.User;
@@ -20,9 +21,9 @@ public interface UserMapper {
 
     public User selectUserByMobile(@Param("openId") String openId, @Param("mobile") String mobile);
 
-    public List<User> selectUserList(@Param("start") Integer start, @Param("size") Integer size);
+    public List<User> selectUserList(@Param("filter") UserFilter filter);
 
-    public int countUserList();
+    public int countUserList(@Param("filter") UserFilter filter);
 
     public void insertOrUpdateUser(User user);
 

@@ -10,8 +10,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ep.dao.filter.ComplainFilter;
+import com.ep.dao.model.common.PagingFilter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.xssf.usermodel.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,18 +35,23 @@ import com.ep.util.POIUtil;
 @RequestMapping(value = "/complain")
 public class ComplainController {
 
-    @Resource
+    @Autowired
     private ComplainMapper complainMapper;
 
-    @Resource
+    @Autowired
     private IComplainService complainService;
 
     @RequestMapping(value = "/list")
     @ResponseBody
     public Map<String, Object> complainList(Integer typeId, Integer iDisplayStart, Integer iDisplayLength) {
-        List<Complain> complains = complainMapper.selectComplain(typeId, iDisplayStart, iDisplayLength);
+        ComplainFilter filter = new ComplainFilter();
+        filter.setTypeId(typeId);
+        filter.setStart(iDisplayStart);
+        filter.setSize(iDisplayLength);
 
-        int count = complainMapper.countComplain(typeId);
+        List<Complain> complains = complainMapper.selectComplain(filter);
+
+        int count = complainMapper.countComplain(filter);
 
         Map<String, Object> map = new HashMap<>();
         map.put("aaData", ComplainVO.toVOs(complains));
@@ -156,8 +164,8 @@ public class ComplainController {
     @RequestMapping("/queryComplainForExcel")
     @ResponseBody
     public void queryComplainForExcel(HttpServletRequest request, HttpServletResponse response) {
-
-        List<Complain> complains = complainMapper.selectComplain(null, null, null);
+        ComplainFilter filter = new ComplainFilter();
+        List<Complain> complains = complainMapper.selectComplain(filter);
 
         // 数据写入Excel
         XSSFWorkbook wb = new XSSFWorkbook();

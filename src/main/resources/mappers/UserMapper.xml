@@ -100,8 +100,13 @@
         <include refid="userColumns"/>
         FROM
         t_user u
-        <if test="start != null and size != null">
-            limit #{start},#{size}
+		<where>
+			<if test="filter.name != null">
+				u.name LIKE #{filter.name}
+			</if>
+		</where>
+        <if test="filter.start != null and filter.size != null">
+            limit #{filter.start},#{filter.size}
         </if>
 
     </select>
@@ -141,6 +146,11 @@
 			COUNT(*)
 		FROM
 		t_user u
+		<where>
+			<if test="filter.name != null">
+				u.name LIKE #{filter.name}
+			</if>
+		</where>
 	</select>
 
 

@@ -52,6 +52,10 @@ jQuery(document).ready(function () {
             }],
         // set the initial value
         "iDisplayLength": 5,
+        "aLengthMenu": [
+            [5, 10, 20,50],
+            [5, 10, 20, 50] // change per page values here
+        ],
         "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
         "sPaginationType": "bootstrap",
         // "bInfo": false, //是否显示页脚信息，DataTables插件左下角显示记录数

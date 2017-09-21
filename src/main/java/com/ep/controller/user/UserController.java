@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
+import com.ep.dao.filter.UserFilter;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,10 +39,14 @@ public class UserController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Map<String, Object> list(Integer iDisplayStart, Integer iDisplayLength) {
+    public Map<String, Object> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch) {
+        UserFilter filter = new UserFilter();
+        filter.setStart(iDisplayStart);
+        filter.setSize(iDisplayLength);
+        filter.setName(sSearch);
 
-        List<User> users = userMapper.selectUserList(iDisplayStart, iDisplayLength);
-        int count = userMapper.countUserList();
+        List<User> users = userMapper.selectUserList(filter);
+        int count = userMapper.countUserList(filter);
 
         List<UserVO> vos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(users)) {

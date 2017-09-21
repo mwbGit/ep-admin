@@ -5,6 +5,9 @@ public class PagingFilter {
     private Integer start;
     private Integer size;
 
+    public PagingFilter() {
+    }
+
     public PagingFilter(Integer start, Integer size) {
         this.start = start;
         this.size = size;
