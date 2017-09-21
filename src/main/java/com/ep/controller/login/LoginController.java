@@ -2,6 +2,7 @@ package com.ep.controller.login;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ep.service.user.api.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import com.ep.util.MD5;
 @Controller
 public class LoginController {
     @Autowired
-    private UserMapper userMapper;
+    private IUserService userService;
 
     @RequestMapping(value = "/login")
     @ResponseBody
@@ -27,13 +28,13 @@ public class LoginController {
         String pwd = request.getParameter("password");
         pwd = MD5.md5(pwd);
 
-        User user = userMapper.selectUser(username, pwd);
+        User user = userService.getUserByPassword(username, pwd);
 
         if (user == null) {
             response.setCode("1");
             response.setMessage("用户名或密码错误");
         }else {
-            ApplicationContextUtils.getSession().setAttribute("user", user);
+            ApplicationContextUtils.setUser(user);
         }
 
         return response;
