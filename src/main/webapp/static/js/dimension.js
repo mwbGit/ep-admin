@@ -46,11 +46,11 @@ function modifyItem(id) {
     $('#ratio').val(ratio);
     addItem();
 }
-function reLoad() {
+function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {
         $('.close').click();
-        $('#dashboard').load("/views/dimension.jsp");
+        $('#dashboard').load($ctx + "/views/dimension.jsp");
     }
 }
 function modifyItemSub() {

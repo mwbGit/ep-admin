@@ -105,7 +105,7 @@ function modifyTypeNameBut() {
         type: "POST",
         async: false,
         // contentType: 'application/json',
-        url: "/activity/type/modify",
+        url: $ctx +"/activity/type/modify",
         data: data,
         success: function (data) {
             reLoad(data);
@@ -120,7 +120,7 @@ function addTypeNameBut() {
         type: "POST",
         async: false,
         // contentType: 'application/json',
-        url: "/activity/type/add",
+        url: $ctx +"/activity/type/add",
         data: data,
         success: function (data) {
             reLoad(data);
@@ -132,7 +132,7 @@ function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {
         $('.close').click();
-        $('#dashboard').load("/views/activity_type.jsp");
+        $('#dashboard').load($ctx +"/views/activity_type.jsp");
     }
 }
 

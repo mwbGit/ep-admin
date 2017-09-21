@@ -165,7 +165,6 @@ CREATE TABLE `t_activity_type` (
   `is_deleted` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_activity_type_name` (`name`),
-  UNIQUE KEY `uk_activity_type_sequence` (`sequence`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 

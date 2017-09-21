@@ -68,7 +68,7 @@ function subPassword() {
             type: "POST",
             async: false,
             // contentType: 'application/json',
-            url: "/user/reset/password",
+            url: $ctx +"/user/reset/password",
             data: {"password": password},
             success: function (data) {
                 alert(data.message);

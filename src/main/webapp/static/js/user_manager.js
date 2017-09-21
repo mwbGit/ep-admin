@@ -120,7 +120,7 @@ function modifyUserBut(id) {
         type: "POST",
         async: false,
         contentType: 'application/json',
-        url: "/resource/space/list",
+        url: $ctx +"/resource/space/list",
         // data: {},
         success: function (data) {
             var str = '';
@@ -135,11 +135,11 @@ function modifyUserBut(id) {
     });
 }
 
-function reLoad() {
+function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {
         $('.close').click();
-        $('#dashboard').load("/views/user_manager.jsp");
+        $('#dashboard').load( $ctx +"/views/user_manager.jsp");
     }
 }
 
