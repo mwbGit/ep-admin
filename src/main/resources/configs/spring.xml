@@ -13,6 +13,8 @@
 <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
     <!--<cache:annotation-driven cache-manager="cacheManager" />-->
 
+    <bean class="com.ep.service.user.UserService" id="userService"/>
+
     <!--<bean id="userDao" class="com.ep.dao.user.UserDao"/>-->
     <!--&lt;!&ndash; cacheManager工厂类，指定ehcache.xml的位置 &ndash;&gt;-->
     <!--<bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->

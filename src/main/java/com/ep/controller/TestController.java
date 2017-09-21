@@ -1,17 +1,18 @@
 package com.ep.controller;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ep.dao.user.UserDao;
+import com.ep.service.user.UserService;
+import com.ep.service.user.api.IUserService;
 
 @Controller
 public class TestController {
 
-//    @Resource
-    private UserDao userDao;
+    @Autowired
+    private IUserService userService;
 
     @RequestMapping(value = "/test")
     public String test(Integer id) throws Exception {
@@ -20,7 +21,7 @@ public class TestController {
             throw new Exception("aaaaaaaa");
         }
 
-
+        userService.test();
         return "index";
     }
 

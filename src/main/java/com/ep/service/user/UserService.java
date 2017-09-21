@@ -8,6 +8,7 @@ import com.ep.dao.model.common.Bool;
 import com.ep.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ep.dao.mapper.SpaceMapper;
 import com.ep.dao.mapper.UserMapper;
@@ -74,5 +75,20 @@ public class UserService implements IUserService {
     @Override
     public User getUserByPassword(String name, String password) {
         return userMapper.selectUserByPassword(name, password);
+    }
+
+    @Override
+    @Transactional
+    public void test() throws Exception {
+        User user = new User();
+        user.setMobile("asda");
+        user.setOpenId("asda");
+        user.setName("dsa");
+        user.setDeleted(Bool.N);
+        userMapper.insertOrUpdateUser(user);
+        if (user.getId() != 1){
+            throw new Exception();
+        }
+        System.out.println(1);
     }
 }

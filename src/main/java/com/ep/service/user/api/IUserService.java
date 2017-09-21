@@ -16,4 +16,6 @@ public interface IUserService {
 
     public User getUserByPassword(String name, String password);
 
-}
+    public void test() throws Exception;
+
+    }
