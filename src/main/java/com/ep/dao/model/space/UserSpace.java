@@ -1,5 +1,7 @@
 package com.ep.dao.model.space;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import com.ep.dao.model.user.User;
@@ -7,7 +9,9 @@ import com.ep.dao.model.user.User;
 /**
  * Created by MengWeiBo on 2017-08-25
  */
-public class UserSpace {
+public class UserSpace  implements Serializable {
+    private static final long serialVersionUID = 1549226849768969923L;
+
     private Integer id;
     private Integer userId;
     private Integer spaceId;

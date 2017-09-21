@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ep.dao.mapper.ActivityMapper">
+
+    <resultMap id="activityTypeResult" type="ActivityType">
+        <id property="id" column="t_activity_type_id"/>
+        <result property="name" column="t_activity_type_name"/>
+        <result property="sequence" column="t_activity_type_sequence"/>
+        <result property="deleted" column="t_activity_type_is_deleted" jdbcType="CHAR" javaType="Bool"/>
+        <!--<association property="item" javaType="ServiceItem" resultMap="itemResult" />-->
+    </resultMap>
+
+    <sql id="activityTypeColumns">
+		u.id AS t_activity_type_id,
+		u.name AS t_activity_type_name,
+		u.sequence AS t_activity_type_sequence,
+		u.is_deleted AS t_activity_type_is_deleted
+	</sql>
+
+    <insert id="insertActivityType"
+		 parameterType="ActivityType"
+		 useGeneratedKeys="true"
+		 keyProperty="id">
+		INSERT INTO t_activity_type(
+			`name`,
+			sequence,
+			is_deleted
+		) VALUES (
+			#{name},
+			#{sequence},
+			#{deleted.code}
+		)
+	</insert>
+
+	<update id="updateActivityType">
+		UPDATE t_activity_type
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="sequence != null">
+				sequence = #{sequence},
+			</if>
+			<if test="deleted != null">
+				is_deleted = #{deleted.code}
+			</if>
+		</set>
+	</update>
+
+    <select id="selectActivityTypeList" resultMap="activityTypeResult">
+        SELECT
+        <include refid="activityTypeColumns"/>
+        FROM
+		t_activity_type u
+		WHERE
+		u.is_deleted = 'N'
+		ORDER BY u.sequence ASC
+        <if test="filter.start != null and filter.size != null">
+            limit #{filter.start}, #{filter.size}
+        </if>
+
+    </select>
+
+	<select id="countActivityTypeList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+		t_activity_type
+		WHERE
+		is_deleted = 'N'
+	</select>
+
+	<select id="selectActivityById" resultMap="activityTypeResult">
+		SELECT
+		<include refid="activityTypeColumns"/>
+		FROM
+		t_activity_type
+		WHERE
+		id= #{id}
+	</select>
+
+	<select id="selectActivityBySequence" resultMap="activityTypeResult">
+		SELECT
+			<include refid="activityTypeColumns"/>
+		FROM
+		t_activity_type
+		WHERE
+		is_deleted = 'N'
+
+		<if test="asc == true">
+			AND sequence<![CDATA[ > ]]> #{sequence}
+		</if>
+		<if test="asc == false">
+			AND sequence<![CDATA[ < ]]> #{sequence}
+		</if>
+		limit 0,1
+	</select>
+
+</mapper>

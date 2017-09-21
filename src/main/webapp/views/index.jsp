@@ -252,6 +252,38 @@
 					</ul>
 
 				</li>
+				<li>
+
+					<a href="javascript:;">
+
+						<i class="icon-user"></i>
+
+						<span class="title">活动管理</span>
+
+						<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li id="activity-li">
+
+							<a href="#" onclick="loadJsp('user')">
+
+								用户列表</a>
+
+						</li>
+						<li id="activity-type-li">
+
+							<a href="#" onclick="loadJsp('activity_type')">
+
+								活动分类管理</a>
+
+						</li>
+
+					</ul>
+
+				</li>
 			</ul>
 
 			<!-- END SIDEBAR MENU -->
