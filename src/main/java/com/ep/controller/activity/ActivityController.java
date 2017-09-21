@@ -98,6 +98,7 @@ public class ActivityController {
             if (count > 0) {
                 response.setCode("1");
                 response.setMessage("名称重复");
+                return response;
             }
 
             ActivityType activityType = new ActivityType();
@@ -107,7 +108,6 @@ public class ActivityController {
             activityMapper.updateActivityType(activityType);
         } else {
 
-
             activityService.modifyActivityTypeSequence(id, asc);
         }
 
@@ -116,16 +116,18 @@ public class ActivityController {
 
     @RequestMapping(value = "/type/add")
     @ResponseBody
-    public ServiceResponse modify(@RequestParam(value = "name") String name) {
+    public ServiceResponse add(@RequestParam(value = "name") String name) {
         ServiceResponse response = new ServiceResponse();
         if (StringUtils.isBlank(name)) {
             response.setCode("1");
             response.setMessage("名称为空");
+            return response;
         }
         int count = activityMapper.countActivityByName(name, null);
         if (count > 0) {
             response.setCode("2");
             response.setMessage("名称重复");
+            return response;
         }
 
         int sequence = activityMapper.selectMaxActivitySequence();
