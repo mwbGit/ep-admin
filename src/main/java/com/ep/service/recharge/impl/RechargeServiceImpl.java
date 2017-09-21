@@ -42,7 +42,7 @@ public class RechargeServiceImpl implements RechargeService {
             throw new RuntimeException("不能给该手机号充值");
         }
         TRechargeDetail detail = createOrder(tel, moneySum);
-        PreOrderResult preOrderResult = weChatPayService.getWechatPreOrderResult(detail.getUserId(), moneySum, detail.getOrder(), WX_PAY_NOTIFY_URL);
+        PreOrderResult preOrderResult = weChatPayService.getWechatPreOrderResult(detail.getUserId(), moneySum, detail.getSysOrder(), WX_PAY_NOTIFY_URL);
         return preOrderResult;
     }
 
@@ -82,12 +82,12 @@ public class RechargeServiceImpl implements RechargeService {
         User user = userMapper.selectUserById(userId);
 
         TRechargeDetail detail = new TRechargeDetail();
-        detail.setDate(new Date());
-        detail.setName(user.getName());
-        detail.setOrder(createOrderCode());
+        detail.setUserName(user.getName());
+        detail.setSysOrder(createOrderCode());
         detail.setRechargeAmount(moneySum);
         detail.setTel(user.getMobile());
         detail.setUserId(userId);
+
         rechargeDetailMapper.insertSelective(detail);
         return detail;
     }
