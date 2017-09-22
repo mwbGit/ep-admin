@@ -13,11 +13,15 @@ import com.ep.dao.model.user.User;
  */
 public interface ActivityMapper {
 
-    public List<ActivityType> selectActivityTypeList(@Param("filter")PagingFilter filter);
+    public List<ActivityType> selectActivityTypeList(@Param("filter") PagingFilter filter);
 
-    public int countActivityTypeList(@Param("filter")PagingFilter filter);
+    public int countActivityTypeList(@Param("filter") PagingFilter filter);
 
     public ActivityType selectActivityById(@Param("id") Integer id);
+
+    public int countActivityByName(@Param("name") String name, @Param("id") Integer id);
+
+    public int selectMaxActivitySequence();
 
     public ActivityType selectActivityBySequence(@Param("sequence") Integer sequence, @Param("asc") boolean asc);
 

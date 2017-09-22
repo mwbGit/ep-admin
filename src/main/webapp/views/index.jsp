@@ -266,13 +266,6 @@
 
 					<ul class="sub-menu">
 
-						<li id="activity-li">
-
-							<a href="#" onclick="loadJsp('user')">
-
-								用户列表</a>
-
-						</li>
 						<li id="activity-type-li">
 
 							<a href="#" onclick="loadJsp('activity_type')">
@@ -341,9 +334,29 @@
 								</div>
 
 							</li>
-							<li style="float: right"><a href="#add-item-config" data-toggle="modal" onclick="addItem()" >
-								<button id="showAddItem" class="btn green" style="display: none">添加服务项</button>
-							</a></li>
+							<li style="float: right">
+								<div >
+									<div class="actions">
+										<div class="btn-group" id="showAddItem" style="display: none">
+
+											<a href="#add-item-config" data-toggle="modal">
+												<button  class="btn green">
+													添加服务项
+												</button>
+											</a>
+
+											<div id="sample_2_column_toggler"
+												 class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</li>
+
+							</li>
+
 						</ul>
 
 						<!-- END PAGE TITLE & BREADCRUMB-->

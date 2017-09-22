@@ -150,7 +150,7 @@
 
 	<div class="copyright">
 
-		2017 &copy; EPark - Admin
+		2017 &copy; EPARK-Admin
 
 	</div>
 

@@ -6,6 +6,8 @@ jQuery(document).ready(function () {
         "bPaginate": true, //是否显示（应用）分页器
         "bLengthChange": true, //开关，是否显示每页大小的下拉框
         "bSort": false,
+        "bAutoWidth" : true, //是否自适应宽度
+        "bFilter" : true, //是否启动过滤、搜索功能
 
         "aoColumns": [
             {
@@ -66,19 +68,23 @@ jQuery(document).ready(function () {
                             '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
                     }
 
-                    str += '&nbsp&nbsp<span><a href="#userModify" data-toggle="modal"  onclick="modifyUserBut(' +full.id + ')"><i class="icon-edit" style="width: 50px;height: 50px"></i></span></a>';
+                    str += '&nbsp&nbsp<span><a href="#userModify" data-toggle="modal"  onclick="modifyUserBut(' + full.id + ')"><i class="icon-edit" style="width: 50px;height: 50px"></i></span></a>';
 
                     return str;
                 }
             }],
         // set the initial value
         "iDisplayLength": 5,
+        "aLengthMenu": [
+            [5, 10, 20, 50],
+            [5, 10, 20, 50] // change per page values here
+        ],
         "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
         "sPaginationType": "bootstrap",
         // "bInfo": false, //是否显示页脚信息，DataTables插件左下角显示记录数
-        "bFilter": false, //是否启动过滤、搜索功能
 
         "oLanguage": {
+            "sSearch" : "搜索",
             "sProcessing": "正在加载中......",
             "sZeroRecords": "对不起，查询不到相关数据！",
             "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
@@ -114,7 +120,7 @@ function modifyUserBut(id) {
         type: "POST",
         async: false,
         contentType: 'application/json',
-        url: "/resource/space/list",
+        url: $ctx +"/resource/space/list",
         // data: {},
         success: function (data) {
             var str = '';
@@ -129,9 +135,12 @@ function modifyUserBut(id) {
     });
 }
 
-function reLoad() {
-    $('.close').click();
-    $('#dashboard').load("/views/user_manager.jsp");
+function reLoad(data) {
+    alert(data.message)
+    if (data.code == '0') {
+        $('.close').click();
+        $('#dashboard').load( $ctx +"/views/user_manager.jsp");
+    }
 }
 
 function deleteUser(id) {
@@ -141,25 +150,23 @@ function deleteUser(id) {
         url: $ctx + "/user/delete?id=" + id,
         // data: "{}",
         success: function (data) {
-            alert("成功");
-            reLoad();
+            reLoad(data);
         }
     });
 }
 
 function modifyUser() {
-        var data = $("#modifyUserFrom").serialize();
-        $.ajax({
-            dataType: 'json',
-            type: "POST",
-            async: false,
-            // contentType:'application/json',
-            url: $ctx + "/user/modify",
-            data: data,
-            success: function (data) {
-                alert("成功");
-                reLoad();
-            }
-        });
+    var data = $("#modifyUserFrom").serialize();
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        async: false,
+        // contentType:'application/json',
+        url: $ctx + "/user/modify",
+        data: data,
+        success: function (data) {
+            reLoad(data);
+        }
+    });
 
 }

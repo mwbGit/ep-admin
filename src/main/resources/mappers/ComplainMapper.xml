@@ -63,12 +63,12 @@
 			INNER JOIN t_dimension d ON c.dimension_id = d.id
 			INNER JOIN t_service_item si ON d.item_id = si.id
 		<where>
-			<if test="typeId != null">
-				d.type_id = #{typeId}
+			<if test="filter.typeId != null">
+				d.type_id = #{filter.typeId}
 			</if>
 		</where>
-		<if test="start != null and size != null" >
-			limit #{start},#{size}
+		<if test="filter.start != null and filter.size != null" >
+			limit #{filter.start},#{filter.size}
 		</if>
 
 	</select>
@@ -82,8 +82,8 @@
 		INNER JOIN t_service_item si ON d.item_id = si.id
 
 		<where>
-			<if test="typeId != null">
-				d.type_id = #{typeId}
+			<if test="filter.typeId != null">
+				d.type_id = #{filter.typeId}
 			</if>
 		</where>
 	</select>

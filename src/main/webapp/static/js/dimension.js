@@ -46,9 +46,12 @@ function modifyItem(id) {
     $('#ratio').val(ratio);
     addItem();
 }
-function reLoad() {
-    $('.close').click();
-    $('#dashboard').load("/views/dimension.jsp");
+function reLoad(data) {
+    alert(data.message)
+    if (data.code == '0') {
+        $('.close').click();
+        $('#dashboard').load($ctx + "/views/dimension.jsp");
+    }
 }
 function modifyItemSub() {
     var  ratio = $("#ratio").val();
@@ -66,8 +69,7 @@ function modifyItemSub() {
         url: $ctx + "/complain/item/modify",
         data: data,
         success: function (data) {
-            alert("成功")
-            reLoad();
+            reLoad(data);
         }
     });
 }
@@ -82,8 +84,7 @@ function deleteDimension(id) {
             url: $ctx + "/complain/dimension/delete?id=" + id,
             // data: data,
             success: function (data) {
-                alert("成功");
-                reLoad();
+                reLoad(data);
             }
         });
     } else {
@@ -102,12 +103,11 @@ function deleteItem(id) {
             url: $ctx + "/complain/item/delete?id=" + id,
             // data: data,
             success: function (data) {
-                alert("成功");
-                reLoad();
+                reLoad(data);
             }
         });
     } else {
-        reLoad();
+        reLoad(data);
     }
 
 }
@@ -152,8 +152,7 @@ function addItemSub() {
         url: $ctx + "/complain/item/add",
         data: data,
         success: function (data) {
-            alert("成功")
-            reLoad();
+            reLoad(data);
         }
     });
 }
@@ -173,8 +172,7 @@ function addDimensionSub() {
         url: $ctx + "/complain/dimension/add",
         data: data,
         success: function (data) {
-            alert("成功")
-            reLoad();
+            reLoad(data);
         }
     });
 }
@@ -194,8 +192,7 @@ function modifyDimensionSub() {
         url: $ctx + "/complain/dimension/modify",
         data: data,
         success: function (data) {
-            alert("成功");
-            reLoad();
+            reLoad(data);
         }
     });
 }
@@ -226,7 +223,7 @@ function init(id, itemId, itemName, itemRatio) {
     if ((id % 2) == 0) {
         initContent += '<div class="row-fluid" id="row-fluid' + id + '">';
     }
-    initContent += '<div class="span6" id="aa"><div class="portlet box red"><div class="portlet-title">' +
+    initContent += '<div class="span6" id="aa"><div class="portlet box light-grey"><div class="portlet-title">' +
         '<div class="caption"><i class="icon-cogs"></i><input type="hidden" id="item-id' + id + '" value="' + itemId + '">' +
         '<span id="service-item' + id + '"> ' + itemName + '</span>(<span id="service-ratio' + id + '">' + itemRatio + '</span>%)' +
         '</div><div class="tools"><input type="hidden" value="true" id="collapse_hidden' + id + '">' +

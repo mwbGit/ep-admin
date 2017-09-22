@@ -1,4 +1,4 @@
-package com.ep.dao.mapper.base;
+package com.ep.dao.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -20,7 +20,7 @@ public interface BaseMapper<T, PK extends Serializable, E> {
 
     PK insert(T record);
 
-    PK insertSelective(T record);
+    void insertSelective(T record);
 
     List<T> selectByExample(E example);
 

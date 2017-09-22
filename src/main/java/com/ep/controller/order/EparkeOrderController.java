@@ -38,7 +38,7 @@ public class EparkeOrderController {
     @ResponseBody
     public ServiceResponse createOrder(@RequestBody CreateOrderRequest request) {
 
-        PreOrderResult result = rechargeService.clientOrder(request.getTel(), request.getPay());
+        PreOrderResult result = rechargeService.createClientOrder(request.getTel(), request.getPay());
         PreOrderResultResponse resultResponse = new PreOrderResultResponse();
         resultResponse.setResult(result);
         return resultResponse;
