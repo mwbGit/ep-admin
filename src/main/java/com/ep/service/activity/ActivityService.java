@@ -20,7 +20,7 @@ public class ActivityService implements IActivityService {
     @Override
     public void modifyActivityTypeSequence(Integer id, Boolean asc) {
 
-        ActivityType activityType = activityMapper.selectActivityById(id);
+        ActivityType activityType = activityMapper.selectActivityTypeById(id);
 
         ActivityType replaceType = activityMapper.selectActivityBySequence(activityType.getSequence(), asc);
 

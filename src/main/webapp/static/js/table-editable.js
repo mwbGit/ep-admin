@@ -18,7 +18,6 @@ var TableEditable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                debugger;
                 //jqTds[0].innerHTML = '<input type="text" class="m-wrap small" value="' + aData[0] + '">';
                 jqTds[1].innerHTML = '<input type="text" class="m-wrap small" value="' + aData.name + '">';
                 jqTds[2].innerHTML = '<input type="text" class="m-wrap small" value="' + aData.ratio + '"> %';
@@ -29,7 +28,6 @@ var TableEditable = function () {
 
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                debugger
                 //oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 2, false);
@@ -199,7 +197,6 @@ var TableEditable = function () {
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
 
-                debugger;
                 if (nEditing !== null && nEditing != nRow) {
                     /* Currently editing - but not this row - restore the old before continuing to edit mode */
                     restoreRow(oTable, nEditing);

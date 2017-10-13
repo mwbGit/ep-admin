@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ep.controller.activity.api.ActivityTypeVO;
+import com.ep.controller.activity.api.ActivityVO;
 import com.ep.controller.activity.api.AddActivityRequest;
+import com.ep.controller.activity.api.AddActivityResponse;
 import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
+import com.ep.dao.filter.ActivityFilter;
 import com.ep.dao.mapper.ActivityMapper;
 import com.ep.dao.model.activity.Activity;
 import com.ep.dao.model.activity.ActivityType;
+import com.ep.dao.model.activity.AddressDetail;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PagingFilter;
 import com.ep.service.activity.api.IActivityService;
@@ -38,6 +42,27 @@ public class ActivityController {
     @Autowired
     private IUploadService uploadService;
 
+
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public PagingResponse<List<ActivityVO>> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch, Integer typeId) {
+        PagingResponse<List<ActivityVO>> response = new PagingResponse<>();
+
+        ActivityFilter filter = new ActivityFilter();
+        filter.setStart(iDisplayStart);
+        filter.setSize(iDisplayLength);
+        filter.setTitle(sSearch);
+        filter.setTypeId(typeId);
+
+        List<Activity> activities = activityMapper.selectActivityList(filter);
+        int count = activityMapper.countActivityList(filter);
+
+        response.setTotalCount(count);
+        response.setAaData(ActivityVO.toVOs(activities));
+
+        return response;
+    }
+
     @RequestMapping(value = "/add")
     @ResponseBody
     public ServiceResponse add(@RequestParam("imgUpload") MultipartFile uploadFile, AddActivityRequest activityRequest) throws Exception {
@@ -45,29 +70,77 @@ public class ActivityController {
 
         String url = uploadService.uploadImage(uploadFile);
 
-        if (url != null) {
-            System.out.println(url);
-        } else {
+        if (url == null && activityRequest.getId() == null){
             response.setCode("1");
             response.setMessage("上传失败");
+            return response;
+        } else if (activityRequest.getId() != null){
+            Activity activity = activityMapper.selectActivityById(activityRequest.getId());
+            url = activity.getImg();
         }
 
         Activity activity = new Activity();
+        activity.setId(activityRequest.getId());
         activity.setTitle(activityRequest.getTitle());
         activity.setStartTime(DateTimeUtility.parseYYYYMMDDHHMM(activityRequest.getStartTime()));
         activity.setEndTime(DateTimeUtility.parseYYYYMMDDHHMM(activityRequest.getEndTime()));
-        activity.setPrice(activity.getPrice());
+        activity.setPrice(activityRequest.getPrice());
         activity.setContent(activityRequest.getContent());
         activity.setImg(url);
         activity.setOnline(Bool.N);
         ActivityType type = new ActivityType();
         type.setId(activityRequest.getTypeId());
         activity.setType(type);
+        AddressDetail detail = new AddressDetail();
+        detail.setId(activityRequest.getAddressId());
+        activity.setAddressDetail(detail);
 
+        activityMapper.insertOrUpdateActivity(activity);
 
         return response;
     }
 
+    @RequestMapping(value = "/publish")
+    @ResponseBody
+    public ServiceResponse publish(@RequestParam("id") Integer id) throws Exception {
+        ServiceResponse response = new ServiceResponse();
+
+        activityMapper.updateActivityOnline(id);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/detail")
+    @ResponseBody
+    public AddActivityResponse detail(@RequestParam("id") Integer id) throws Exception {
+        AddActivityResponse response = new AddActivityResponse();
+
+        Activity activity = activityMapper.selectActivityById(id);
+        if (activity != null) {
+            response.setId(activity.getId());
+            response.setImg(activity.getImg());
+            response.setTitle(activity.getTitle());
+            response.setPrice(activity.getPrice());
+            response.setContent(activity.getContent());
+            response.setStartTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getStartTime()));
+            response.setEndTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getEndTime()));
+            response.setTypeId(activity.getType().getId());
+            response.setAddressId(activity.getAddressDetail().getAddress().getId());
+            response.setAddressDetailId(activity.getAddressDetail().getId());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public ServiceResponse delete(@RequestParam("id") Integer id) throws Exception {
+        ServiceResponse response = new ServiceResponse();
+
+        activityMapper.deleteActivity(id);
+
+        return response;
+    }
 
     @RequestMapping(value = "/type/list")
     @ResponseBody

@@ -6,6 +6,10 @@
 
 <link href="${ctx }/static/js/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 
+<script type="text/javascript">
+    var activity_id = "${param.id}";
+</script>
+
 <div class="row-fluid">
 
     <div class="span12">
@@ -20,7 +24,7 @@
 
                     <i class="icon-reorder"></i>
 
-                    <span class="hidden-480">添加活动</span>
+                    <span class="hidden-480" id="titleSpan">添加活动</span>
 
                 </div>
 
@@ -28,15 +32,16 @@
 
             <div class="portlet-body form">
 
-                <form action="${ctx }/activity/add" class="form-horizontal" method="post" enctype="multipart/form-data" >
-
+                <form id="form_activity_add"
+                      action="${ctx }/activity/add" class="form-horizontal" method="post" enctype="multipart/form-data" >
+                    <br>
                     <div class="control-group">
-
+                        <input type="hidden" id="activityId" name="id">
                         <label class="control-label">活动标题：</label>
 
                         <div class="controls">
 
-                            <input type="text" class="m-wrap medium" name="title"/>
+                            <input type="text" class="m-wrap medium" name="title" id="title"/>
 
                             <span class="help-inline">0/32</span>
 
@@ -51,15 +56,8 @@
 
                         <div class="controls">
 
-                            <select class="small m-wrap" tabindex="1" name="typeId">
+                            <select class="medium m-wrap" tabindex="1" name="typeId" id="activityType">
 
-                                <option value="Category 1">Category 1</option>
-
-                                <option value="Category 2">Category 2</option>
-
-                                <option value="Category 3">Category 5</option>
-
-                                <option value="Category 4">Category 4</option>
 
                             </select>
 
@@ -93,26 +91,10 @@
 
                         <div class="controls">
 
-                            <select class="small m-wrap" tabindex="1">
-
-                                <option value="Category 1">Category 1</option>
-
-                                <option value="Category 2">Category 2</option>
-
-                                <option value="Category 3">Category 5</option>
-
-                                <option value="Category 4">Category 4</option>
+                            <select class="small m-wrap" tabindex="1" id="address">
 
                             </select>
-                            <select class="small m-wrap" tabindex="1" name="address">
-
-                                <option value="Category 1">Category 1</option>
-
-                                <option value="Category 2">Category 2</option>
-
-                                <option value="Category 3">Category 5</option>
-
-                                <option value="Category 4">Category 4</option>
+                            <select class="small m-wrap" tabindex="1" name="addressId" id="addressDetail">
 
                             </select>
                         </div>
@@ -124,15 +106,11 @@
 
                         <div class="controls">
 
-                            <select class="small m-wrap" tabindex="1">
-
-                                <option value="true">是</option>
-
-                                <option value="false">否</option>
+                            <select class="small m-wrap" tabindex="1" id="fee">
 
                             </select>
 
-                            <input type="text" class="m-wrap small" name="price"/>
+                            <input type="text" class="m-wrap small" name="price" id="price"/>
 
                             <span class="help-inline">元</span>
                         </div>
@@ -148,10 +126,12 @@
                             <div class="fileupload fileupload-new" data-provides="fileupload">
 
                                 <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="" id="imgShow" style="width: 200px; height: 150px;">
                                 </div>
 
                                 <div class="fileupload-preview fileupload-exists thumbnail"
-                                     style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;" >
+                                </div>
                                 <div>
 
 									<span class="btn btn-file"><span
@@ -159,7 +139,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUpload"/></span>
+									<input type="file" class="default" name="imgUpload" id="imgUpload"/></span>
 
                                     <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
@@ -183,9 +163,9 @@
 
                     <div class="form-actions">
 
-                        <input type="submit" class="btn blue" value="保存"/>
+                        <button type="button" class="btn blue" onclick="validateFromSub()"><i class="icon-ok"></i> 提交</button>
 
-                        <input type="reset" class="btn blue" value="清空" onclick=""/>
+                        <button type="button" class="btn blue" onclick="ret()">返回</button>
 
                     </div>
 
@@ -205,13 +185,12 @@
 
 <script type="text/javascript" src="${ctx }/static/media/js/bootstrap-fileupload.js"></script>
 
-
 <script type="text/javascript" src="${ctx }/static/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx }/static/js/umeditor/third-party/template.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx }/static/js/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx }/static/js/umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="${ctx }/static/js/umeditor/lang/zh-cn/zh-cn.js"></script>
-
+<script type="text/javascript" src="${ctx }/static/js/activity_add.js"></script>
 
 <script type="text/javascript">
     //实例化编辑器

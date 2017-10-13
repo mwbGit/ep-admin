@@ -2,17 +2,21 @@ package com.ep.controller.activity.api;
 
 import java.math.BigDecimal;
 
+import com.ep.controller.common.ServiceResponse;
+
 /**
  * Created by MengWeiBo on 2017-10-12
  */
-public class AddActivityRequest {
+public class AddActivityResponse extends ServiceResponse{
     private Integer id;
     private String title;
+    private String img;
     private String startTime;
     private String endTime;
     private BigDecimal price;
-    private Integer addressId;
     private String content;
+    private Integer addressId;
+    private Integer addressDetailId;
     private Integer typeId;
 
     public Integer getId() {
@@ -21,6 +25,14 @@ public class AddActivityRequest {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public BigDecimal getPrice() {
@@ -65,6 +77,14 @@ public class AddActivityRequest {
 
     public Integer getAddressId() {
         return addressId;
+    }
+
+    public Integer getAddressDetailId() {
+        return addressDetailId;
+    }
+
+    public void setAddressDetailId(Integer addressDetailId) {
+        this.addressDetailId = addressDetailId;
     }
 
     public void setAddressId(Integer addressId) {

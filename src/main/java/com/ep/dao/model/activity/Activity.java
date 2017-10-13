@@ -16,9 +16,9 @@ public class Activity {
     private Bool online;
     private BigDecimal price;
     private String img;
-    private String address;
     private String content;
     private ActivityType type;
+    private AddressDetail addressDetail;
 
     public Integer getId() {
         return id;
@@ -84,19 +84,19 @@ public class Activity {
         this.online = online;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public ActivityType getType() {
         return type;
     }
 
     public void setType(ActivityType type) {
         this.type = type;
+    }
+
+    public AddressDetail getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(AddressDetail addressDetail) {
+        this.addressDetail = addressDetail;
     }
 }

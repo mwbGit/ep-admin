@@ -4,6 +4,19 @@
 
 <mapper namespace="com.ep.dao.mapper.ActivityMapper">
 
+    <resultMap id="activityResult" type="Activity">
+        <id property="id" column="t_activity_id"/>
+        <result property="title" column="t_activity_title"/>
+        <result property="startTime" column="t_activity_start_time"/>
+        <result property="endTime" column="t_activity_end_time"/>
+        <result property="price" column="t_activity_price"/>
+        <result property="img" column="t_activity_img"/>
+        <result property="content" column="t_activity_content"/>
+        <result property="online" column="t_activity_is_online" jdbcType="CHAR" javaType="Bool"/>
+        <association property="type" javaType="ActivityType" resultMap="activityTypeResult" />
+        <association property="addressDetail" javaType="AddressDetail" resultMap="addressDetailResult" />
+    </resultMap>
+
     <resultMap id="activityTypeResult" type="ActivityType">
         <id property="id" column="t_activity_type_id"/>
         <result property="name" column="t_activity_type_name"/>
@@ -12,12 +25,94 @@
         <!--<association property="item" javaType="ServiceItem" resultMap="itemResult" />-->
     </resultMap>
 
+	<resultMap id="addressResult" type="Address">
+		<id property="id" column="t_address_id"/>
+		<result property="name" column="t_address_name"/>
+	</resultMap>
+
+	<resultMap id="addressDetailResult" type="AddressDetail">
+		<id property="id" column="t_address_detail_id"/>
+		<result property="name" column="t_address_detail_name"/>
+		<association property="address" javaType="Address" resultMap="addressResult" />
+	</resultMap>
+
+	<sql id="activityColumns">
+		aa.id AS t_activity_id,
+		aa.title AS t_activity_title,
+		aa.start_time AS t_activity_start_time,
+		aa.end_time AS t_activity_end_time,
+		aa.price AS t_activity_price,
+		aa.img AS t_activity_img,
+		aa.content AS t_activity_content,
+		aa.is_online AS t_activity_is_online
+	</sql>
+
+	<sql id="addressColumns">
+		a.id AS t_address_id,
+		a.name AS t_address_name
+	</sql>
+
+	<sql id="addressDetailColumns">
+		ad.id AS t_address_detail_id,
+		ad.name AS t_address_detail_name,
+		ad.address_id AS t_address_detail_address_id
+	</sql>
+
     <sql id="activityTypeColumns">
 		u.id AS t_activity_type_id,
 		u.name AS t_activity_type_name,
 		u.sequence AS t_activity_type_sequence,
 		u.is_deleted AS t_activity_type_is_deleted
 	</sql>
+
+	<insert id="insertOrUpdateActivity"
+			parameterType="Activity"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO t_activity(
+		`title`,
+		start_time,
+		end_time,
+		price,
+		img,
+		content,
+		type_id,
+		address_detail_id,
+		is_online
+		) VALUES (
+		#{title},
+		#{startTime},
+		#{endTime},
+		#{price},
+		#{img},
+		#{content},
+		#{type.id},
+		#{addressDetail.id},
+		'N'
+		) ON DUPLICATE KEY UPDATE
+			<if  test="img != null">
+				img = #{img},
+			</if>
+			title = #{title},
+			start_time = #{startTime},
+			end_time = #{endTime},
+			price = #{price},
+			content = #{content},
+			type_id = #{type.id},
+			address_detail_id = #{addressDetail.id}
+	</insert>
+
+	<update id="updateActivityOnline">
+		UPDATE t_activity
+		SET
+		is_online = 'Y'
+		WHERE id = #{id}
+	</update>
+
+	<delete id="deleteActivity">
+		DELETE FROM t_activity
+		WHERE id = #{id}
+	</delete>
 
     <insert id="insertActivityType"
 		 parameterType="ActivityType"
@@ -73,13 +168,71 @@
 		is_deleted = 'N'
 	</select>
 
-	<select id="selectActivityById" resultMap="activityTypeResult">
+	<select id="selectActivityTypeById" resultMap="activityTypeResult">
 		SELECT
 		<include refid="activityTypeColumns"/>
 		FROM
 		t_activity_type u
 		WHERE
 		id= #{id}
+	</select>
+
+    <select id="selectActivityById" resultMap="activityResult">
+        SELECT
+        <include refid="activityColumns"/>,
+        <include refid="activityTypeColumns"/>,
+        <include refid="addressDetailColumns"/>,
+        <include refid="addressColumns"/>
+        FROM
+		t_activity aa
+		INNER JOIN t_activity_type u ON aa.type_id = u.id
+		INNER JOIN t_address_detail ad ON ad.id = aa.address_detail_id
+		INNER JOIN t_address a ON a.id = ad.address_id
+		WHERE aa.id = #{id}
+    </select>
+
+    <select id="selectActivityList" resultMap="activityResult">
+        SELECT
+        <include refid="activityColumns"/>,
+        <include refid="activityTypeColumns"/>,
+        <include refid="addressDetailColumns"/>,
+        <include refid="addressColumns"/>
+        FROM
+		t_activity aa
+		INNER JOIN t_activity_type u ON aa.type_id = u.id
+		INNER JOIN t_address_detail ad ON ad.id = aa.address_detail_id
+		INNER JOIN t_address a ON a.id = ad.address_id
+		<where>
+			<if test="filter.title != null">
+				aa.title LIKE #{filter.title}
+			</if>
+			<if test="filter.typeId != null">
+				AND aa.type_id LIKE #{filter.typeId}
+			</if>
+		</where>
+		ORDER BY aa.end_time DESC
+        <if test="filter.start != null and filter.size != null">
+            limit #{filter.start}, #{filter.size}
+        </if>
+
+    </select>
+
+	<select id="countActivityList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+		t_activity aa
+		INNER JOIN t_activity_type u ON aa.type_id = u.id
+		INNER JOIN t_address_detail ad ON ad.id = aa.address_detail_id
+		INNER JOIN t_address a ON a.id = ad.address_id
+		<where>
+			<if test="filter.title != null">
+				aa.title LIKE #{filter.title}
+			</if>
+			<if test="filter.typeId != null">
+				AND aa.type_id LIKE #{filter.typeId}
+			</if>
+		</where>
 	</select>
 
 	<select id="countActivityByName" resultType="int">
@@ -118,6 +271,24 @@
 		</if>
 
 		limit 0,1
+	</select>
+
+	<select id="selectAllAddressList" resultMap="addressResult">
+		SELECT
+		<include refid="addressColumns"/>
+		FROM
+			t_address a
+
+	</select>
+
+	<select id="selectAllAddressDetailListByAddressId" resultMap="addressDetailResult">
+		SELECT
+		<include refid="addressColumns"/>,
+		<include refid="addressDetailColumns"/>
+		FROM
+			t_address_detail ad
+	  		INNER JOIN t_address a ON a.id = ad.address_id
+		WHERE ad.address_id= #{addressId}
 	</select>
 
 </mapper>

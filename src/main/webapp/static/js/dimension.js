@@ -19,23 +19,9 @@ jQuery(document).ready(function () {
 
 });
 
-function testNumber(number) {
-    var re = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
-    if (number== null || number =='' || !re.test(number)) {
-        alert("非法数字！");
-        return false;
-    }
 
-    return true;
-}
 
-function testStr(itemName) {
-    if (itemName== null || itemName ==''){
-        alert("输入不正确！");
-        return;
-    }
-    return true;
-}
+
 
 function modifyItem(id) {
     var itemId = $('#item-id' + id).val();

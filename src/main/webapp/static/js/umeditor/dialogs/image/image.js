@@ -184,7 +184,6 @@
             return me;
         },
         uploadComplete: function(r){
-            debugger
             var me = this;
             try{
                 var json = eval('('+r+')');
@@ -195,7 +194,6 @@
             }
         },
         submit: function (callback) {
-            debugger
             var me = this,
                 input = $( '<input style="filter: alpha(opacity=0);" class="edui-image-file" type="file" hidefocus="" name="upfile" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp">'),
                 input = input[0];

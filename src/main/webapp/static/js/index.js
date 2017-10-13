@@ -23,7 +23,46 @@ $(function () {
     });
 
 });
+function testNumber(number) {
+    var re = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+    if (number== null || number =='' || !re.test(number)) {
+        alert("非法数字！");
+        return false;
+    }
 
+    return true;
+}
+
+function testPrice(num, msg) {
+    var exp = /^[\-\+]?([0-9]\d*|0|[1-9]\d{0,2}(,\d{3})*)(\.\d+)?$/;
+    if(!testStrMsg(num,msg)){
+        return false;
+    }
+
+    if (!exp.test(num)){
+        msg += "格式不正确！";
+        alert(msg);
+        return false;
+    }
+    return true;
+}
+
+function testStr(str) {
+    if (str== null || str ==''){
+        alert("不能为空！");
+        return false;
+    }
+    return true;
+}
+
+function testStrMsg(str, msg) {
+    msg += "不能为空！";
+    if (str== null || str ==''){
+        alert(msg);
+        return false;
+    }
+    return true;
+}
 
 function loadJsp(item) {
     $('#showAddItem').hide();
@@ -46,6 +85,9 @@ function loadJsp(item) {
     } else if (item == "activity_add") {
         $('#dashboard').load($ctx + "/views/activity_add.jsp");
         $('#menuTitle').html("添加活动");
+    } else if (item == "activity_manager") {
+        $('#dashboard').load($ctx + "/views/activity_manager.jsp");
+        $('#menuTitle').html("活动管理");
     }
 }
 

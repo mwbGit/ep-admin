@@ -165,8 +165,48 @@ CREATE TABLE `t_activity_type` (
   `is_deleted` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_activity_type_name` (`name`),
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ----------------------------
+-- 1级地址
+-- ----------------------------
+DROP TABLE IF EXISTS  `t_address` ;
+CREATE TABLE `t_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ----------------------------
+-- 2级地址
+-- ----------------------------
+DROP TABLE IF EXISTS  `t_address_detail` ;
+CREATE TABLE `t_address_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `address_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_address_detail_address` FOREIGN KEY (`address_id`) REFERENCES `t_address` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ----------------------------
+-- 活动
+-- ----------------------------
+DROP TABLE IF EXISTS  `t_activity` ;
+CREATE TABLE `t_activity` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(64) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `price`decimal(18,2) DEFAULT NULL,
+  `img` varchar(128) NOT NULL,
+  `content` text NOT NULL,
+  `is_online` char(1) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `address_detail_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_activity_type_name` (`name`),
+  CONSTRAINT `fk_activity_type` FOREIGN KEY (`type_id`) REFERENCES `t_activity_type` (`id`),
+  CONSTRAINT `fk_activity_address_detail` FOREIGN KEY (`address_detail_id`) REFERENCES `t_address_detail` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
