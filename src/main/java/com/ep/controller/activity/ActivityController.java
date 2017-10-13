@@ -1,9 +1,7 @@
 package com.ep.controller.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,14 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ep.controller.activity.api.ActivityTypeVO;
+import com.ep.controller.activity.api.AddActivityRequest;
+import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
 import com.ep.dao.mapper.ActivityMapper;
+import com.ep.dao.model.activity.Activity;
 import com.ep.dao.model.activity.ActivityType;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PagingFilter;
 import com.ep.service.activity.api.IActivityService;
+import com.ep.service.upload.api.IUploadService;
+import com.ep.util.DateTimeUtility;
 
 @RequestMapping(value = "/activity")
 @Controller
@@ -31,10 +35,43 @@ public class ActivityController {
     @Autowired
     private IActivityService activityService;
 
+    @Autowired
+    private IUploadService uploadService;
+
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public ServiceResponse add(@RequestParam("imgUpload") MultipartFile uploadFile, AddActivityRequest activityRequest) throws Exception {
+        ServiceResponse response = new ServiceResponse();
+
+        String url = uploadService.uploadImage(uploadFile);
+
+        if (url != null) {
+            System.out.println(url);
+        } else {
+            response.setCode("1");
+            response.setMessage("上传失败");
+        }
+
+        Activity activity = new Activity();
+        activity.setTitle(activityRequest.getTitle());
+        activity.setStartTime(DateTimeUtility.parseYYYYMMDDHHMM(activityRequest.getStartTime()));
+        activity.setEndTime(DateTimeUtility.parseYYYYMMDDHHMM(activityRequest.getEndTime()));
+        activity.setPrice(activity.getPrice());
+        activity.setContent(activityRequest.getContent());
+        activity.setImg(url);
+        activity.setOnline(Bool.N);
+        ActivityType type = new ActivityType();
+        type.setId(activityRequest.getTypeId());
+        activity.setType(type);
+
+
+        return response;
+    }
+
 
     @RequestMapping(value = "/type/list")
     @ResponseBody
-    public Map<String, Object> typeList(Integer iDisplayStart, Integer iDisplayLength) {
+    public PagingResponse<List<ActivityTypeVO>> typeList(Integer iDisplayStart, Integer iDisplayLength) {
 
         List<ActivityType> types = activityMapper.selectActivityTypeList(new PagingFilter(iDisplayStart, iDisplayLength));
         int count = activityMapper.countActivityTypeList(new PagingFilter(iDisplayStart, iDisplayLength));
@@ -67,17 +104,16 @@ public class ActivityController {
             }
         }
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("aaData", vos);
-        map.put("iTotalDisplayRecords", count);
-        map.put("iTotalRecords", count);
+        PagingResponse<List<ActivityTypeVO>> response = new PagingResponse<>();
+        response.setTotalCount(count);
+        response.setAaData(vos);
 
-        return map;
+        return response;
     }
 
     @RequestMapping(value = "/type/delete")
     @ResponseBody
-    public ServiceResponse delete(@RequestParam(value = "id") Integer id) {
+    public ServiceResponse typeDelete(@RequestParam(value = "id") Integer id) {
 
         ActivityType activityType = new ActivityType();
         activityType.setId(id);
@@ -90,7 +126,7 @@ public class ActivityController {
 
     @RequestMapping(value = "/type/modify")
     @ResponseBody
-    public ServiceResponse modify(@RequestParam(value = "id") Integer id, String name, Boolean asc) {
+    public ServiceResponse typpModify(@RequestParam(value = "id") Integer id, String name, Boolean asc) {
         ServiceResponse response = new ServiceResponse();
 
         if (asc == null) {
@@ -116,7 +152,7 @@ public class ActivityController {
 
     @RequestMapping(value = "/type/add")
     @ResponseBody
-    public ServiceResponse add(@RequestParam(value = "name") String name) {
+    public ServiceResponse typeAdd(@RequestParam(value = "name") String name) {
         ServiceResponse response = new ServiceResponse();
         if (StringUtils.isBlank(name)) {
             response.setCode("1");

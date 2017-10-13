@@ -43,6 +43,9 @@ function loadJsp(item) {
     } else if (item == "activity_type") {
         $('#dashboard').load($ctx + "/views/activity_type.jsp");
         $('#menuTitle').html("活动分类管理");
+    } else if (item == "activity_add") {
+        $('#dashboard').load($ctx + "/views/activity_add.jsp");
+        $('#menuTitle').html("添加活动");
     }
 }
 

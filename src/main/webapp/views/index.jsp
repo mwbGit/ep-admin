@@ -274,6 +274,13 @@
 
 						</li>
 
+						<li id="activity_add-li">
+
+							<a href="#" onclick="loadJsp('activity_add')">
+
+								添加活动</a>
+						</li>
+
 					</ul>
 
 				</li>

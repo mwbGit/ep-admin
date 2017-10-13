@@ -5,42 +5,45 @@ import java.io.Serializable;
 /**
  * Created by MengWeiBo on 2017-03-28
  */
-public class PagingResponse extends ServiceResponse implements Serializable {
+public class PagingResponse<T> extends ServiceResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int pageNumber;
-    private int recordNumber;
-    private int totalPage;
+    private int iTotalDisplayRecords;
+    private int iTotalRecords;
+    private int totalCount;
+    private T aaData;
 
-    public int getPageNumber() {
-        return pageNumber;
+    public int getiTotalDisplayRecords() {
+        return iTotalDisplayRecords;
     }
 
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
+    public void setiTotalDisplayRecords(int iTotalDisplayRecords) {
+        this.iTotalDisplayRecords = iTotalDisplayRecords;
     }
 
-    public int getRecordNumber() {
-        return recordNumber;
+    public int getiTotalRecords() {
+        return iTotalRecords;
     }
 
-    public void setRecordNumber(int recordNumber) {
-        this.recordNumber = recordNumber;
+    public void setiTotalRecords(int iTotalRecords) {
+        this.iTotalRecords = iTotalRecords;
     }
 
-    public int getTotalPage() {
-        return totalPage;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+        this.iTotalRecords = totalCount;
+        this.iTotalDisplayRecords = totalCount;
     }
 
-    public void setPagingResult(PagingResult result) {
-        if (result != null) {
-            setPageNumber(result.getPageNumber());
-            setRecordNumber(result.getRecordNumber());
-            setTotalPage(result.getTotalPage());
-        }
+    public T getAaData() {
+        return aaData;
+    }
+
+    public void setAaData(T aaData) {
+        this.aaData = aaData;
     }
 }

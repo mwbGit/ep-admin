@@ -6,12 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ep.dao.filter.ComplainFilter;
-import com.ep.dao.model.common.PagingFilter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.complain.api.ComplainVO;
 import com.ep.controller.complain.api.DimensionRequest;
 import com.ep.controller.complain.api.DimensionVO;
 import com.ep.controller.complain.api.ItemRequest;
+import com.ep.dao.filter.ComplainFilter;
 import com.ep.dao.mapper.ComplainMapper;
 import com.ep.dao.model.complain.*;
 import com.ep.service.complain.api.IComplainService;
@@ -43,7 +42,7 @@ public class ComplainController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Map<String, Object> complainList(Integer typeId, Integer iDisplayStart, Integer iDisplayLength) {
+    public PagingResponse<List<ComplainVO>> complainList(Integer typeId, Integer iDisplayStart, Integer iDisplayLength) {
         ComplainFilter filter = new ComplainFilter();
         filter.setTypeId(typeId);
         filter.setStart(iDisplayStart);
@@ -53,12 +52,11 @@ public class ComplainController {
 
         int count = complainMapper.countComplain(filter);
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("aaData", ComplainVO.toVOs(complains));
-        map.put("iTotalDisplayRecords", count);
-        map.put("iTotalRecords", count);
+        PagingResponse<List<ComplainVO>> response = new PagingResponse<>();
+        response.setAaData(ComplainVO.toVOs(complains));
+        response.setTotalCount(count);
 
-        return map;
+        return response;
     }
 
 

@@ -1,10 +1,11 @@
 package com.ep.controller.user;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.ep.dao.filter.UserFilter;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.user.api.UserVO;
 import com.ep.controller.util.ApplicationContextUtils;
+import com.ep.dao.filter.UserFilter;
 import com.ep.dao.mapper.SpaceMapper;
 import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.model.common.Bool;
@@ -39,7 +42,7 @@ public class UserController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Map<String, Object> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch) {
+    public PagingResponse<List<UserVO>> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch) {
         UserFilter filter = new UserFilter();
         filter.setStart(iDisplayStart);
         filter.setSize(iDisplayLength);
@@ -81,12 +84,11 @@ public class UserController {
             }
         }
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("aaData", vos);
-        map.put("iTotalDisplayRecords", count);
-        map.put("iTotalRecords", count);
+        PagingResponse<List<UserVO>> response = new PagingResponse<>();
+        response.setTotalCount(count);
+        response.setAaData(vos);
 
-        return map;
+        return response;
     }
 
     @RequestMapping(value = "/delete")

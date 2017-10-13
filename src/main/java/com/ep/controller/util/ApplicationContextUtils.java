@@ -15,8 +15,19 @@ public class ApplicationContextUtils {
         HttpSession session = null;
         try {
             session = getRequest().getSession();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return session;
+    }
+
+    public static String getDomain() {
+        String url = getRequest().getScheme() + "://" + getRequest().getServerName();
+        if (getRequest().getServerName().equals("localhost")) {
+            url += ":" + getRequest().getServerPort();
+        }
+        url += getRequest().getContextPath();
+
+        return url;
     }
 
     public static User getUser() {
@@ -32,7 +43,7 @@ public class ApplicationContextUtils {
     }
 
     public static HttpServletRequest getRequest() {
-        ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return attrs.getRequest();
     }
 
