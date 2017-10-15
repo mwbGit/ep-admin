@@ -2,13 +2,11 @@ package com.ep.dao.mapper;
 
 import java.util.List;
 
+import com.ep.dao.filter.ActivityUserFilter;
+import com.ep.dao.model.activity.*;
 import org.apache.ibatis.annotations.Param;
 
 import com.ep.dao.filter.ActivityFilter;
-import com.ep.dao.model.activity.Activity;
-import com.ep.dao.model.activity.ActivityType;
-import com.ep.dao.model.activity.Address;
-import com.ep.dao.model.activity.AddressDetail;
 import com.ep.dao.model.common.PagingFilter;
 import com.ep.dao.model.user.User;
 
@@ -22,6 +20,10 @@ public interface ActivityMapper {
     public List<Activity> selectActivityList(@Param("filter") ActivityFilter filter);
 
     public int countActivityList(@Param("filter") ActivityFilter filter);
+
+    public List<ActivityUser> selectActivityUserList(@Param("filter") ActivityUserFilter filter);
+
+    public int countActivityUserList(@Param("filter") ActivityUserFilter filter);
 
     public List<Address>  selectAllAddressList();
 

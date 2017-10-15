@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ep.dao.mapper.ActivityMapper">
+	<resultMap id="userResult" type="User" extends="com.ep.dao.mapper.UserMapper.userResult" />
 
     <resultMap id="activityResult" type="Activity">
         <id property="id" column="t_activity_id"/>
@@ -22,7 +23,6 @@
         <result property="name" column="t_activity_type_name"/>
         <result property="sequence" column="t_activity_type_sequence"/>
         <result property="deleted" column="t_activity_type_is_deleted" jdbcType="CHAR" javaType="Bool"/>
-        <!--<association property="item" javaType="ServiceItem" resultMap="itemResult" />-->
     </resultMap>
 
 	<resultMap id="addressResult" type="Address">
@@ -35,6 +35,26 @@
 		<result property="name" column="t_address_detail_name"/>
 		<association property="address" javaType="Address" resultMap="addressResult" />
 	</resultMap>
+
+	<resultMap id="activityUserResult" type="ActivityUser">
+		<id property="id" column="t_activity_user_id"/>
+		<result property="price" column="t_activity_user_price"/>
+		<result property="createDate" column="t_activity_user_create_date"/>
+		<association property="user" javaType="User" resultMap="userResult" />
+		<association property="activity" javaType="Activity" resultMap="activityResult" />
+	</resultMap>
+
+	<sql id="userColumns" >
+		<include refid="com.ep.dao.mapper.UserMapper.userColumns"/>
+	</sql>
+
+	<sql id="activityUserColumns">
+		au.id AS t_activity_user_id,
+		au.price AS t_activity_user_price,
+		au.create_date AS t_activity_user_create_date,
+		au.user_id AS t_activity_user_user_id,
+		au.activity_id AS t_activity_user_activity_id
+	</sql>
 
 	<sql id="activityColumns">
 		aa.id AS t_activity_id,
@@ -144,6 +164,47 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+
+    <select id="selectActivityUserList" resultMap="activityUserResult">
+        SELECT
+        <include refid="activityUserColumns"/>,
+        <include refid="userColumns"/>,
+        <include refid="activityColumns"/>
+        FROM
+		t_activity_user au
+		INNER JOIN t_user u ON  u.id = au.user_id
+		INNER JOIN t_activity aa ON  aa.id = au.activity_id
+		<where>
+			<if test="filter.activityId != null">
+			   au.activity_id = #{filter.activityId}
+			</if>
+			<if test="filter.userName != null">
+			  AND u.name LIKE #{filter.userName}
+			</if>
+		</where>
+		ORDER BY au.create_date ASC
+        <if test="filter.start != null and filter.size != null">
+            limit #{filter.start}, #{filter.size}
+        </if>
+
+    </select>
+
+    <select id="countActivityUserList" resultType="int">
+        SELECT
+        	COUNT(*)
+        FROM
+		t_activity_user au
+		INNER JOIN t_user u ON  u.id = au.user_id
+		INNER JOIN t_activity aa ON  aa.id = au.activity_id
+		<where>
+			<if test="filter.activityId != null">
+				au.activity_id = #{filter.activityId}
+			</if>
+			<if test="filter.userName != null">
+				AND u.name LIKE #{filter.userName}
+			</if>
+		</where>
+    </select>
 
     <select id="selectActivityTypeList" resultMap="activityTypeResult">
         SELECT
