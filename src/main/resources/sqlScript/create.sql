@@ -222,6 +222,8 @@ CREATE TABLE `t_activity_user` (
   `activity_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_activity_user_activity_user` (`user_id`, `activity_id`),
+  KEY `key_activity_user_user` (`user_id`),
+  KEY `idx_activity_user_activity` (`activity_id`),
   CONSTRAINT `fk_activity_user_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `fk_activity_user_activity` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

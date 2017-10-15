@@ -245,7 +245,7 @@ public class ActivityController {
             response.setCode("1");
             response.setMessage("上传失败");
             return response;
-        } else if (activityRequest.getId() != null) {
+        } else if (url == null && activityRequest.getId() != null) {
             Activity activity = activityMapper.selectActivityById(activityRequest.getId());
             url = activity.getImg();
         }
