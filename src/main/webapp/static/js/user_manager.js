@@ -84,7 +84,7 @@ jQuery(document).ready(function () {
         // "bInfo": false, //是否显示页脚信息，DataTables插件左下角显示记录数
 
         "oLanguage": {
-            "sSearch" : "搜索",
+            "sSearch" : "姓名",
             "sProcessing": "正在加载中......",
             "sZeroRecords": "对不起，查询不到相关数据！",
             "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",

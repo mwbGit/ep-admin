@@ -52,8 +52,8 @@ jQuery(document).ready(function () {
                             '<i class="icon-bullhorn" ></i></span></a> &nbsp';
                     }
 
-                    str += '<a href="javascript:;">' +
-                        '<span   data-toggle="tooltip"  title="报名名单" > ' +
+                    str += '<a href="javascript:;" onclick="users(' + full.id + ')">' +
+                        '<span data-toggle="tooltip"  title="报名列表" > ' +
                         '<i class="icon-user" ></i></span></a>&nbsp&nbsp';
 
                     str += '<a href="javascript:;"  onclick="deleteActivity(' + full.id + ')">' +
@@ -149,4 +149,13 @@ function reLoad(data) {
         $('.close').click();
         $('#dashboard').load($ctx + "/views/activity_manager.jsp");
     }
+}
+
+function users(activityId) {
+    var p = {
+        id: activityId
+    };
+    $('#menuTitle').html("报名列表");
+    $('#dashboard').load($ctx + "/views/activity_user.jsp", p);
+
 }

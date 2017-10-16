@@ -16,7 +16,7 @@
 
         <!-- BEGIN SAMPLE FORM PORTLET-->
 
-        <div class="portlet box blue tabbable">
+        <div class="portlet box light-grey tabbable">
 
             <div class="portlet-title">
 
@@ -154,7 +154,8 @@
                     <div class="control-group">
 
                         <div class="controls">
-                            <textarea name="content" type="text/plain" id="myEditor" style="width:1000px;height:240px;"></textarea>
+                            <textarea name="content" type="text/plain"
+                                      id="myEditor" style="height: 240px;width:724px"></textarea>
 
 
                         </div>
