@@ -80,7 +80,7 @@ public class WeChatPayServiceImpl implements WeChatPayService{
     private Map<String, Object> getWechatPayParams( String openId, float moneySum, String sysOrderCode, String wxPayNotifyUrl) {
         //涉及金钱，应该等微信支付回调在处理积分
         PreOrder preOrder = new PreOrder();
-        preOrder.setBody("e_parke");
+        preOrder.setBody("eparke");
         preOrder.setOpenId(openId);
         //转成分
         preOrder.setTotalFee((int) Math.ceil(moneySum * 100));

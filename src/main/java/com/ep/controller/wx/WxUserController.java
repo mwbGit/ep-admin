@@ -4,12 +4,15 @@ import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.wx.user.UserBindRequest;
 import com.ep.controller.wx.user.UserBindResponse;
 import com.ep.service.user.api.IUserService;
+import com.ep.service.we_chat.WeChatService;
+import com.ep.service.we_chat.pay.api.AccessTokenAndOpenId;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RequestMapping(value = "/wx")
 @Controller
@@ -17,6 +20,9 @@ public class WxUserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private WeChatService weChatService;
+
 
     @RequestMapping(value = "/bind")
     @ResponseBody
@@ -33,6 +39,14 @@ public class WxUserController {
 
         response.setToken(token);
         return response;
+    }
+
+    @RequestMapping(value = "/openid")
+    @ResponseBody
+    public AccessTokenAndOpenId getOpenId(@RequestParam("code") String code) throws IOException {
+
+        return weChatService.getAccessTokenAndOpenId(code);
+
     }
 
     @RequestMapping(value = "/test")
