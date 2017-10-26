@@ -151,7 +151,6 @@ function changeAddress(id) {
 }
 
 function validateFromSub() {
-
     if (!testStrMsg($("#title").val(), "标题")) {
         return;
     } else if ($("#title").val().length > 32) {
@@ -168,7 +167,7 @@ function validateFromSub() {
         }
     }
 
-    if ($("#imgUpload").val() == null && $("#imgShow").attr("src") != '') {
+    if ($("#imgUpload").val() == '' && $("#imgShow").attr("src") == '') {
         alert("上传封面！");
         return;
     }

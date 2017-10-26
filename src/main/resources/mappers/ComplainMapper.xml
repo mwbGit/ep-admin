@@ -8,7 +8,6 @@
 		<id property="id" column="dimension_id"/>
 		<result property="name" column="dimension_name"/>
 		<result property="ratio" column="dimension_ratio"/>
-		<!--<result property="type" column="dimension_type_id" javaType="dimensionType" typeHandler="EnumIdTypeHandler" />-->
 		<result property="type" column="dimension_type_id" javaType="DimensionType" typeHandler="EnumIdTypeHandler" />
 		<association property="item" javaType="ServiceItem" resultMap="itemResult" />
 	</resultMap>
@@ -17,7 +16,6 @@
 		<id property="id" column="item_id"/>
 		<result property="name" column="item_name"/>
 		<result property="ratio" column="item_ratio"/>
-		<!--<result property="type" column="dimension_type_id" javaType="dimensionType" typeHandler="EnumIdTypeHandler" />-->
 		<!--<result property="type" column="dimension_project_type_id" javaType="DimensionType" typeHandler="EnumIdTypeHandler" />-->
 	</resultMap>
 

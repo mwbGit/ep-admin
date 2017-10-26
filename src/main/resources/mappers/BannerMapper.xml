@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ep.dao.mapper.BannerMapper">
+
+    <resultMap id="bannerResult" type="Banner">
+        <id property="id" column="banner_id"/>
+        <result property="title" column="banner_title"/>
+        <result property="img" column="banner_img"/>
+        <result property="linkUrl" column="banner_link_url"/>
+        <result property="sequence" column="banner_sequence"/>
+        <result property="online" column="banner_is_online" jdbcType="CHAR" javaType="Bool"/>
+        <result property="updateDate" column="banner_update_date"/>
+        <result property="updatedById" column="banner_updated_by_id"/>
+        <result property="updatedByName" column="banner_updated_by_name"/>
+        <result property="activityId" column="banner_activity_id"/>
+        <result property="type" column="banner_type_id" javaType="BannerType" typeHandler="EnumIdTypeHandler" />
+        <result property="position" column="banner_position_id" javaType="BannerPosition" typeHandler="EnumIdTypeHandler" />
+	</resultMap>
+
+	<sql id="bannerColumns">
+		b.id AS banner_id,
+		b.title AS banner_title,
+		b.img AS banner_img,
+		b.link_url AS banner_link_url,
+		b.sequence AS banner_sequence,
+		b.is_online AS banner_is_online,
+		b.update_date AS banner_update_date,
+		b.updated_by_id AS banner_updated_by_id,
+		b.updated_by_name AS banner_updated_by_name,
+		b.type_id AS banner_type_id,
+		b.position_id AS banner_position_id,
+		b.activity_id AS banner_activity_id
+	</sql>
+
+    <insert id="insertBanner" parameterType="Banner">
+		INSERT INTO t_banner(
+			`title`,
+			`img`,
+			`link_url`,
+			`sequence`,
+			`is_online`,
+			`update_date`,
+			`updated_by_id`,
+			`updated_by_name`,
+			`activity_id`,
+			`type_id`,
+			position_id
+		) VALUES
+		(
+			#{title},
+			#{img},
+			#{linkUrl},
+			#{sequence},
+			#{online.code},
+			#{updateDate},
+			#{updatedById},
+			#{updatedByName},
+			#{activityId},
+			#{type.id},
+			#{position.id}
+		)
+	</insert>
+
+	<update id="updateBanner"
+			parameterType="Banner">
+		UPDATE t_banner
+		<set>
+			<if test="title != null">
+				`title` = #{title},
+			</if>
+			<if test="img != null">
+				img = #{img},
+			</if>
+			<if test="linkUrl != null">
+				link_url = #{linkUrl},
+			</if>
+			<if test="sequence != null">
+				sequence = #{sequence},
+			</if>
+			<if test="online != null">
+				is_online = #{online.code},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate},
+			</if>
+			<if test="updatedById != null">
+				updated_by_id = #{updatedById},
+			</if>
+			<if test="updatedByName != null">
+				updated_by_name = #{updatedByName},
+			</if>
+			<if test="position != null">
+				position_id = #{position.id},
+			</if>
+			<if test="activityId != null">
+				activity_id = #{activityId},
+			</if>
+			<if test="type != null">
+				type_id = #{type.id}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+    <delete id="deleteBannerById" >
+        DELETE FROM t_banner  WHERE id = #{id}
+    </delete>
+
+	<select id="selectBannerBySequence" resultMap="bannerResult">
+		SELECT
+		<include refid="bannerColumns"/>
+		FROM
+			t_banner b
+		WHERE
+		<if test="asc == true">
+			 sequence<![CDATA[ < ]]> #{sequence}
+			ORDER BY sequence DESC
+		</if>
+		<if test="asc == false">
+			 sequence<![CDATA[ > ]]> #{sequence}
+			ORDER BY sequence ASC
+		</if>
+		limit 0,1
+	</select>
+
+	<select id="selectBannerById" resultMap="bannerResult">
+		SELECT
+		<include refid="bannerColumns"/>
+		FROM
+			t_banner b
+		WHERE b.id = #{id}
+	</select>
+
+	<select id="selectBannerList" resultMap="bannerResult">
+		SELECT
+		<include refid="bannerColumns"/>
+		FROM
+			t_banner b
+		<where>
+			<if test="filter.position != null">
+				b.position_id = #{filter.position.id}
+			</if>
+		</where>
+		ORDER BY b.sequence ASC
+		<if test="filter.start != null and filter.size != null">
+			limit #{filter.start}, #{filter.size}
+		</if>
+
+	</select>
+
+	<select id="countBannerList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_banner b
+		<where>
+			<if test="filter.position != null">
+				b.position_id = #{filter.position.id}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectMaxBannerSequence" resultType="int">
+		SELECT
+			MAX(sequence) + 1
+		FROM
+			t_banner
+	</select>
+</mapper>
