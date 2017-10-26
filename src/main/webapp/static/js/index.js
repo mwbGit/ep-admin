@@ -87,7 +87,7 @@ function loadJsp(item) {
         $('#menuTitle').html("添加活动");
     } else if (item == "activity_manager") {
         $('#dashboard').load($ctx + "/views/activity_manager.jsp");
-        $('#menuTitle').html("活动管理");
+        $('#menuTitle').html("活动内容管理");
     } else if (item == "banner_manager") {
         $('#dashboard').load($ctx + "/views/banner_manager.jsp");
         $('#menuTitle').html("轮播图管理");

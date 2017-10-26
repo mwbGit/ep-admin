@@ -243,13 +243,6 @@
 
                 <ul class="sub-menu">
 
-                    <li id="activity_manager-li">
-
-                        <a href="#" onclick="loadJsp('activity_manager')">
-
-                            活动管理</a>
-                    </li>
-
                     <li id="activity_add-li">
 
                         <a href="#" onclick="loadJsp('activity_add')">
@@ -257,6 +250,12 @@
                             添加活动</a>
                     </li>
 
+                    <li id="activity_manager-li">
+
+                        <a href="#" onclick="loadJsp('activity_manager')">
+
+                            活动内容管理</a>
+                    </li>
                     <li id="activity-type-li">
 
                         <a href="#" onclick="loadJsp('activity_type')">
