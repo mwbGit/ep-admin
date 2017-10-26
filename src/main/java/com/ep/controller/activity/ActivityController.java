@@ -50,7 +50,6 @@ public class ActivityController {
     @Autowired
     private IUploadService uploadService;
 
-
     @Autowired
     private SpaceMapper spaceMapper;
 
@@ -370,7 +369,7 @@ public class ActivityController {
 
     @RequestMapping(value = "/type/modify")
     @ResponseBody
-    public ServiceResponse typpModify(@RequestParam(value = "id") Integer id, String name, Boolean asc) {
+    public ServiceResponse typeModify(@RequestParam(value = "id") Integer id, String name, Boolean asc) {
         ServiceResponse response = new ServiceResponse();
 
         if (asc == null) {

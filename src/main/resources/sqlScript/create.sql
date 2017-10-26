@@ -227,3 +227,54 @@ CREATE TABLE `t_activity_user` (
   CONSTRAINT `fk_activity_user_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `fk_activity_user_activity` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- banner位置
+-- ----------------------------
+DROP TABLE IF EXISTS  `t_banner_position` ;
+CREATE TABLE `t_banner_position` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` char(32) NOT NULL,
+  `description` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_banner_position_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- banner 类型
+-- ----------------------------
+DROP TABLE IF EXISTS  `t_banner_type` ;
+CREATE TABLE `t_banner_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` char(32) NOT NULL,
+  `description` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_banner_type_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- banner
+-- ----------------------------
+DROP TABLE IF EXISTS  `t_banner` ;
+CREATE TABLE `t_banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(64) NOT NULL,
+  `img` varchar(128) NOT NULL,
+  `link_url` varchar(128) DEFAULT NULL,
+  `sequence` int(11) NOT NULL,
+  `is_online` char(1) NOT NULL,
+  `update_date` date NOT NULL,
+  `updated_by_id` int(11) NOT NULL,
+  `updated_by_name` char(32) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `activity_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_banner_type` FOREIGN KEY (`type_id`) REFERENCES `t_banner_type` (`id`),
+  CONSTRAINT `fk_banner_position` FOREIGN KEY (`position_id`) REFERENCES `t_banner_position` (`id`),
+  CONSTRAINT `fk_banner_activity` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `t_banner_position` VALUES ('1', 'HOME_PAGE', '首页轮播'),('2', 'E_CARD', 'E卡管理轮播');
+INSERT INTO `t_banner_type` VALUES ('1', 'ACTIVITY', '活动详情'),('2', 'CUSTOM', '自定义'),('3', 'NONE', '无');
+

@@ -71,6 +71,9 @@
     <!-- END PAGE LEVEL STYLES -->
 
     <link rel="shortcut icon" href="${ctx }/static/media/image/favicon.ico"/>
+
+    <link rel="stylesheet" type="text/css" href="${ctx }/static/media/css/bootstrap-fileupload.css"/>
+
 </head>
 <script type="text/javascript">
     var $ctx = "${ctx }";
@@ -264,7 +267,31 @@
                 </ul>
 
             </li>
+            <li>
 
+                <a href="javascript:;">
+
+                    <i class="icon-expand"></i>
+
+                    <span class="title">轮播图管理</span>
+
+                    <span class="arrow "></span>
+
+                </a>
+
+                <ul class="sub-menu">
+
+                    <li id="banner-li">
+
+                        <a href="#" onclick="loadJsp('banner_manager')">
+
+                            轮播图管理</a>
+
+                    </li>
+
+                </ul>
+
+            </li>
             <li>
 
                 <a href="javascript:;">
@@ -281,7 +308,7 @@
 
                     <li id="user-li">
 
-                        <a href="#" onclick="loadJsp('user')">
+                        <a href="#" onclick="loadJsp('user_manager')">
 
                             用户列表</a>
 
@@ -561,6 +588,8 @@
 <script src="${ctx }/static/js/index.js" type="text/javascript"></script>
 
 <script type="text/javascript" src="${ctx }/static/media/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript" src="${ctx }/static/media/js/bootstrap-fileupload.js"></script>
 
 <!-- END PAGE LEVEL SCRIPTS -->
 

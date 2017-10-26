@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ep.controller.resource.api.ResourceResponse;
 import com.ep.controller.resource.api.ResourceVO;
+import com.ep.dao.filter.ActivityFilter;
 import com.ep.dao.mapper.ActivityMapper;
 import com.ep.dao.mapper.SpaceMapper;
+import com.ep.dao.model.activity.Activity;
 import com.ep.dao.model.activity.ActivityType;
 import com.ep.dao.model.activity.Address;
 import com.ep.dao.model.activity.AddressDetail;
+import com.ep.dao.model.banner.BannerType;
 import com.ep.dao.model.common.PagingFilter;
 import com.ep.dao.model.complain.DimensionType;
 import com.ep.dao.model.complain.ServiceItemType;
@@ -45,6 +48,26 @@ public class ResourceController {
                 ResourceVO vo = new ResourceVO();
                 vo.setLabel(type.getName());
                 vo.setValue(type.getId());
+
+                vos.add(vo);
+            }
+        }
+
+        return new ResourceResponse(vos);
+    }
+
+    @RequestMapping(value = "/activity/list")
+    @ResponseBody
+    public ResourceResponse activityList() {
+        List<ResourceVO> vos = new ArrayList<>();
+
+        List<Activity> activities = activityMapper.selectActivityList(new ActivityFilter());
+
+        if (CollectionUtils.isNotEmpty(activities)) {
+            for (Activity activity : activities) {
+                ResourceVO vo = new ResourceVO();
+                vo.setLabel(activity.getTitle());
+                vo.setValue(activity.getId());
 
                 vos.add(vo);
             }
@@ -132,10 +155,19 @@ public class ResourceController {
 
             dimensions.add(vo);
         }
+        List<ResourceVO> bannerTypes = new ArrayList<>();
+        for (BannerType type : BannerType.values()) {
+            ResourceVO vo = new ResourceVO();
+            vo.setLabel(type.getDescription());
+            vo.setValue(type.getCode());
+
+            bannerTypes.add(vo);
+        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("items",items);
         map.put("dimensions",dimensions);
+        map.put("bannerTypes",bannerTypes);
         return map;
     }
 

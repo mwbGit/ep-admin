@@ -63,5 +63,12 @@ public enum Bool {
         return description;
     }
 
+    public String getName() {
+        if (this.value){
+            return "是";
+        }
+        return "否";
+    }
+
 }
 
