@@ -60,7 +60,7 @@
 
         </div>
 
-        <div class="modal-body" style="height: 550px;max-height:600px;">
+        <div class="modal-body" style="height: 550px;max-height:650px;">
 
             <form method="post" class="form-horizontal" id="bannerForm" enctype="multipart/form-data">
                 <input type="hidden" id="bannerId" name="id"/>

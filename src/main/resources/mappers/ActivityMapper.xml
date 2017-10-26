@@ -310,7 +310,7 @@
 
 	<select id="selectMaxActivitySequence" resultType="int">
 		SELECT
-			MAX(sequence) + 1
+			if(MAX(sequence) IS NULL, 1,MAX(sequence) + 1)
 		FROM
 			`t_activity_type`
 	</select>
