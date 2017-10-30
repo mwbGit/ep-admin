@@ -74,16 +74,20 @@
 			updated_by_id = #{updatedById},
 			updated_by_name = #{updatedByName}
 	</insert>
+
 	<insert id="insertOrUpdateUserToken">
 		INSERT INTO t_user_token(
 		`user_id`,
+		`open_code`,
 		token
 		) VALUES (
 		#{userId},
+		#{openCode},
 		#{token}
 		) ON DUPLICATE KEY UPDATE
 			token =#{token}
 	</insert>
+
     <select id="selectUserByToken" resultMap="userResult">
         SELECT
         <include refid="userColumns"/>
@@ -92,7 +96,15 @@
 		INNER JOIN t_user_token ut ON ut.user_id = u.id
        	WHERE
 			ut.token=#{token}
-		AND u.is_deleted ='N'
+    </select>
+
+    <select id="selectTokenByOpenCode" resultType="string">
+        SELECT
+			token
+        FROM
+			t_user_token
+       	WHERE
+			open_code=#{openCode}
     </select>
 
     <select id="selectUserList" resultMap="userResult">
@@ -137,9 +149,6 @@
 		FROM
 		t_user u
 		WHERE `mobile` = #{mobile}
-		<if test="openId != null" >
-			AND open_id = #{openId}
-		</if>
 	</select>
 
     <select id="countUserList" resultType="int">

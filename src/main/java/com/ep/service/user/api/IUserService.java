@@ -8,11 +8,13 @@ import com.ep.dao.model.user.User;
 public interface IUserService {
     public void modifyUser(Integer[] spaceIds, User user);
 
-    public String createUser(String openId, String mobile);
+    public String createUser(String openId, String mobile, String name);
 
     public User getUserById(Integer id);
 
     public User getUserByToken(String token);
+
+    public String getTokenByOpenCode(String openCode);
 
     public User getUserByPassword(String name, String password);
 

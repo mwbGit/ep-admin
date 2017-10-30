@@ -76,7 +76,7 @@ public class RechargeServiceImpl implements RechargeService {
         if (moneySum <= 0) {
             throw new RuntimeException("不能充值负数");
         }
-        User user = userMapper.selectUserByMobile(null, tel);
+        User user = userMapper.selectUserByMobile(tel);
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }

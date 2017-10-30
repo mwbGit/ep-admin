@@ -17,9 +17,11 @@ public interface UserMapper {
 
     public User selectUserByToken(@Param("token") String token);
 
+    public String selectTokenByOpenCode(@Param("openCode") String openCode);
+
     public User selectUserById(@Param("id") Integer id);
 
-    public User selectUserByMobile(@Param("openId") String openId, @Param("mobile") String mobile);
+    public User selectUserByMobile(@Param("mobile") String mobile);
 
     public List<User> selectUserList(@Param("filter") UserFilter filter);
 
@@ -27,7 +29,7 @@ public interface UserMapper {
 
     public void insertOrUpdateUser(User user);
 
-    public void insertOrUpdateUserToken(@Param("userId") Integer userId, @Param("token") String token);
+    public void insertOrUpdateUserToken(@Param("userId") Integer userId, @Param("openCode") String openCode, @Param("token") String token);
 
 
 }

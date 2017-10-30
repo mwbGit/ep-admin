@@ -147,6 +147,7 @@ CREATE TABLE `t_information` (
 DROP TABLE IF EXISTS t_user_token ;
 CREATE TABLE `t_user_token` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `open_code` varchar(64) NOT NULL,
   `token` varchar(64) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),

@@ -4,15 +4,24 @@ package com.ep.controller.wx.user;
  * Created by Admin on 2017/9/18.
  */
 public class UserBindRequest {
-    private String openId;
+    private String name;
+    private String openCode;
     private String mobile;
 
-    public String getOpenId() {
-        return openId;
+    public String getName() {
+        return name;
     }
 
-    public void setOpenId(String openId) {
-        this.openId = openId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOpenCode() {
+        return openCode;
+    }
+
+    public void setOpenCode(String openCode) {
+        this.openCode = openCode;
     }
 
     public String getMobile() {
