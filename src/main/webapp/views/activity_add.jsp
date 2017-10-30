@@ -14,7 +14,7 @@
 
         <!-- BEGIN SAMPLE FORM PORTLET-->
 
-        <div class="portlet box light-grey tabbable">
+        <div class="portlet box blue tabbable">
 
             <div class="portlet-title">
 

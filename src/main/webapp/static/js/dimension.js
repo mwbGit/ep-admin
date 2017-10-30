@@ -19,10 +19,6 @@ jQuery(document).ready(function () {
 
 });
 
-
-
-
-
 function modifyItem(id) {
     var itemId = $('#item-id' + id).val();
     var ratio = $('#service-ratio' + id).text();
@@ -209,7 +205,7 @@ function init(id, itemId, itemName, itemRatio) {
     if ((id % 2) == 0) {
         initContent += '<div class="row-fluid" id="row-fluid' + id + '">';
     }
-    initContent += '<div class="span6" id="aa"><div class="portlet box light-grey"><div class="portlet-title">' +
+    initContent += '<div class="span6" id="aa"><div class="portlet box blue"><div class="portlet-title">' +
         '<div class="caption"><i class="icon-cogs"></i><input type="hidden" id="item-id' + id + '" value="' + itemId + '">' +
         '<span id="service-item' + id + '"> ' + itemName + '</span>(<span id="service-ratio' + id + '">' + itemRatio + '</span>%)' +
         '</div><div class="tools"><input type="hidden" value="true" id="collapse_hidden' + id + '">' +

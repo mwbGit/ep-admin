@@ -105,6 +105,7 @@
 				u.name LIKE #{filter.name}
 			</if>
 		</where>
+		ORDER BY u.create_date DESC
         <if test="filter.start != null and filter.size != null">
             limit #{filter.start},#{filter.size}
         </if>

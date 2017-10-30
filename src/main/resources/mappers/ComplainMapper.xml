@@ -65,6 +65,7 @@
 				d.type_id = #{filter.typeId}
 			</if>
 		</where>
+		ORDER BY c.create_time DESC
 		<if test="filter.start != null and filter.size != null" >
 			limit #{filter.start},#{filter.size}
 		</if>
@@ -96,6 +97,7 @@
 				d.item_id = #{itemId}
 			</if>
 		</where>
+		ORDER BY  d.id ASC
 	</select>
 
 	<insert id="insertDimension"
@@ -200,6 +202,7 @@
 		<include refid="itemColumns"/>
 		FROM
 			t_service_item si
+		ORDER BY  si.id ASC
 	</select>
 
 

@@ -72,7 +72,7 @@
 		<include refid="spaceColumns"/>
 		FROM
 		t_space s
-
+		ORDER BY s.id ASC
 	</select>
 
 

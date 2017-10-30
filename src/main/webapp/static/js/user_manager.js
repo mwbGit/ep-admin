@@ -74,7 +74,7 @@ jQuery(document).ready(function () {
                 }
             }],
         // set the initial value
-        "iDisplayLength": 5,
+        "iDisplayLength": 10,
         "aLengthMenu": [
             [5, 10, 20, 50],
             [5, 10, 20, 50] // change per page values here

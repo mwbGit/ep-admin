@@ -484,11 +484,8 @@
 
 <div class="footer">
 
-    <div class="footer-inner">
-
-        2013 &copy; Metronic by keenthemes.Collect from <a href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a>
-        - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a>
-
+    <div class="footer-inner" style="text-align: center;position: fixed;left: 45%;">
+        Copyright&copy;2016-2020 北京意园创新办公服务股份有限公司
     </div>
 
     <div class="footer-tools">

@@ -111,7 +111,7 @@ function init(id) {
                 }
             }],
         // set the initial value
-        "iDisplayLength": 5,
+        "iDisplayLength": 10,
         "aLengthMenu": [
             [5, 10, 20, 50],
             [5, 10, 20, 50] // change per page values here
@@ -164,6 +164,7 @@ function init(id) {
     });
 }
 function add() {
+    $("#positionGroup").show();
     $("#reset").click();
     $("#linkUrlGroup").hide();
     $("#imgShow").attr("src", "");

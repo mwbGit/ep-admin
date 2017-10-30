@@ -11,7 +11,7 @@
 
         <div class="tabbable tabbable-custom tabbable-full-width">
 
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" >
 
                 <li class="active"><a href="#tab_1_1" data-toggle="tab">首页轮播</a></li>
 
@@ -19,7 +19,7 @@
 
                 <li style="float: right">
                     <a href="#add-config" data-toggle="modal">
-                        <button type="button" class="btn green" >添加</button>
+                        <button type="button" class="btn blue" >添加</button>
                     </a>
                 </li>
             </ul>
@@ -46,8 +46,6 @@
         </div>
     </div>
 </div>
-<div class="page-content">
-
     <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
     <div id="add-config" class="modal hide" style="height: 600px">
@@ -177,7 +175,6 @@
         </div>
 
     </div>
-</div>
 
 
 <script src="${ctx }/static/js/banner_manager.js"></script>
