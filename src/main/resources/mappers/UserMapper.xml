@@ -78,11 +78,9 @@
 	<insert id="insertOrUpdateUserToken">
 		INSERT INTO t_user_token(
 		`user_id`,
-		`open_code`,
 		token
 		) VALUES (
 		#{userId},
-		#{openCode},
 		#{token}
 		) ON DUPLICATE KEY UPDATE
 			token =#{token}
