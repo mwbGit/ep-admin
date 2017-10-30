@@ -14,7 +14,7 @@ public interface IUserService {
 
     public User getUserByToken(String token);
 
-    public String getTokenByOpenCode(String openCode);
+    public String getTokenByOpenId(String openId);
 
     public User getUserByPassword(String name, String password);
 

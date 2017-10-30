@@ -86,8 +86,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public String getTokenByOpenCode(String openCode) {
-        return userMapper.selectTokenByOpenCode(openCode);
+    public String getTokenByOpenId(String openId) {
+        return userMapper.selectTokenByOpenId(openId);
     }
 
     @Override

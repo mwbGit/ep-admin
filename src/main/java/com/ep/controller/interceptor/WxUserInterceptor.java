@@ -41,19 +41,19 @@ public class WxUserInterceptor implements HandlerInterceptor {
         }
 
         String token = null;
-        String openCode = null;
+        String openId = null;
         for (Cookie cookie : cookies) {
             String name = cookie.getName();
             if ("token".equals(name)) {
                 token = cookie.getValue();
             }
-            if ("openCode".equals(name)) {
-                openCode = cookie.getValue();
+            if ("openId".equals(name)) {
+                openId = cookie.getValue();
             }
         }
 
-        if (token == null) {
-            token = userService.getTokenByOpenCode(openCode);
+        if (token == null && openId != null) {
+            token = userService.getTokenByOpenId(openId);
         }
 
         JSONObject jsonObject = new JSONObject();

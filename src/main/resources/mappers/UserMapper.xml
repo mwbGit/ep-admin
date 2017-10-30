@@ -98,13 +98,14 @@
 			ut.token=#{token}
     </select>
 
-    <select id="selectTokenByOpenCode" resultType="string">
+    <select id="selectTokenByOpenId" resultType="string">
         SELECT
-			token
+			ut.token
         FROM
-			t_user_token
+			t_user_token ut
+			INNER JOIN t_user u ON ut.user_id = u.id
        	WHERE
-			open_code=#{openCode}
+			u.open_id=#{openId}
     </select>
 
     <select id="selectUserList" resultMap="userResult">

@@ -17,7 +17,7 @@ public interface UserMapper {
 
     public User selectUserByToken(@Param("token") String token);
 
-    public String selectTokenByOpenCode(@Param("openCode") String openCode);
+    public String selectTokenByOpenId(@Param("openId") String openId);
 
     public User selectUserById(@Param("id") Integer id);
 

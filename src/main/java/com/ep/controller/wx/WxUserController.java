@@ -17,6 +17,7 @@ import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.util.ApplicationContextUtils;
 import com.ep.controller.wx.user.UserBindRequest;
 import com.ep.controller.wx.user.UserInfoResponse;
+import com.ep.controller.wx.user.UserTokenResponse;
 import com.ep.dao.model.user.User;
 import com.ep.service.user.api.IUserService;
 import com.ep.service.we_chat.WeChatService;
@@ -34,8 +35,8 @@ public class WxUserController {
 
     @RequestMapping(value = "/bind")
     @ResponseBody
-    public ServiceResponse bind(@RequestBody UserBindRequest request, HttpServletResponse httpServletResponse) {
-        ServiceResponse response = new ServiceResponse();
+    public UserTokenResponse bind(@RequestBody UserBindRequest request, HttpServletResponse httpServletResponse) {
+        UserTokenResponse response = new UserTokenResponse();
         if (StringUtils.isBlank(request.getOpenCode()) ||
                 StringUtils.isBlank(request.getMobile())) {
             response.setCode("1");
@@ -56,6 +57,7 @@ public class WxUserController {
             httpServletResponse.addCookie(tokenCookie);
         }
 
+        response.setToken(token);
         return response;
     }
 
@@ -85,12 +87,14 @@ public class WxUserController {
         return response;
     }
 
-    @RequestMapping(value = "/test1")
+    @RequestMapping(value = "/token")
     @ResponseBody
-    public ServiceResponse test1() {
-        System.out.println(1);
+    public UserTokenResponse getToken(@RequestParam("openId") String openId) {
+        UserTokenResponse response = new UserTokenResponse();
+        String token = userService.getTokenByOpenId(openId);
+        response.setToken(token);
 
-        return new ServiceResponse();
+        return response;
     }
 
 }
