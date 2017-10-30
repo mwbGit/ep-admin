@@ -188,15 +188,7 @@ var Login = function () {
 	            jQuery('.register-form').hide();
 	        });
 
-	        $.backstretch([
-		        "media/image/bg/1.jpg",
-		        "media/image/bg/2.jpg",
-		        "media/image/bg/3.jpg",
-		        "media/image/bg/4.jpg"
-		        ], {
-		          fade: 1000,
-		          duration: 8000
-		      });
+
         }
 
     };

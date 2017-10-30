@@ -64,7 +64,7 @@
 
 	<div class="logo">
 
-		<img src="${ctx }/static/media/image/logo-big.png" alt="" /> 
+		<img src="${ctx }/static/media/logo/epark-logo.png" alt="" />
 
 	</div>
 
@@ -200,7 +200,7 @@
 
 	<script src="${ctx }/static/media/js/app.js" type="text/javascript"></script>
 
-	<script src="${ctx }/static/media/js/login-soft.js" type="text/javascript"></script>      
+	<script src="${ctx }/static/media/js/login-soft.js" type="text/javascript"></script>
 
 	<!-- END PAGE LEVEL SCRIPTS -->
 

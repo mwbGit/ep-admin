@@ -98,7 +98,7 @@
 
             <a class="brand" href="${ctx}/views/index.jsp">
 
-                <img src="${ctx }/static/media/image/logo.png" alt="logo"/>
+              <span style="font-size: x-large; margin-left: 30px;color: white" >EPARK</span>
 
             </a>
 
