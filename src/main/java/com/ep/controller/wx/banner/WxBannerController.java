@@ -37,8 +37,7 @@ public class WxBannerController {
 
         List<Banner> banners = bannerMapper.selectBannerList(filter);
 
-        response.setData(BannerVO.toVOs(banners))
-        ;
+        response.setData(BannerVO.toVOs(banners));
         return response;
     }
 
