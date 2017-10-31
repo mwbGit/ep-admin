@@ -334,7 +334,7 @@
 
                         <a href="#" onclick="loadJsp('adviceAdd')">
 
-                            添加咨询</a>
+                            添加资讯</a>
 
                     </li>
 

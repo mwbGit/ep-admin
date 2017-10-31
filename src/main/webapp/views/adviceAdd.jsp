@@ -19,7 +19,7 @@
 
 			<i class="icon-reorder"></i>
 
-			<span class="hidden-480" id="titleSpan">添加咨询</span>
+			<span class="hidden-480" id="titleSpan">添加资讯</span>
 
 		</div>
 
@@ -40,7 +40,7 @@
 
 						<div class="control-group">
 
-							<label class="control-label">咨询标题：</label>
+							<label class="control-label">资讯标题：</label>
 							<input type="hidden" id="id" name="id">
 							<div class="controls">
 

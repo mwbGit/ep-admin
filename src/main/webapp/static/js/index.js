@@ -90,7 +90,7 @@ function loadJsp(item) {
         $('#menuTitle').html("活动管理");
     }else if (item == "adviceAdd") {
         $('#dashboard').load($ctx + "/views/adviceAdd.jsp");
-        $('#menuTitle').html("添加咨询");
+        $('#menuTitle').html("添加资讯");
     }else if (item == "advice_manager") {
         $('#dashboard').load($ctx + "/views/advice_manager.jsp");
         $('#menuTitle').html("内容管理");
