@@ -151,9 +151,7 @@
 
 </div>
 
-</div>
 
-<script type="text/javascript" src="${ctx }/static/media/js/bootstrap-fileupload.js"></script>
 
 <script type="text/javascript" src="${ctx }/static/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx }/static/js/umeditor/third-party/template.min.js"></script>

@@ -1,5 +1,5 @@
-
-
+var typeId;
+jQuery(document).ready(function () {
     if (activity_id != null && activity_id != '') {
         $('#activityId').val(activity_id);
         $('#menuTitle').html("修改资讯");
@@ -12,25 +12,25 @@
         type: "POST",
         async: false,
         contentType: 'application/json',
-        url: $ctx + "/resource/activity/type/list",
+        url: $ctx + "/advice/type/list",
         // data: {},
         success: function (data) {
             var trs = "";
-            $.each(data.data, function (n, value) {
-                trs += '<option value=' + value.label;
+            $.each(data.aaData, function (n, value) {
+                trs += '<option value=' + value.name;
 
-                if (typeId != null && typeId == value.value) {
+                if (typeId != null && typeId == value.id) {
                     trs += ' selected ';
                 }
 
-                trs += '>' + value.label + '</option>';
+                trs += '>' + value.name + '</option>';
 
             });
 
             $("#activityType").html(trs);
         }
     });
-
+});
 
 
 function detail(id) {
@@ -46,7 +46,7 @@ function detail(id) {
             $("#id").val(data[0].id);
             $("#title").val(data[0].title);
             $("#typeId").val(data[0].typeId);
-            $("#content").val(data[0].content);
+            $("#myEditor").val(data[0].content);
             $("#miniText").val(data[0].miniText);
             //$("#myEditor").val(data.content);
             $("#imgShow").attr("src", data[0].img);

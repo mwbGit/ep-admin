@@ -1,31 +1,17 @@
 package com.ep.controller.information;
 
-import com.ep.controller.activity.api.ActivityTypeVO;
-import com.ep.controller.activity.api.ActivityVO;
-import com.ep.controller.activity.api.AddActivityRequest;
-import com.ep.controller.activity.api.AddActivityResponse;
 import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.information.api.InformationTypeVo;
 import com.ep.controller.information.api.InformationVO;
 import com.ep.controller.resource.api.ResourceResponse;
 import com.ep.controller.resource.api.ResourceVO;
-import com.ep.dao.filter.ActivityFilter;
-import com.ep.dao.mapper.ActivityMapper;
-import com.ep.dao.mapper.SpaceMapper;
 import com.ep.dao.mapper.SqlAdapterMappe;
-import com.ep.dao.model.activity.Activity;
-import com.ep.dao.model.activity.ActivityType;
-import com.ep.dao.model.advice.Advice;
-import com.ep.dao.model.advice.AdviceType;
 import com.ep.dao.model.advice.api.AddAdviceRequest;
 import com.ep.dao.model.common.Bool;
-import com.ep.dao.model.common.PagingFilter;
 import com.ep.service.adviceService.AdviceService;
 import com.ep.service.upload.api.IUploadService;
-import com.ep.util.DateTimeUtility;
 import com.ep.util.StringUtil;
-import com.ep.util.mybatis.UuidUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +134,11 @@ public class InformationController {
     @RequestMapping(value = "/type/list")
     @ResponseBody
     public PagingResponse<List<InformationTypeVo>> typeList(Integer iDisplayStart, Integer iDisplayLength) {
+       if (iDisplayStart==null){
+           iDisplayStart=0;
+           iDisplayLength=10000;
+       }
+
         StringBuffer sql = new StringBuffer("SELECT * FROM t_advice_type u WHERE u.is_deleted='N' ORDER BY u.sequence ASC");
         if (StringUtil.isNotBlank(iDisplayStart)&&StringUtil.isNotBlank(iDisplayLength)){
             sql.append(" limit "+iDisplayStart+","+iDisplayLength+"");
