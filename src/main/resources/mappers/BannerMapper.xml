@@ -142,6 +142,9 @@
 			<if test="filter.position != null">
 				b.position_id = #{filter.position.id}
 			</if>
+			<if test="filter.online != null">
+				AND b.is_online = #{filter.online.code}
+			</if>
 		</where>
 		ORDER BY b.sequence ASC
 		<if test="filter.start != null and filter.size != null">
@@ -158,6 +161,9 @@
 		<where>
 			<if test="filter.position != null">
 				b.position_id = #{filter.position.id}
+			</if>
+			<if test="filter.online != null">
+				AND b.is_online = #{filter.online.code}
 			</if>
 		</where>
 	</select>

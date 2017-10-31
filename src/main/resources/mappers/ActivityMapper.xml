@@ -270,6 +270,12 @@
 			<if test="filter.typeId != null">
 				AND aa.type_id LIKE #{filter.typeId}
 			</if>
+			<if test="filter.online != null">
+				AND aa.is_online = #{filter.online.code}
+			</if>
+			<if test="filter.unFinished != null and filter.unFinished == true">
+				AND aa.end_time <![CDATA[ > ]]> NOW()
+			</if>
 		</where>
 		ORDER BY aa.end_time DESC
         <if test="filter.start != null and filter.size != null">
@@ -292,6 +298,12 @@
 			</if>
 			<if test="filter.typeId != null">
 				AND aa.type_id LIKE #{filter.typeId}
+			</if>
+			<if test="filter.online != null">
+				AND aa.is_online = #{filter.online.code}
+			</if>
+			<if test="filter.unFinished != null and filter.unFinished == true">
+				AND aa.end_time <![CDATA[ > ]]> NOW()
 			</if>
 		</where>
 	</select>

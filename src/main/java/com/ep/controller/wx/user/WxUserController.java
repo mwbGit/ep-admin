@@ -1,4 +1,4 @@
-package com.ep.controller.wx;
+package com.ep.controller.wx.user;
 
 import java.io.IOException;
 
@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.util.ApplicationContextUtils;
-import com.ep.controller.wx.user.UserBindRequest;
-import com.ep.controller.wx.user.UserInfoResponse;
-import com.ep.controller.wx.user.UserTokenResponse;
+import com.ep.controller.wx.user.api.UserBindRequest;
+import com.ep.controller.wx.user.api.UserInfoResponse;
+import com.ep.controller.wx.user.api.UserTokenResponse;
 import com.ep.dao.model.user.User;
 import com.ep.service.user.api.IUserService;
 import com.ep.service.we_chat.WeChatService;

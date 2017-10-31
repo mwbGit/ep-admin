@@ -1,4 +1,4 @@
-package com.ep.controller.wx.user;
+package com.ep.controller.wx.user.api;
 
 import com.ep.controller.common.ServiceResponse;
 

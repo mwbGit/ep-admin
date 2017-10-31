@@ -1,4 +1,4 @@
-package com.ep.controller.wx.user;
+package com.ep.controller.wx.user.api;
 
 /**
  * Created by Admin on 2017/9/18.
