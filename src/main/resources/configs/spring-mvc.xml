@@ -24,8 +24,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/wx/**"/>
-            <mvc:exclude-mapping path="/wx/bind"/>
-            <mvc:exclude-mapping path="/wx/test"/>
+            <mvc:exclude-mapping path="/wx/user/**"/>
             <bean class="com.ep.controller.interceptor.WxUserInterceptor">
             </bean>
         </mvc:interceptor>

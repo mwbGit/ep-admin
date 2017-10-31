@@ -49,6 +49,7 @@ public class UserService implements IUserService {
     @Override
     public String createUser(String openCode, String mobile, String name) {
         String openId = "";
+        String token = null;
         try {
             AccessTokenAndOpenId andOpenId = weChatService.getAccessTokenAndOpenId(openCode);
             if (andOpenId != null) {
@@ -58,19 +59,28 @@ public class UserService implements IUserService {
             e.printStackTrace();
         }
 
-        User user = new User();
-        user.setMobile(mobile);
-        user.setOpenId(openId);
-        user.setName(name);
-        user.setDeleted(Bool.N);
+        if (openId != null) {
+            token = userMapper.selectTokenByOpenId(openId);
 
-        userMapper.insertOrUpdateUser(user);
+            User user;
+            if (token == null) {
+                user = new User();
+                user.setMobile(mobile);
+                user.setOpenId(openId);
+                user.setName(name);
+                user.setDeleted(Bool.N);
 
-        String token = MD5.md5(openCode + mobile + new Date().getTime());
+                userMapper.insertOrUpdateUser(user);
 
-        userMapper.insertOrUpdateUserToken(user.getId(), openCode, token);
+                token = MD5.md5(openCode + mobile + new Date().getTime());
 
-        ApplicationContextUtils.setUser(user);
+                userMapper.insertOrUpdateUserToken(user.getId(), openCode, token);
+            } else {
+                user = userMapper.selectUserByToken(token);
+            }
+
+            ApplicationContextUtils.setUser(user);
+        }
 
         return token;
     }
