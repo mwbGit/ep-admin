@@ -316,7 +316,45 @@
                 </ul>
 
             </li>
+            <li>
 
+                <a href="javascript:;">
+
+                    <i class="icon-user"></i>
+
+                    <span class="title">资讯管理</span>
+
+                    <span class="arrow "></span>
+
+                </a>
+
+                <ul class="sub-menu">
+
+                    <li id="adviceAdd">
+
+                        <a href="#" onclick="loadJsp('adviceAdd')">
+
+                            添加咨询</a>
+
+                    </li>
+
+                    <li id="adviceManage">
+
+                        <a href="#" onclick="loadJsp('advice_manager')">
+
+                            内容管理</a>
+
+                    </li>
+
+                    <li id="adviceClass">
+
+                        <a href="#" onclick="loadJsp('advice_type')">
+
+                            分类管理</a>
+
+                    </li>
+
+                </ul>
         </ul>
 
         <!-- END SIDEBAR MENU -->

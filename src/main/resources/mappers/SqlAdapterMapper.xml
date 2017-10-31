@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ep.dao.mapper.SqlAdapterMappe" >
+    <select id="selectSQL" parameterType="String" resultType="hashmap">
+        ${value}
+    </select>
+
+    <select id="selectIntSQL" parameterType="String" resultType="Int">
+        ${value}
+    </select>
+
+    <insert id="insertSQL" parameterType="String" >
+        ${value}
+    </insert>
+
+    <update id="updateSQL" parameterType="String" >
+        ${value}
+    </update>
+
+    <delete id="deleteSQL" parameterType="String" >
+        ${value}
+    </delete>
+</mapper>
