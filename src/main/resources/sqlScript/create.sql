@@ -227,3 +227,24 @@ CREATE TABLE `t_activity_user` (
   CONSTRAINT `fk_activity_user_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `fk_activity_user_activity` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- ----------------------------
+-- 资讯
+-- ----------------------------
+CREATE TABLE `t_advice` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(400) DEFAULT NULL,
+  `miniText` varchar(400) DEFAULT NULL,
+  `content` text,
+  `img` varchar(128) DEFAULT NULL,
+  `createTime` date DEFAULT NULL,
+  `typeId` char(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4
+
+CREATE TABLE `t_advice_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `sequence` int(11) DEFAULT NULL,
+  `is_deleted` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4

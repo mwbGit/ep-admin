@@ -88,6 +88,15 @@ function loadJsp(item) {
     } else if (item == "activity_manager") {
         $('#dashboard').load($ctx + "/views/activity_manager.jsp");
         $('#menuTitle').html("活动管理");
+    }else if (item == "adviceAdd") {
+        $('#dashboard').load($ctx + "/views/adviceAdd.jsp");
+        $('#menuTitle').html("添加咨询");
+    }else if (item == "advice_manager") {
+        $('#dashboard').load($ctx + "/views/advice_manager.jsp");
+        $('#menuTitle').html("内容管理");
+    }else if (item == "advice_type") {
+        $('#dashboard').load($ctx + "/views/advice_type.jsp");
+        $('#menuTitle').html("分类管理");
     }
 }
 
