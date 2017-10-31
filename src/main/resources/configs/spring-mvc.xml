@@ -25,15 +25,15 @@
         <mvc:interceptor>
             <mvc:mapping path="/wx/**"/>
             <mvc:exclude-mapping path="/wx/user/**"/>
+            <mvc:exclude-mapping path="/wx/banner/**"/>
+            <mvc:exclude-mapping path="/wx/activity/**"/>
             <bean class="com.ep.controller.interceptor.WxUserInterceptor">
             </bean>
         </mvc:interceptor>
 
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/wx/user/**"/>
-            <mvc:exclude-mapping path="/wx/banner/**"/>
-            <mvc:exclude-mapping path="/wx/activity/**"/>
+            <mvc:exclude-mapping path="/wx/**"/>
             <mvc:exclude-mapping path="/login"/>
             <bean class="com.ep.controller.interceptor.UserInterceptor">
                 <property name="allowUrls">
