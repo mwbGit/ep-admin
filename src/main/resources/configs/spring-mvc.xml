@@ -34,6 +34,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/wx/**"/>
+            <mvc:exclude-mapping path="/upload/**"/>
             <mvc:exclude-mapping path="/login"/>
             <bean class="com.ep.controller.interceptor.UserInterceptor">
                 <property name="allowUrls">
