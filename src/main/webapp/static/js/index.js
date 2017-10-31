@@ -76,7 +76,7 @@ function loadJsp(item) {
         $('#dashboard').load($ctx + "/views/dimension.jsp");
         $('#menuTitle').html("吐槽管理");
         $('#showAddItem').show();
-    } else if (item == "user") {
+    } else if (item == "user_manager") {
         $('#dashboard').load($ctx + "/views/user_manager.jsp");
         $('#menuTitle').html("用户列表");
     } else if (item == "activity_type") {
