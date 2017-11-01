@@ -87,7 +87,16 @@ function loadJsp(item) {
         $('#menuTitle').html("添加活动");
     } else if (item == "activity_manager") {
         $('#dashboard').load($ctx + "/views/activity_manager.jsp");
-        $('#menuTitle').html("活动内容管理");
+        $('#menuTitle').html("活动管理");
+    }else if (item == "adviceAdd") {
+        $('#dashboard').load($ctx + "/views/adviceAdd.jsp");
+        $('#menuTitle').html("添加资讯");
+    }else if (item == "advice_manager") {
+        $('#dashboard').load($ctx + "/views/advice_manager.jsp");
+        $('#menuTitle').html("内容管理");
+    }else if (item == "advice_type") {
+        $('#dashboard').load($ctx + "/views/advice_type.jsp");
+        $('#menuTitle').html("分类管理");
     } else if (item == "banner_manager") {
         $('#dashboard').load($ctx + "/views/banner_manager.jsp");
         $('#menuTitle').html("轮播图管理");
