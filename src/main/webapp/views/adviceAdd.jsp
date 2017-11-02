@@ -10,147 +10,154 @@
 <script type="text/javascript">
     var activity_id = "${param.id}";
 </script>
+<div class="row-fluid">
 
-<div class="portlet box blue tabbable">
+	<div class="span12">
 
-	<div class="portlet-title">
+			<div class="portlet box blue tabbable">
 
-		<div class="caption">
+				<div class="portlet-title">
 
-			<i class="icon-reorder"></i>
+					<div class="caption">
 
-			<span class="hidden-480" id="titleSpan">添加资讯</span>
+						<i class="icon-reorder"></i>
 
-		</div>
+						<span class="hidden-480" id="titleSpan">添加资讯</span>
 
-	</div>
-
-	<div class="portlet-body form">
-
-		<div class="tabbable portlet-tabs">
-
-
-			<div class="tab-content">
-
-				<div class="tab-pane active" id="portlet_tab1">
-
-					<!-- BEGIN FORM-->
-
-					<form class="form-horizontal" id="editForm" method="post">
-
-						<div class="control-group">
-
-							<label class="control-label">资讯标题：</label>
-							<input type="hidden" id="id" name="id">
-							<div class="controls">
-
-								<input class="m-wrap large"  id="title" name="title" type="text" >
-
-							</div>
-
-						</div>
-
-						<div class="control-group">
-
-							<label class="control-label">选择分类：</label>
-
-							<div class="controls">
-
-								<select class="medium m-wrap" tabindex="1" name="typeId" id="activityType">
-
-
-								</select>
-
-							</div>
-
-						</div>
-
-						<div class="control-group">
-
-							<label class="control-label">资讯摘要：</label>
-
-							<div class="controls">
-
-								<textarea id="miniText" name="miniText" class="large m-wrap" rows="3" onkeydown="textdown()"></textarea>
-
-								<span id="a" class="help-inline"></span>
-
-							</div>
-
-						</div>
-
-						<div class="control-group">
-
-							<label class="control-label">封面图片：</label>
-
-							<div class="controls">
-
-								<div class="fileupload fileupload-new" data-provides="fileupload">
-
-									<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-										<img src="" id="imgShow" style="width: 200px; height: 150px;">
-									</div>
-
-									<div class="fileupload-preview fileupload-exists thumbnail"
-										 style="max-width: 200px; max-height: 150px; line-height: 20px;" >
-									</div>
-									<div>
-
-									<span class="btn btn-file"><span
-											class="fileupload-new">选择</span>
-
-									<span class="fileupload-exists">更改</span>
-
-									<input type="file" class="default" name="imgUpload" id="imgUpload"/></span>
-
-										<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-
-									</div>
-
-								</div>
-
-							</div>
-
-
-						</div>
-
-						<div class="control-group">
-
-							<label class="control-label">资讯内容：</label>
-
-							<div class="controls">
-
-								 <textarea name="content" type="text/plain"
-										   id="myEditor" style="height: 240px;width:724px"></textarea>
-
-							</div>
-
-						</div>
-
-						<div class="form-actions">
-
-							<button type="button" class="btn blue"  type="submit" onclick="validateFromSub()"><i class="icon-ok"></i> 保存</button>
-
-							<button class="btn" type="button">取消</button>
-
-						</div>
-
-					</form>
-
-					<!-- END FORM-->
+					</div>
 
 				</div>
 
+				<div class="portlet-body form">
 
+					<div class="tabbable portlet-tabs">
+
+
+						<div class="tab-content">
+
+							<div class="tab-pane active" id="portlet_tab1">
+
+								<!-- BEGIN FORM-->
+
+								<form class="form-horizontal" id="editForm" method="post">
+									<br>
+									<br>
+									<div class="control-group">
+
+										<label class="control-label">资讯标题：</label>
+										<input type="hidden" id="id" name="id">
+										<div class="controls">
+
+											<input class="m-wrap large"  id="title" name="title" type="text" >
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">选择分类：</label>
+
+										<div class="controls">
+
+											<select class="medium m-wrap" tabindex="1" name="typeId" id="activityType">
+
+
+											</select>
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">资讯摘要：</label>
+
+										<div class="controls">
+
+											<textarea id="miniText" name="miniText" class="large m-wrap" rows="3" onkeydown="textdown()"></textarea>
+
+											<span id="a" class="help-inline"></span>
+
+										</div>
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">封面图片：</label>
+
+										<div class="controls">
+
+											<div class="fileupload fileupload-new" data-provides="fileupload">
+
+												<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+													<img src="" id="imgShow" style="width: 200px; height: 150px;">
+												</div>
+
+												<div class="fileupload-preview fileupload-exists thumbnail"
+													 style="max-width: 200px; max-height: 150px; line-height: 20px;" >
+												</div>
+												<div>
+
+												<span class="btn btn-file"><span
+														class="fileupload-new">选择</span>
+
+												<span class="fileupload-exists">更改</span>
+
+												<input type="file" class="default" name="imgUpload" id="imgUpload"/></span>
+
+													<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+
+												</div>
+
+											</div>
+
+										</div>
+
+
+									</div>
+
+									<div class="control-group">
+
+										<label class="control-label">资讯内容：</label>
+
+										<div class="controls">
+
+											 <textarea name="content" type="text/plain"
+													   id="myEditor" style="height: 240px;width:724px"></textarea>
+
+										</div>
+
+									</div>
+
+									<div class="form-actions">
+
+										<button type="button" class="btn blue"  type="submit" onclick="validateFromSub()"><i class="icon-ok"></i> 保存</button>
+
+										<button class="btn" type="button">取消</button>
+
+									</div>
+
+								</form>
+
+								<!-- END FORM-->
+
+							</div>
+
+
+
+						</div>
+
+					</div>
+
+				</div>
 
 			</div>
-
-		</div>
 
 	</div>
 
 </div>
-
 
 
 <script type="text/javascript" src="${ctx }/static/js/My97DatePicker/WdatePicker.js"></script>
