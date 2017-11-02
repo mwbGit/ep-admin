@@ -32,7 +32,6 @@
 
 					<div class="tabbable portlet-tabs">
 
-
 						<div class="tab-content">
 
 							<div class="tab-pane active" id="portlet_tab1">
