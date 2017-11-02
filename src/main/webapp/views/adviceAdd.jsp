@@ -29,11 +29,6 @@
 
 				<div class="portlet-body form">
 
-					<div class="tabbable portlet-tabs">
-
-						<div class="tab-content">
-
-							<div class="tab-pane active" id="portlet_tab1">
 
 								<!-- BEGIN FORM-->
 
@@ -141,13 +136,7 @@
 
 								<!-- END FORM-->
 
-							</div>
 
-
-
-						</div>
-
-					</div>
 
 				</div>
 
