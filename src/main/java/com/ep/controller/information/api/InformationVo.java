@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by 吴晓海 on 2017/10/24.
  */
-public class InformationVO {
+public class InformationVo {
     public Integer getId() {
         return id;
     }
