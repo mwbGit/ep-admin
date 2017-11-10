@@ -27,6 +27,7 @@
             <mvc:exclude-mapping path="/wx/user/**"/>
             <mvc:exclude-mapping path="/wx/banner/**"/>
             <mvc:exclude-mapping path="/wx/activity/**"/>
+            <mvc:exclude-mapping path="/wx/information/**"/>
             <bean class="com.ep.controller.interceptor.WxUserInterceptor">
             </bean>
         </mvc:interceptor>
