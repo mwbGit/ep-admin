@@ -11,7 +11,7 @@ import com.ep.dao.model.banner.Banner;
 /**
  * Created by MengWeiBo on 2017-10-31
  */
-public class BannerVO extends ServiceResponse {
+public class BannerVO{
     private Integer id;
     private String img;
     private String linkUrl;

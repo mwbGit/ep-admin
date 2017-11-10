@@ -3,7 +3,7 @@ package com.ep.controller.information;
 import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.information.api.InformationTypeVo;
-import com.ep.controller.information.api.InformationVO;
+import com.ep.controller.information.api.InformationVo;
 import com.ep.controller.resource.api.ResourceResponse;
 import com.ep.controller.resource.api.ResourceVO;
 import com.ep.dao.mapper.SqlAdapterMappe;
@@ -11,6 +11,7 @@ import com.ep.dao.model.advice.api.AddAdviceRequest;
 import com.ep.dao.model.common.Bool;
 import com.ep.service.adviceService.AdviceService;
 import com.ep.service.upload.api.IUploadService;
+import com.ep.util.DateTimeUtility;
 import com.ep.util.StringUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -39,11 +40,12 @@ public class InformationController {
     @Autowired
     private IUploadService uploadService;
 
+    //获取资讯列表
     @RequestMapping(value = "/list")
     @ResponseBody
-    public PagingResponse<List<InformationVO>> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch, Integer typeId) {
-        PagingResponse<List<InformationVO>> response = new PagingResponse<>();
-
+    public PagingResponse<List<InformationVo>> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch, Integer typeId) {
+        PagingResponse<List<InformationVo>> response = new PagingResponse<>();
+        //获取资讯列表
         StringBuffer sql = new StringBuffer("SELECT * from t_advice u WHERE 1=1 ");
         if (StringUtil.isNotBlank(sSearch)){
             sql.append(" and u.title like %'"+sSearch+"'%");
@@ -56,7 +58,7 @@ public class InformationController {
             sql.append("order by u.createTime desc limit "+iDisplayStart+","+iDisplayLength+"");
         }
         List<Map<String, Object>> types = sqlAdapterMappe.selectSQL(sql.toString());
-
+        //获取资讯数量
         StringBuffer sql2 = new StringBuffer("SELECT count(*) from t_advice u WHERE 1=1 ");
         if (StringUtil.isNotBlank(sSearch)){
             sql2.append(" and u.title like %'"+sSearch+"'%");
@@ -65,17 +67,17 @@ public class InformationController {
             sql2.append(" and u.title like %'"+typeId+"'%");
         }
         int count = sqlAdapterMappe.selectIntSQL(sql2.toString());
-
-        List<InformationVO> vos = new ArrayList<>();
+        //资讯数据封装到集合
+        List<InformationVo> vos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(types)) {
             for (Map map : types) {
-                InformationVO vo = new InformationVO();
+                InformationVo vo = new InformationVo();
                 Date date = (Date) map.get("createTime");
                 vo.setId((int)map.get("id"));
                 vo.setTitle((String)map.get("title"));
                 vo.setTypeId((String)map.get("typeId"));
                 vo.setMiniText((String)map.get("miniText"));
-                vo.setCreateTime(date.toString());
+                vo.setCreateTime(DateTimeUtility.formatYYYYMMDDHHMM(date));
 
                 vos.add(vo);
             }
@@ -86,16 +88,16 @@ public class InformationController {
         return response;
     }
 
-
+        //获取资讯类别列表
         @RequestMapping(value = "/get/type/list")
         @ResponseBody
         public ResourceResponse activityTypeList() {
             List<ResourceVO> vos = new ArrayList<>();
-
+            //获取资讯类别
             StringBuffer sql = new StringBuffer("SELECT * FROM t_advice_type u WHERE u.is_deleted='N'");
 
             List<Map<String, Object>> types = sqlAdapterMappe.selectSQL(sql.toString());
-
+            //资讯类别封装到集合
             if (CollectionUtils.isNotEmpty(types)) {
                 for (Map map : types) {
                     ResourceVO vo = new ResourceVO();
@@ -109,12 +111,14 @@ public class InformationController {
             return new ResourceResponse(vos);
         }
 
+    //添加资讯
     @RequestMapping(value = "/add")
     @ResponseBody
     public ServiceResponse add(@RequestParam("imgUpload") MultipartFile uploadFile, AddAdviceRequest addAdviceRequest ) {
         ServiceResponse response = new ServiceResponse();
 
         String url = uploadService.uploadImage(uploadFile);
+        //id存在更新资讯信息，为null添加资讯
         if (addAdviceRequest.getId()!=null){
             StringBuffer sql =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"',img = '"+url +"' where id = '"+addAdviceRequest.getId()+"'");
             sqlAdapterMappe.updateSQL(sql.toString());
@@ -130,7 +134,7 @@ public class InformationController {
         return response;
     }
 
-
+    //获取资讯类别列表
     @RequestMapping(value = "/type/list")
     @ResponseBody
     public PagingResponse<List<InformationTypeVo>> typeList(Integer iDisplayStart, Integer iDisplayLength) {
@@ -138,15 +142,17 @@ public class InformationController {
            iDisplayStart=0;
            iDisplayLength=10000;
        }
-
+        //获取资讯类别列表
         StringBuffer sql = new StringBuffer("SELECT * FROM t_advice_type u WHERE u.is_deleted='N' ORDER BY u.sequence ASC");
         if (StringUtil.isNotBlank(iDisplayStart)&&StringUtil.isNotBlank(iDisplayLength)){
             sql.append(" limit "+iDisplayStart+","+iDisplayLength+"");
         }
         List<Map<String, Object>> types = sqlAdapterMappe.selectSQL(sql.toString());
+        //获取资讯类别数量
         StringBuffer sql2 = new StringBuffer("SELECT COUNT(*) FROM t_advice_type u WHERE u.is_deleted='N'");
         int count = sqlAdapterMappe.selectIntSQL(sql2.toString());
         int i = 0;
+        //封装list
         List<InformationTypeVo> vos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(types)) {
 
@@ -183,6 +189,7 @@ public class InformationController {
         return response;
     }
 
+    //资讯类别排序
     @RequestMapping(value = "/type/modify")
     @ResponseBody
     public ServiceResponse typpModify(@RequestParam(value = "id") Integer id, String name, Boolean asc, Integer sequence) {
@@ -190,7 +197,6 @@ public class InformationController {
 
         if (asc == null) {
             StringBuffer sql = new StringBuffer("SELECT COUNT(*) FROM t_advice_type u WHERE u.name='"+name+"'");
-
             int count = sqlAdapterMappe.selectIntSQL(sql.toString());
             //int count = activityMapper.countActivityByName(name, id);
             if (count > 0) {
@@ -204,6 +210,7 @@ public class InformationController {
             sqlAdapterMappe.updateSQL(sql2.toString());
             //activityMapper.updateActivityType(activityType);
         } else {
+            //当前序列下移
             if (asc==false){
                 int sequenceChance = sequence+1;
                 StringBuffer sql3 = new StringBuffer("update t_advice_type t set t.sequence= '"+sequence+"' where t.sequence ='"+sequenceChance+"'");
@@ -211,6 +218,7 @@ public class InformationController {
                 sqlAdapterMappe.updateSQL(sql3.toString());
                 sqlAdapterMappe.updateSQL(sql4.toString());
             }else {
+                //当前序列上移
                 int sequenceChance = sequence-1;
                 StringBuffer sql3 = new StringBuffer("update t_advice_type t set t.sequence= '"+sequence+"' where t.sequence ='"+sequenceChance+"'");
                 StringBuffer sql4 = new StringBuffer("update t_advice_type t set t.sequence= '"+sequenceChance+"' where t.id ='"+id+"'");
@@ -223,15 +231,18 @@ public class InformationController {
         return response;
     }
 
+    //添加资讯类别
     @RequestMapping(value = "/type/add")
     @ResponseBody
     public ServiceResponse typeAdd(@RequestParam(value = "name") String name) {
         ServiceResponse response = new ServiceResponse();
-        if (StringUtils.isBlank(name)) {
+        //验证添加资讯类别名称是否为空
+        if (!StringUtils.isBlank(name)) {
             response.setCode("1");
             response.setMessage("名称为空");
             return response;
         }
+        //验证添加资讯类别名称是否重复
         StringBuffer sql = new StringBuffer("SELECT COUNT(*) FROM t_advice_type u WHERE u.name='"+name+"'");
         int count = sqlAdapterMappe.selectIntSQL(sql.toString());
         //int count = activityMapper.countActivityByName(name, id);
@@ -240,22 +251,17 @@ public class InformationController {
             response.setMessage("名称重复");
             return response;
         }
+        //名称不为空且不重复添加资讯类别
         StringBuffer sql2 = new StringBuffer("SELECT COUNT(*) FROM t_advice_type u ");
         int maxcount = sqlAdapterMappe.selectIntSQL(sql2.toString());
         int sequence = maxcount+1;
         //int sequence = activityMapper.selectMaxActivitySequence();
         StringBuffer sql3 = new StringBuffer("insert into t_advice_type (name,sequence,is_deleted) values ('"+name+"','"+sequence+"',"+"'"+Bool.N+"')");
         sqlAdapterMappe.insertSQL(sql3.toString());
-//        ActivityType activityType = new ActivityType();
-//        activityType.setName(name);
-//        activityType.setDeleted(Bool.N);
-//        activityType.setSequence(sequence);
-//
-//        activityMapper.insertActivityType(activityType);
-
         return response;
     }
 
+    //删除资讯类别
     @RequestMapping(value = "/type/delete")
     @ResponseBody
     public ServiceResponse typeDelete(@RequestParam(value = "id") Integer id) {
@@ -263,6 +269,8 @@ public class InformationController {
         sqlAdapterMappe.updateSQL(sql.toString());
         return new ServiceResponse();
     }
+
+    //删除资讯
     @RequestMapping(value = "/manger/delete")
     @ResponseBody
     public ServiceResponse Delete(@RequestParam(value = "id") Integer id) {
@@ -271,10 +279,12 @@ public class InformationController {
         return new ServiceResponse();
     }
 
+    //资讯修改页面信息返显
     @RequestMapping(value = "/detail")
     @ResponseBody
     public List detail(@RequestParam("id") Integer id) throws Exception {
-        InformationVO response = new InformationVO();
+        InformationVo response = new InformationVo();
+        //获取id资讯信息
         StringBuffer sql = new StringBuffer("select * from t_advice where id = "+id+"");
         List<Map<String, Object>> types = sqlAdapterMappe.selectSQL(sql.toString());
        /* Map map = types.get(0);

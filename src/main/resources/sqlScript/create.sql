@@ -236,10 +236,11 @@ CREATE TABLE `t_advice` (
   `miniText` varchar(400) DEFAULT NULL,
   `content` text,
   `img` varchar(128) DEFAULT NULL,
-  `createTime` date DEFAULT NULL,
+  `createTime` datetime DEFAULT NULL,
   `typeId` char(32) DEFAULT NULL,
+  `clicksum` int(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4
 
 -- ----------------------------
 -- banner位置
