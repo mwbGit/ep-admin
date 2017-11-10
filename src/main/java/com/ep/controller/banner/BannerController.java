@@ -68,6 +68,7 @@ public class BannerController {
     public ServiceResponse add(@RequestParam("imgUpload") MultipartFile uploadFile, BannerRequest request) {
         ServiceResponse response = new ServiceResponse();
         BannerFilter filter = new BannerFilter();
+        filter.setOnline(Bool.Y);
         filter.setPosition(BannerPosition.fromCode(request.getPositionCode()));
         int count = bannerMapper.countBannerList(filter);
         if (count >= 5) {
