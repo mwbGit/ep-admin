@@ -3,6 +3,7 @@ package com.ep.controller.wx.information.api;
 
 import com.ep.util.DateTimeUtility;
 import com.ep.util.DateUtil;
+import com.ep.util.StringUtil;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -29,15 +30,22 @@ public class InformationVO {
         if (CollectionUtils.isNotEmpty(list)) {
             for (Map map : list) {
                 InformationVO vo = new InformationVO();
+                if(StringUtil.isNotBlank(map.get("title"))){
+                    vo.setTitle((String)map.get("title"));
+                }if(StringUtil.isNotBlank(map.get("miniText"))){
+                    vo.setMiniText((String)map.get("miniText"));
+                }if(StringUtil.isNotBlank(map.get("img"))){
+                    vo.setImg((String)map.get("img"));
+                }if(StringUtil.isNotBlank(map.get("typeId"))){
+                    vo.setTypeName((String)map.get("typeId"));
+                }if(StringUtil.isNotBlank(map.get("content"))) {
+                    vo.setContent((String) map.get("content"));
+                }
                 vo.setId((int)map.get("id"));
-                vo.setTitle((String)map.get("title"));
-                vo.setMiniText((String)map.get("miniText"));
-                vo.setImg((String)map.get("img"));
-                vo.setTypeName((String)map.get("typeId"));
-                vo.setContent((String)map.get("content"));
                 vo.setClicksum((int)map.get("clicksum"));
                 vo.setCreateTime(DateUtil.getTimeFormatText((Date)map.get("createTime")));
                 vo.setDateTime(DateTimeUtility.formatYYYYMMDDHHMM((Date)map.get("createTime")));
+
             }
         }
         return vos;
