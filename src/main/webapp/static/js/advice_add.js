@@ -62,36 +62,39 @@ function detail(id) {
 }
 
 //提交表单
+
+/*
+ if (!testStrMsg($("#d4311").val(), "活动时间") || !testStrMsg($("#d4312").val(), "活动时间")) {
+ return;
+ }
+
+ if ($("#fee").val() == 'true') {
+ if (!testPrice($("#price").val(), "金额")) {
+ return;
+ }
+ }
+
+ if ($("#imgUpload").val() == null && $("#imgShow").attr("src") != '') {
+ alert("上传封面！");
+ return;
+ }
+
+ if (!testStrMsg($("#myEditor").val(), "内容")) {
+ return;
+ }
+
+ if (!testStrMsg($("#addressDetail").val(), "地址")) {
+ return;
+ }*/
 function validateFromSub() {
-    /* if (!testStrMsg($("#title").val(), "标题")) {
-     return;
-     } else if ($("#title").val().length > 32) {
-     alert("标题过长")
-     }
-
-     if (!testStrMsg($("#d4311").val(), "活动时间") || !testStrMsg($("#d4312").val(), "活动时间")) {
-     return;
-     }
-
-     if ($("#fee").val() == 'true') {
-     if (!testPrice($("#price").val(), "金额")) {
-     return;
-     }
-     }
-
-     if ($("#imgUpload").val() == null && $("#imgShow").attr("src") != '') {
-     alert("上传封面！");
-     return;
-     }
-
-     if (!testStrMsg($("#myEditor").val(), "内容")) {
-     return;
-     }
-
-     if (!testStrMsg($("#addressDetail").val(), "地址")) {
-     return;
-     }*/
-
+    if (!testStrMsg($("#title").val(), "标题")) {
+        return;
+    } else if ($("#title").val().length > 32) {
+        alert("标题过长")
+    }
+    if (!testStrMsg($("#activityType").val(), "分类")) {
+        return;
+    }
 
     var form = new FormData(document.getElementById("editForm"));
     $.ajax({

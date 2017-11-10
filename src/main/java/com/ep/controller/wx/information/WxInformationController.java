@@ -29,7 +29,7 @@ public class WxInformationController {
     //获取当前id资讯信息
     @RequestMapping(value = "/detail")
     @ResponseBody
-    public List detail(@RequestParam Integer id) {
+    public InformationInfoTopResponse detail(@RequestParam Integer id) {
         InformationInfoTopResponse response = new InformationInfoTopResponse();
         //获取id资讯信息
         StringBuffer sql = new StringBuffer("select * from t_advice where id = "+id+"");
@@ -38,13 +38,14 @@ public class WxInformationController {
         int sum = (int)types.get(0).get("clicksum")+1;
         StringBuffer sql2 = new StringBuffer("update t_advice set clicksum = '"+sum+"' where id = "+id+"");
         sqlAdapterMappe.updateSQL(sql2.toString());
-        return types;
+        response.setData(InformationVO.toVOs(types));
+        return response;
     }
 
     //首页资讯
     @RequestMapping(value = "/topInformation")
     @ResponseBody
-    public InformationInfoTopResponse topInformation(@RequestParam Integer id) {
+    public InformationInfoTopResponse topInformation() {
         InformationInfoTopResponse response = new InformationInfoTopResponse();
         //获取前三条资讯信息
         StringBuffer sql = new StringBuffer("select * from t_advice limit 3;");

@@ -46,6 +46,7 @@ public class InformationVO {
                 vo.setCreateTime(DateUtil.getTimeFormatText((Date)map.get("createTime")));
                 vo.setDateTime(DateTimeUtility.formatYYYYMMDDHHMM((Date)map.get("createTime")));
 
+                vos.add(vo);
             }
         }
         return vos;
