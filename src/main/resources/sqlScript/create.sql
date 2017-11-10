@@ -126,22 +126,6 @@ CREATE TABLE `t_recharge_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='充值流水';
 
 -- ----------------------------
--- 资讯
--- ----------------------------
-DROP TABLE IF EXISTS t_information ;
-CREATE TABLE `t_information` (
-	`id` INT (11) NOT NULL AUTO_INCREMENT,
-	`title` varchar (128) NOT NULL,
-	`introduction` varchar (128) NOT NULL,
-	`author` varchar(32) NOT NULL ,
-	`img` varchar (64) NOT NULL,
-	`category` varchar (64) NOT NULL,
-	`totle_count` int (11) NOT NULL,
-	`create_time` datetime NOT NULL,
-	PRIMARY KEY (`id`)
-) ENGINE = INNODB DEFAULT CHARSET = utf8mb4;
-
--- ----------------------------
 -- 小程序登录认证
 -- ----------------------------
 DROP TABLE IF EXISTS t_user_token ;
@@ -230,6 +214,7 @@ CREATE TABLE `t_activity_user` (
 -- ----------------------------
 -- 资讯
 -- ----------------------------
+DROP TABLE IF EXISTS  `t_advice` ;
 CREATE TABLE `t_advice` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(400) DEFAULT NULL,
@@ -240,7 +225,16 @@ CREATE TABLE `t_advice` (
   `typeId` char(32) DEFAULT NULL,
   `clicksum` int(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+DROP TABLE IF EXISTS  `t_advice_type` ;
+CREATE TABLE `t_advice_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `sequence` int(11) DEFAULT NULL,
+  `is_deleted` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
 -- ----------------------------
 -- banner位置
@@ -291,12 +285,3 @@ CREATE TABLE `t_banner` (
 
 INSERT INTO `t_banner_position` VALUES ('1', 'HOME_PAGE', '首页轮播'),('2', 'E_CARD', 'E卡管理轮播');
 INSERT INTO `t_banner_type` VALUES ('1', 'ACTIVITY', '活动详情'),('2', 'CUSTOM', '自定义'),('3', 'NONE', '无');
-
-
-CREATE TABLE `t_advice_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL,
-  `sequence` int(11) DEFAULT NULL,
-  `is_deleted` char(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4

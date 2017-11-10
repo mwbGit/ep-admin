@@ -30,7 +30,7 @@ public class WxBannerController {
         BannerListResponse response = new BannerListResponse();
 
         BannerFilter filter = new BannerFilter();
-        filter.setSize(3);
+        filter.setSize(5);
         filter.setStart(0);
         filter.setOnline(Bool.Y);
         filter.setPosition(BannerPosition.fromCode(positionCode));

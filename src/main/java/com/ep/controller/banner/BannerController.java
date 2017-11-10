@@ -67,10 +67,19 @@ public class BannerController {
     @ResponseBody
     public ServiceResponse add(@RequestParam("imgUpload") MultipartFile uploadFile, BannerRequest request) {
         ServiceResponse response = new ServiceResponse();
+        BannerFilter filter = new BannerFilter();
+        filter.setPosition(BannerPosition.fromCode(request.getPositionCode()));
+        int count = bannerMapper.countBannerList(filter);
+        if (count >= 5) {
+            response.setCode("1");
+            response.setMessage("数量超过5个！");
+            return response;
+        }
+
         String url = uploadService.uploadImage(uploadFile);
 
         if (url == null) {
-            response.setCode("1");
+            response.setCode("2");
             response.setMessage("上传失败");
             return response;
         }
@@ -110,7 +119,7 @@ public class BannerController {
         banner.setType(BannerType.fromCode(request.getTypeCode()));
         if (banner.getType() == BannerType.ACTIVITY) {
             banner.setActivityId(request.getActivityId());
-        } else if (banner.getType() == BannerType.CUSTOM){
+        } else if (banner.getType() == BannerType.CUSTOM) {
             banner.setLinkUrl(request.getLinkUrl());
         }
         banner.setOnline(Bool.fromValue(request.getOnline()));
