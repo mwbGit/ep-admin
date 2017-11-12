@@ -1,5 +1,6 @@
 package com.ep.service.recharge.impl;
 
+import com.ep.controller.util.ApplicationContextUtils;
 import com.ep.dao.mapper.TRechargeDetailMapper;
 import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.model.common.Bool;
@@ -73,10 +74,11 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     private TRechargeDetail createOrder(String tel, Float moneySum) {
+        User user = ApplicationContextUtils.getUser();
+
         if (moneySum <= 0) {
             throw new RuntimeException("不能充值负数");
         }
-        User user = userMapper.selectUserByMobile(tel);
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }
@@ -85,7 +87,7 @@ public class RechargeServiceImpl implements RechargeService {
         detail.setUserName(user.getName());
         detail.setSysOrder(createOrderCode());
         detail.setRechargeAmount(moneySum);
-        detail.setTel(user.getMobile());
+        detail.setTel(tel);
         detail.setUserId(user.getId());
         rechargeDetailMapper.insertSelective(detail);
         return detail;
