@@ -24,6 +24,7 @@ public class InformationVO {
     private String dateTime;
     private String content;
     private Integer clicksum;
+    private  String[] imgs;
 
     public static List<InformationVO> toVOs(List<Map<String, Object>> list) {
         List<InformationVO> vos = new ArrayList<>();
@@ -36,6 +37,7 @@ public class InformationVO {
                     vo.setMiniText((String)map.get("miniText"));
                 }if(StringUtil.isNotBlank(map.get("img"))){
                     vo.setImg((String)map.get("img"));
+                    vo.setImgs(((String) map.get("img")).split(","));
                 }if(StringUtil.isNotBlank(map.get("typeId"))){
                     vo.setTypeName((String)map.get("typeId"));
                 }if(StringUtil.isNotBlank(map.get("content"))) {
@@ -50,6 +52,14 @@ public class InformationVO {
             }
         }
         return vos;
+    }
+
+    public String[] getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(String[] imgs) {
+        this.imgs = imgs;
     }
 
     public Integer getId() {

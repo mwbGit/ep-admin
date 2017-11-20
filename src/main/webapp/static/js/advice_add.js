@@ -49,8 +49,9 @@ function detail(id) {
             $("#myEditor").val(data[0].content);
             $("#miniText").val(data[0].miniText);
             //$("#myEditor").val(data.content);
-            $("#imgShow").attr("src", data[0].img);
-
+            $("#imgShow").attr("src", data[0].imgs[0]);
+            $("#imgShow2").attr("src", data[0].imgs[1]);
+            $("#imgShow3").attr("src", data[0].imgs[2]);
             typeId = data.typeId;
             addressId = data.addressId;
             addressDetailId = data.addressDetailId;
@@ -110,6 +111,37 @@ function validateFromSub() {
         }
     });
 }
+
+/*function validateFromSub2() {
+var type2 = "laster";
+    $.ajax({
+        type: 'get',
+
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        url: $ctx + "/wx/information/list?theneid="+49+"&count="+3+"&type="+type2,
+        success: function (data) {
+            reLoad(data);
+        }
+    });
+}*/
+/*function validateFromSub2() {
+    var type2 = "laster";
+    $.ajax({
+        type: 'get',
+
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        url: $ctx + "/wx/information/topInformation",
+        success: function (data) {
+            reLoad(data);
+        }
+    });
+}*/
 function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {

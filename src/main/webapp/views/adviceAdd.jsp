@@ -108,6 +108,62 @@
 
 										</div>
 
+										<div class="controls">
+
+											<div class="fileupload fileupload-new" data-provides="fileupload">
+
+												<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+													<img src="" id="imgShow2" style="width: 200px; height: 150px;">
+												</div>
+
+												<div class="fileupload-preview fileupload-exists thumbnail"
+													 style="max-width: 200px; max-height: 150px; line-height: 20px;" >
+												</div>
+												<div>
+
+												<span class="btn btn-file"><span
+														class="fileupload-new">选择</span>
+
+												<span class="fileupload-exists">更改</span>
+
+												<input type="file" class="default" name="imgUpload2" id="imgUpload2"/></span>
+
+													<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+
+												</div>
+
+											</div>
+
+										</div>
+
+										<div class="controls">
+
+											<div class="fileupload fileupload-new" data-provides="fileupload">
+
+												<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+													<img src="" id="imgShow3" style="width: 200px; height: 150px;">
+												</div>
+
+												<div class="fileupload-preview fileupload-exists thumbnail"
+													 style="max-width: 200px; max-height: 150px; line-height: 20px;" >
+												</div>
+												<div>
+
+												<span class="btn btn-file"><span
+														class="fileupload-new">选择</span>
+
+												<span class="fileupload-exists">更改</span>
+
+												<input type="file" class="default" name="imgUpload3" id="imgUpload3"/></span>
+
+													<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+
+												</div>
+
+											</div>
+
+										</div>
+
 
 									</div>
 
@@ -127,6 +183,9 @@
 									<div class="form-actions">
 
 										<button type="button" class="btn blue"  type="submit" onclick="validateFromSub()"><i class="icon-ok"></i> 保存</button>
+<%--
+										<button type="button" class="btn blue"  type="submit" onclick="validateFromSub2()"><i class="icon-ok"></i> 保存2</button>
+--%>
 
 										<button class="btn" type="button">取消</button>
 

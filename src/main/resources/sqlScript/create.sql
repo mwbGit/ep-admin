@@ -214,18 +214,17 @@ CREATE TABLE `t_activity_user` (
 -- ----------------------------
 -- 资讯
 -- ----------------------------
-DROP TABLE IF EXISTS  `t_advice` ;
 CREATE TABLE `t_advice` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(400) DEFAULT NULL,
   `miniText` varchar(400) DEFAULT NULL,
   `content` text,
-  `img` varchar(128) DEFAULT NULL,
+  `img` varchar(400) DEFAULT NULL,
   `createTime` datetime DEFAULT NULL,
   `typeId` char(32) DEFAULT NULL,
   `clicksum` int(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4
 
 DROP TABLE IF EXISTS  `t_advice_type` ;
 CREATE TABLE `t_advice_type` (

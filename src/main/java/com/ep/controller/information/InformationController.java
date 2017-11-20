@@ -6,6 +6,7 @@ import com.ep.controller.information.api.InformationTypeVo;
 import com.ep.controller.information.api.InformationVo;
 import com.ep.controller.resource.api.ResourceResponse;
 import com.ep.controller.resource.api.ResourceVO;
+import com.ep.controller.wx.information.api.InformationVO;
 import com.ep.dao.mapper.SqlAdapterMappe;
 import com.ep.dao.model.advice.api.AddAdviceRequest;
 import com.ep.dao.model.common.Bool;
@@ -114,10 +115,17 @@ public class InformationController {
     //添加资讯
     @RequestMapping(value = "/add")
     @ResponseBody
-    public ServiceResponse add(@RequestParam("imgUpload") MultipartFile uploadFile, AddAdviceRequest addAdviceRequest ) {
+    public ServiceResponse add(@RequestParam("imgUpload") MultipartFile uploadFile,@RequestParam("imgUpload2") MultipartFile uploadFile2,@RequestParam("imgUpload3") MultipartFile uploadFile3, AddAdviceRequest addAdviceRequest ) {
         ServiceResponse response = new ServiceResponse();
-
+        //图片url
         String url = uploadService.uploadImage(uploadFile);
+        String url2 = uploadService.uploadImage(uploadFile2);
+        String url3 = uploadService.uploadImage(uploadFile3);
+        if (StringUtil.isNotBlank(url2)){
+            url=url+","+url2;
+        }if (StringUtil.isNotBlank(url3)){
+            url=url+","+url3;
+        }
         //id存在更新资讯信息，为null添加资讯
         if (addAdviceRequest.getId()!=null){
             StringBuffer sql =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"',img = '"+url +"' where id = '"+addAdviceRequest.getId()+"'");
@@ -293,6 +301,7 @@ public class InformationController {
         response.setContent((String)map.get("content"));
         response.getImgUpload(map.get("img").toString());
         response.setTitle((String)map.get("title"));*/
-        return types;
+
+        return InformationVO.toVOs(types);
     }
 }
