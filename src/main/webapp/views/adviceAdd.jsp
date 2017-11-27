@@ -79,7 +79,6 @@
 									<div class="control-group">
 
 										<label class="control-label">封面图片：</label>
-
 										<div class="controls">
 
 											<div class="fileupload fileupload-new" data-provides="fileupload">
@@ -186,7 +185,6 @@
 <%--
 										<button type="button" class="btn blue"  type="submit" onclick="validateFromSub2()"><i class="icon-ok"></i> 保存2</button>
 --%>
-
 										<button class="btn" type="button">取消</button>
 
 									</div>

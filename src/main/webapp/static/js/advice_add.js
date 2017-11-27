@@ -1,4 +1,4 @@
-var typeId;
+var typeId = null;
 jQuery(document).ready(function () {
     if (activity_id != null && activity_id != '') {
         $('#activityId').val(activity_id);
@@ -17,9 +17,10 @@ jQuery(document).ready(function () {
         success: function (data) {
             var trs = "";
             $.each(data.aaData, function (n, value) {
+
                 trs += '<option value=' + value.name;
 
-                if (typeId != null && typeId == value.id) {
+                if (typeId != null && typeId  == value.name) {
                     trs += ' selected ';
                 }
 
@@ -45,48 +46,18 @@ function detail(id) {
 
             $("#id").val(data[0].id);
             $("#title").val(data[0].title);
-            $("#typeId").val(data[0].typeId);
             $("#myEditor").val(data[0].content);
             $("#miniText").val(data[0].miniText);
-            //$("#myEditor").val(data.content);
             $("#imgShow").attr("src", data[0].imgs[0]);
             $("#imgShow2").attr("src", data[0].imgs[1]);
             $("#imgShow3").attr("src", data[0].imgs[2]);
-            typeId = data.typeId;
-            addressId = data.addressId;
-            addressDetailId = data.addressDetailId;
-            if (data.price == null) {
-                showFee = false;
-            }
+            typeId = data[0].typeId;
+
         }
     });
 }
 
 //提交表单
-
-/*
- if (!testStrMsg($("#d4311").val(), "活动时间") || !testStrMsg($("#d4312").val(), "活动时间")) {
- return;
- }
-
- if ($("#fee").val() == 'true') {
- if (!testPrice($("#price").val(), "金额")) {
- return;
- }
- }
-
- if ($("#imgUpload").val() == null && $("#imgShow").attr("src") != '') {
- alert("上传封面！");
- return;
- }
-
- if (!testStrMsg($("#myEditor").val(), "内容")) {
- return;
- }
-
- if (!testStrMsg($("#addressDetail").val(), "地址")) {
- return;
- }*/
 function validateFromSub() {
     if (!testStrMsg($("#title").val(), "标题")) {
         return;

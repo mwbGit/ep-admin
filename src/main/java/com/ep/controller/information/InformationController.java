@@ -128,8 +128,13 @@ public class InformationController {
         }
         //id存在更新资讯信息，为null添加资讯
         if (addAdviceRequest.getId()!=null){
-            StringBuffer sql =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"',img = '"+url +"' where id = '"+addAdviceRequest.getId()+"'");
-            sqlAdapterMappe.updateSQL(sql.toString());
+            if(url==null){
+                StringBuffer sql =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"' " +" where id = '"+addAdviceRequest.getId()+"'");
+                sqlAdapterMappe.updateSQL(sql.toString());
+            }else {
+                StringBuffer sql =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"',img = '"+url +"' where id = '"+addAdviceRequest.getId()+"'");
+                sqlAdapterMappe.updateSQL(sql.toString());
+            }
         }else {
             StringBuffer sql =new StringBuffer("insert into t_advice(createTime,content,title,minitext,typeId,img) values (NOW(),'"+addAdviceRequest.getContent()+"','"+addAdviceRequest.getTitle()+"',"+"'"+addAdviceRequest.getMiniText()+"','"+addAdviceRequest.getTypeId()+"','"+url+"')");
 
@@ -302,6 +307,6 @@ public class InformationController {
         response.getImgUpload(map.get("img").toString());
         response.setTitle((String)map.get("title"));*/
 
-        return InformationVO.toVOs(types);
+        return InformationVo.toVOs(types);
     }
 }
