@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 public class EParkeClient {
     private static final String host = "http://ecard.epark.com:8080/EparkPort";
     private static final String checkPhoneUrl = host+"/validationUser";
+    private static final String getBalanceUrl = host+"/getBalance";
     private static final String TopUpUrl = host+"/topUp";
 
 
@@ -61,6 +62,28 @@ public class EParkeClient {
                 return true;
             } else {
                 return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("连接eParke出错");
+        }
+    }
+
+    public static Double getBalance(String phone){
+        JSONObject jsonParam = new JSONObject();
+        jsonParam.put("phone", phone);
+        Map<String, String> result = parseJson(getBalanceUrl, jsonParam);
+        return new Double(result.get("result")) / 100;
+    }
+
+    private static Map<String,String> parseJson(String url,JSONObject jsonParam){
+        try {
+            String json = jsonPost(url, jsonParam);
+            Map<String,String> obj = (Map<String, String>) JSON.parse(json);
+            if (obj.get("state").equals("200")) {
+                return obj;
+            } else {
+                throw new RuntimeException("eParke return fail = "+obj.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,8 +144,8 @@ public class EParkeClient {
 //            respContent = EntityUtils.toString(he,"UTF-8");
 //        }
 //        System.out.println(respContent);
-        Boolean b = topUp("18511332532", "18511332532", new Date(), 100d);
-
-        System.out.println(b);
+//        Boolean b = topUp("18511332532", "18511332532", new Date(), 100d);
+        double d = getBalance("18511332532");
+        System.out.println(d);
     }
 }

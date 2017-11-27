@@ -37,10 +37,16 @@ public class EparkeOrderController {
 
     @RequestMapping(value = "/order")
     @ResponseBody
-    public ServiceResponse createOrder(@RequestBody CreateOrderRequest request) {
-
-        PreOrderResult result = rechargeService.createClientOrder(request.getTel(), request.getPay());
+    public ServiceResponse createOrder(@RequestBody CreateOrderRequest request){
+        PreOrderResult result = null;
         PreOrderResultResponse resultResponse = new PreOrderResultResponse();
+        try {
+
+            result = rechargeService.createClientOrder(request.getTel(), request.getPay());
+        } catch (Exception e) {
+            resultResponse.setCode("1");
+            resultResponse.setMessage(e.getMessage());
+        }
         resultResponse.setResult(result);
         return resultResponse;
     }
