@@ -38,7 +38,7 @@ public class RechargeServiceImpl implements RechargeService {
 
 
     @Override
-    public PreOrderResult createClientOrder(String tel, Float moneySum) {
+    public PreOrderResult createClientOrder(String tel, Float moneySum) throws Exception {
         Boolean result = EParkeClient.checkPhone(tel);
         if (!result) {
             throw new RuntimeException("不能给该手机号充值");
