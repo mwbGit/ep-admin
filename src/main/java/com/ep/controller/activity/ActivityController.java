@@ -265,8 +265,11 @@ public class ActivityController {
         detail.setId(activityRequest.getAddressId());
         activity.setAddressDetail(detail);
 
-        activityMapper.insertOrUpdateActivity(activity);
-
+        if (activity.getId() != null) {
+            activityMapper.updateActivity(activity);
+        } else {
+            activityMapper.insertActivity(activity);
+        }
         return response;
     }
 

@@ -29,7 +29,9 @@ public interface ActivityMapper {
 
     public List<AddressDetail>  selectAllAddressDetailListByAddressId(@Param("addressId") Integer addressId);
 
-    public void insertOrUpdateActivity(Activity activity);
+    public void insertActivity(Activity activity);
+
+    public void updateActivity(Activity activity);
 
     public void updateActivityOnline(@Param("id") Integer id);
 
