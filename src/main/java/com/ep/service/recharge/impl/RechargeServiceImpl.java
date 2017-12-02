@@ -1,10 +1,16 @@
 package com.ep.service.recharge.impl;
 
+import com.ep.controller.common.PagingResponse;
+import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.util.ApplicationContextUtils;
+import com.ep.dao.filter.ConfigRechargeFilter;
+import com.ep.dao.filter.RechargeFilter;
+import com.ep.dao.mapper.TConfigRechargeMapper;
 import com.ep.dao.mapper.TRechargeDetailMapper;
 import com.ep.dao.mapper.UserMapper;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PreOrderResult;
+import com.ep.dao.model.generated.TConfigRecharge;
 import com.ep.dao.model.generated.TRechargeDetail;
 import com.ep.dao.model.user.User;
 import com.ep.service.epclient.EParkeClient;
@@ -18,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by fangchen.chai on 2017/8/27
@@ -35,6 +42,8 @@ public class RechargeServiceImpl implements RechargeService {
     private UserMapper userMapper;
     @Autowired
     private WeChatPayService weChatPayService;
+    @Autowired
+    private TConfigRechargeMapper tConfigRechargeMapper;
 
 
     @Override
@@ -59,6 +68,49 @@ public class RechargeServiceImpl implements RechargeService {
         setOrderPayed(order, outOrder);
         Boolean result =  EParkeClient.topUp(detail.getTel(), detail.getTel(), new Date(), detail.getRechargeAmount().doubleValue());
         return result;
+    }
+
+    @Override
+    public PagingResponse<List<TRechargeDetail>> getTRechargeList(RechargeFilter filter) {
+        PagingResponse<List<TRechargeDetail>> response = new PagingResponse<>();
+        List<TRechargeDetail> details = rechargeDetailMapper.selectTRechargeDetailByFilter(filter);
+        Integer count = rechargeDetailMapper.countTRechargeDetailByFilter(filter);
+        response.setTotalCount(count);
+        response.setAaData(details);
+        return response;
+    }
+
+    @Override
+    public ServiceResponse addConfigRecharge(TConfigRecharge recharge) {
+        ServiceResponse response = new ServiceResponse();
+        Integer num = tConfigRechargeMapper.countTConfigRechargeByFilter(null);
+        if (num > 5) {
+            response.setCode("1");
+            response.setMessage("不能超过六条");
+        }
+        tConfigRechargeMapper.insertSelective(recharge);
+
+        return response;
+    }
+
+    @Override
+    public void deleteConfigRecharge(Integer id) {
+        tConfigRechargeMapper.deleteByPrimaryKey(id.longValue());
+    }
+
+    @Override
+    public void updateConfigRecharge(TConfigRecharge recharge) {
+        tConfigRechargeMapper.updateByPrimaryKeySelective(recharge);
+    }
+
+    @Override
+    public PagingResponse<List<TConfigRecharge>> selectConfigRechargeByFilter(ConfigRechargeFilter filter) {
+        PagingResponse<List<TConfigRecharge>> response = new PagingResponse<>();
+        List<TConfigRecharge> details = tConfigRechargeMapper.selectTConfigRechargeByFilter(filter);
+        Integer count = tConfigRechargeMapper.countTConfigRechargeByFilter(filter);
+        response.setTotalCount(count);
+        response.setAaData(details);
+        return response;
     }
 
     private void setOrderPayed(String orderCode, String outOrderCode) {
