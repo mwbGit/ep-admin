@@ -85,7 +85,7 @@
 		u.is_deleted AS t_activity_type_is_deleted
 	</sql>
 
-	<insert id="insertOrUpdateActivity"
+	<insert id="insertActivity"
 			parameterType="Activity"
 			useGeneratedKeys="true"
 			keyProperty="id">
@@ -109,18 +109,39 @@
 		#{type.id},
 		#{addressDetail.id},
 		'N'
-		) ON DUPLICATE KEY UPDATE
-			<if  test="img != null">
-				img = #{img},
-			</if>
-			title = #{title},
-			start_time = #{startTime},
-			end_time = #{endTime},
-			price = #{price},
-			content = #{content},
-			type_id = #{type.id},
-			address_detail_id = #{addressDetail.id}
+		)
 	</insert>
+
+	<update id="updateActivity" parameterType="Activity">
+		UPDATE t_activity
+		<set>
+		<if  test="img != null">
+			img = #{img},
+		</if>
+		<if  test="title != null">
+			title = #{title},
+		</if>
+		<if  test="startTime != null">
+			start_time = #{startTime},
+		</if>
+		<if  test="endTime != null">
+			end_time = #{endTime},
+		</if>
+		<if  test="price != null">
+			price = #{price},
+		</if>
+		<if  test="content != null">
+			content = #{content},
+		</if>
+		<if  test="type != null">
+			type_id = #{type.id},
+		</if>
+		<if  test="addressDetail != null">
+			address_detail_id = #{addressDetail.id}
+		</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 
 	<update id="updateActivityOnline">
 		UPDATE t_activity

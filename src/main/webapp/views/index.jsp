@@ -98,7 +98,7 @@
 
             <a class="brand" href="${ctx}/views/index.jsp">
 
-              <span style="font-size: x-large; margin-left: 30px;color: white" >EPARK</span>
+                <span style="font-size: x-large; margin-left: 30px;color: white" >EPARK</span>
 
             </a>
 
@@ -355,6 +355,7 @@
                     </li>
 
                 </ul>
+            </li>
         </ul>
 
         <!-- END SIDEBAR MENU -->
@@ -380,7 +381,7 @@
 
                     <h3 class="page-title">
 
-                        &nbsp
+                        &nbsp;
 
                     </h3>
 
@@ -435,7 +436,7 @@
                             </div>
                         </li>
 
-                        </li>
+
 
                     </ul>
 
