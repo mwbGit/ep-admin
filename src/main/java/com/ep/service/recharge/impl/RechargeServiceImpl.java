@@ -82,14 +82,15 @@ public class RechargeServiceImpl implements RechargeService {
 
     @Override
     public ServiceResponse addConfigRecharge(TConfigRecharge recharge) {
+        User user = ApplicationContextUtils.getUser();
         ServiceResponse response = new ServiceResponse();
         Integer num = tConfigRechargeMapper.countTConfigRechargeByFilter(null);
         if (num > 5) {
             response.setCode("1");
             response.setMessage("不能超过六条");
         }
+        recharge.setName(user.getName());
         tConfigRechargeMapper.insertSelective(recharge);
-
         return response;
     }
 
@@ -111,6 +112,11 @@ public class RechargeServiceImpl implements RechargeService {
         response.setTotalCount(count);
         response.setAaData(details);
         return response;
+    }
+
+    @Override
+    public List<TConfigRecharge> getAllTConfigRecharge() {
+        return tConfigRechargeMapper.selectByExample(null);
     }
 
     private void setOrderPayed(String orderCode, String outOrderCode) {

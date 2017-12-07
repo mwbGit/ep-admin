@@ -27,4 +27,6 @@ public interface RechargeService {
     void updateConfigRecharge(TConfigRecharge recharge);
 
     PagingResponse<List<TConfigRecharge>> selectConfigRechargeByFilter(ConfigRechargeFilter filter);
+
+    List<TConfigRecharge> getAllTConfigRecharge();
 }

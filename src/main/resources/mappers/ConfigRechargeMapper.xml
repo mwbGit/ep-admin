@@ -3,14 +3,10 @@
 <mapper namespace="com.ep.dao.mapper.TConfigRechargeMapper">
   <select id="selectTConfigRechargeByFilter" resultType="com.ep.dao.model.generated.TConfigRecharge">
     SELECT * from t_config_recharge
-
     ORDER BY id
-    <if test="filter.start != null and filter.size != null">
-      limit #{filter.start}, #{filter.size}
-    </if>
   </select>
 
-  <select id="countTConfigRechargeByFilter" resultType="com.ep.dao.model.generated.TConfigRecharge">
+  <select id="countTConfigRechargeByFilter" resultType="int">
     SELECT count(*) from t_config_recharge
 
 
