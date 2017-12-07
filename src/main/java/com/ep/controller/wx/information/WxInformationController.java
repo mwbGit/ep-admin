@@ -57,13 +57,14 @@ public class WxInformationController {
     //获取当前页面资讯
     @RequestMapping(value = "/list")
     @ResponseBody
-    public InformationInfoTopResponse list(@RequestBody PageRequest request) {
+    public InformationInfoTopResponse list(@RequestParam Integer themeid,@RequestParam Integer count,@RequestParam String type) {
         InformationInfoTopResponse response = new InformationInfoTopResponse();
-        String type = request.getType();
-        int themeid = request.getThemeid();
-        int count = request.getCount();
         //获取页面资讯信息
-        if (type.equals("before")){
+        if (type.equals("home")){
+            StringBuffer sql = new StringBuffer("SELECT * FROM t_advice  ORDER BY id DESC LIMIT "+count+";");
+            List<Map<String, Object>> types = sqlAdapterMappe.selectSQL(sql.toString());
+            response.setData(InformationVO.toVOs(types));
+        }else if (type.equals("before")){
             StringBuffer sql = new StringBuffer("SELECT * FROM t_advice WHERE id <="+themeid+" ORDER BY id DESC LIMIT "+count+";");
             List<Map<String, Object>> types = sqlAdapterMappe.selectSQL(sql.toString());
             response.setData(InformationVO.toVOs(types));
