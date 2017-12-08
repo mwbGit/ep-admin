@@ -271,7 +271,7 @@
             <li>
                 <a href="javascript:;">
 
-                    <i class="icon-bullhorn"></i>
+                    <i class="icon-bar-chart"></i>
 
                     <span class="title">E卡管理</span>
 
