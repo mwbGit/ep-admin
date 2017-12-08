@@ -18,7 +18,7 @@ public interface TConfigRechargeMapper extends BaseMapper<TConfigRecharge,Long,T
 
     Integer countTConfigRechargeByFilter(@Param("filter") ConfigRechargeFilter filter);
 
-    @Select("select price from t_recharge_detail where recharge_amount = #{money}")
+    @Select("select price from t_config_recharge where money = #{money}")
     Integer selectPriceByMoney(@Param("money") Float money);
 
 
