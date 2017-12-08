@@ -88,10 +88,12 @@ public class RechargeServiceImpl implements RechargeService {
         if (num > 5) {
             response.setCode("500001");
             response.setMessage("不能超过六条");
+            return response;
         }
         if (recharge.getPrice() > recharge.getMoney()) {
             response.setCode("500002");
             response.setMessage("售价不得大于充值金额");
+            return response;
         }
         recharge.setName(user.getName());
         tConfigRechargeMapper.insertSelective(recharge);
@@ -109,6 +111,7 @@ public class RechargeServiceImpl implements RechargeService {
         if (recharge.getPrice() > recharge.getMoney()) {
             response.setCode("500002");
             response.setMessage("售价不得大于充值金额");
+            return response;
         }
         tConfigRechargeMapper.updateByPrimaryKeySelective(recharge);
         return response;
