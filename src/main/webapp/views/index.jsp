@@ -266,6 +266,38 @@
                 </ul>
 
             </li>
+
+
+            <li>
+                <a href="javascript:;">
+
+                    <i class="icon-bullhorn"></i>
+
+                    <span class="title">E卡管理</span>
+
+                    <span class="arrow "></span>
+
+                </a>
+
+                <ul class="sub-menu">
+
+                    <li id="recharge_manager-li">
+
+                        <a href="#" onclick="loadJsp('recharge_manager')">
+
+                            充值管理</a>
+                    </li>
+
+                    <li id="recharge_detail-li">
+
+                        <a href="#" onclick="loadJsp('recharge_detail')">
+
+                            充值记录</a>
+                    </li>
+                </ul>
+
+            </li>
+
             <li>
 
                 <a href="javascript:;">
@@ -546,7 +578,6 @@
 <!-- BEGIN CORE PLUGINS -->
 
 <script src="${ctx }/static/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
-
 <script src="${ctx }/static/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
 <!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->

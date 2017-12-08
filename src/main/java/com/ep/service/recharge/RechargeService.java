@@ -24,7 +24,7 @@ public interface RechargeService {
 
     void deleteConfigRecharge(Integer id);
 
-    void updateConfigRecharge(TConfigRecharge recharge);
+    ServiceResponse updateConfigRecharge(TConfigRecharge recharge);
 
     PagingResponse<List<TConfigRecharge>> selectConfigRechargeByFilter(ConfigRechargeFilter filter);
 

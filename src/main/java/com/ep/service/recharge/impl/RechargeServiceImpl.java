@@ -86,8 +86,12 @@ public class RechargeServiceImpl implements RechargeService {
         ServiceResponse response = new ServiceResponse();
         Integer num = tConfigRechargeMapper.countTConfigRechargeByFilter(null);
         if (num > 5) {
-            response.setCode("1");
+            response.setCode("500001");
             response.setMessage("不能超过六条");
+        }
+        if (recharge.getPrice() > recharge.getMoney()) {
+            response.setCode("500002");
+            response.setMessage("售价不得大于充值金额");
         }
         recharge.setName(user.getName());
         tConfigRechargeMapper.insertSelective(recharge);
@@ -100,8 +104,14 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
-    public void updateConfigRecharge(TConfigRecharge recharge) {
+    public ServiceResponse updateConfigRecharge(TConfigRecharge recharge) {
+        ServiceResponse response = new ServiceResponse();
+        if (recharge.getPrice() > recharge.getMoney()) {
+            response.setCode("500002");
+            response.setMessage("售价不得大于充值金额");
+        }
         tConfigRechargeMapper.updateByPrimaryKeySelective(recharge);
+        return response;
     }
 
     @Override

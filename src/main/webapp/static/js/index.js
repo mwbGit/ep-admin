@@ -100,6 +100,12 @@ function loadJsp(item) {
     } else if (item == "banner_manager") {
         $('#dashboard').load($ctx + "/views/banner_manager.jsp");
         $('#menuTitle').html("轮播图管理");
+    } else if (item == "recharge_manager") {
+        $('#dashboard').load($ctx + "/views/recharge_manager.jsp");
+        $('#menuTitle').html("充值管理");
+    } else if (item == "recharge_detail") {
+        $('#dashboard').load($ctx + "/views/recharge_detail.jsp");
+        $('#menuTitle').html("充值记录");
     }
 }
 

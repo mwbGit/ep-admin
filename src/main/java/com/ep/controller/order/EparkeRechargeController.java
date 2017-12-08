@@ -2,6 +2,7 @@ package com.ep.controller.order;
 
 import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
+import com.ep.dao.filter.ConfigRechargeFilter;
 import com.ep.dao.filter.RechargeFilter;
 import com.ep.dao.model.generated.TConfigRecharge;
 import com.ep.dao.model.generated.TRechargeDetail;
@@ -48,14 +49,16 @@ public class EparkeRechargeController {
     @RequestMapping(value = "/config/update")
     @ResponseBody
     public ServiceResponse updateRechargeConfig(@RequestBody TConfigRecharge configRecharge) {
-        rechargeService.updateConfigRecharge(configRecharge);
-        return new ServiceResponse();
+        return rechargeService.updateConfigRecharge(configRecharge);
     }
 
     @RequestMapping(value = "/config/list")
     @ResponseBody
-    public List<TConfigRecharge> getRechargeConfigList() {
-        return rechargeService.getAllTConfigRecharge();
+    public PagingResponse<List<TConfigRecharge>> getRechargeConfigList(Integer iDisplayStart, Integer iDisplayLength) {
+        ConfigRechargeFilter filter = new ConfigRechargeFilter();
+        filter.setStart(iDisplayStart);
+        filter.setSize(iDisplayLength);
+        return rechargeService.selectConfigRechargeByFilter(filter);
     }
 
 }
