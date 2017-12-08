@@ -8,13 +8,13 @@
 
 	<div class="portlet-title">
 
-		<div class="caption"><i class="icon-globe"></i>活动管理</div>
+		<div class="caption"><i class="icon-globe"></i>充值记录</div>
 
 	</div>
 
 	<div class="portlet-body">
 
-		<table class="table table-striped table-bordered table-hover table-full-width" id="activity_manager">
+		<table class="table table-striped table-bordered table-hover table-full-width" id="recharge_detail">
 
 		</table>
 	</div>
@@ -22,4 +22,4 @@
 </div>
 
 
-<script src="${ctx }/static/js/activity_manager.js"></script>
+<script src="${ctx }/static/js/recharge_detail.js"></script>

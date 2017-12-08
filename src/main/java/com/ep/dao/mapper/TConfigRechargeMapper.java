@@ -4,6 +4,8 @@ import com.ep.dao.filter.ConfigRechargeFilter;
 import com.ep.dao.model.generated.TConfigRecharge;
 import com.ep.dao.model.generated.TConfigRechargeExample;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,6 +17,9 @@ public interface TConfigRechargeMapper extends BaseMapper<TConfigRecharge,Long,T
     List<TConfigRecharge> selectTConfigRechargeByFilter(@Param("filter") ConfigRechargeFilter filter);
 
     Integer countTConfigRechargeByFilter(@Param("filter") ConfigRechargeFilter filter);
+
+    @Select("select price from t_recharge_detail where recharge_amount = #{money}")
+    Integer selectPriceByMoney(@Param("money") Float money);
 
 
 }

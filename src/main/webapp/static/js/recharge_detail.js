@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-    $('#activity_manager').dataTable({
+    $('#recharge_detail').dataTable({
         // "bScrollInfinite": true,
         // "bScrollCollapse": true,
         // "sScrollY": "200px",//长200像素,
@@ -15,50 +15,45 @@ jQuery(document).ready(function () {
                 "sTitle": "序号",
                 "sDefaultContent": "",
                 "sClass": "center",
-                "bVisible": false //此列不显示
+                "bVisible": true //此列不显示
             }, {
-                "mDataProp": "title",
-                "sTitle": "标题",
+                "mDataProp": "userName",
+                "sTitle": "用户名",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "typeName",
-                "sTitle": "活动类别",
+                "mDataProp": "tel",
+                "sTitle": "手机号",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "status",
-                "sTitle": "活动状态",
+                "mDataProp": "rechargeAmount",
+                "sTitle": "金额",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "timeRange",
-                "sTitle": "活动时间",
+                "mDataProp": "price",
+                "sTitle": "售价",
                 "sDefaultContent": "",
                 "sClass": "center"
             },{
-                "mDataProp": "online",
-                "sTitle": "操作",
+                "mDataProp": "date",
+                "sTitle": "日期",
+                "sDefaultContent": "",
+                "sClass": "center"
+            },{
+                "mDataProp": "payStatus",
+                "sTitle": "",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
                     var str = '';
-
-                    str += '&nbsp&nbsp<a href="javascript:;" onclick="editActivity(' + full.id + ')">' +
-                        '<span  data-toggle="tooltip"  title="编辑" ><i class="icon-edit"></i></span></a>&nbsp';
-
-                    if (!val) {
-                        str += '<a href="javascript:;"  onclick="publish(' + full.id + ')">' +
-                            '<span   data-toggle="tooltip"  title="发布" > ' +
-                            '<i class="icon-bullhorn" ></i></span></a> &nbsp';
+                    if (full.payStatus == '0') {
+                        str = '待支付';
+                    }else if (full.payStatus == '1') {
+                        str = '已取消';
+                    }else if (full.payStatus == '2') {
+                        str = '已支付';
                     }
-
-                    str += '<a href="javascript:;" onclick="users(' + full.id + ')">' +
-                        '<span data-toggle="tooltip"  title="报名列表" > ' +
-                        '<i class="icon-user" ></i></span></a>&nbsp&nbsp';
-
-                    str += '<a href="javascript:;"  onclick="deleteActivity(' + full.id + ')">' +
-                        '<span   data-toggle="tooltip"  title="删除活动">'+
-                        '<i class=" icon-remove" ></i></span></a>';
 
                     return str;
                 }
@@ -89,7 +84,7 @@ jQuery(document).ready(function () {
         },
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": $ctx + "/activity/list",
+        "sAjaxSource": $ctx + "/recharge/list",
         "fnServerData": function (sSource, aDataSet, fnCallback, oSettings) {
             oSettings.jqXHR = $.ajax({
                 dataType: 'json',
@@ -103,59 +98,11 @@ jQuery(document).ready(function () {
     });
 
 });
-function publish(id) {
-    if (window.confirm("确定发布？")) {
-        $.ajax({
-            dataType: 'json',
-            type: "POST",
-            async: false,
-            contentType: 'application/json',
-            url: $ctx + "/activity/publish?id=" + id,
-            // data: {},
-            success: function (data) {
-                reLoad(data);
-            }
-        });
-    }
-}
-
-function deleteActivity(id) {
-    if (window.confirm("确定删除？")) {
-        $.ajax({
-            dataType: 'json',
-            type: "POST",
-            async: false,
-            contentType: 'application/json',
-            url: $ctx + "/activity/delete?id=" + id,
-            // data: {},
-            success: function (data) {
-                reLoad(data);
-            }
-        });
-    }
-}
-
-function editActivity(id) {
-    var p = {
-        id: id
-    };
-
-    $('#dashboard').load($ctx + "/views/activity_add.jsp", p);
-}
 
 function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {
         $('.close').click();
-        $('#dashboard').load($ctx + "/views/activity_manager.jsp");
+        $('#dashboard').load($ctx + "/views/recharge_detail.jsp");
     }
-}
-
-function users(activityId) {
-    var p = {
-        id: activityId
-    };
-    $('#menuTitle').html("报名列表");
-    $('#dashboard').load($ctx + "/views/activity_user.jsp", p);
-
 }

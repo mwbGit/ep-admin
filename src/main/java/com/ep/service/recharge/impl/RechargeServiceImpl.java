@@ -143,7 +143,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     private TRechargeDetail createOrder(String tel, Float moneySum) {
         User user = ApplicationContextUtils.getUser();
-
+        Integer price = tConfigRechargeMapper.selectPriceByMoney(moneySum);
         if (moneySum <= 0) {
             throw new RuntimeException("不能充值负数");
         }
@@ -157,6 +157,7 @@ public class RechargeServiceImpl implements RechargeService {
         detail.setRechargeAmount(moneySum);
         detail.setTel(tel);
         detail.setUserId(user.getId());
+        detail.setPrice(price);
         rechargeDetailMapper.insertSelective(detail);
         return detail;
     }
