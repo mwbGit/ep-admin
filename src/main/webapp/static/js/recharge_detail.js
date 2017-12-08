@@ -43,7 +43,7 @@ jQuery(document).ready(function () {
                 "sClass": "center"
             },{
                 "mDataProp": "payStatus",
-                "sTitle": "",
+                "sTitle": "状态",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
                     var str = '';
