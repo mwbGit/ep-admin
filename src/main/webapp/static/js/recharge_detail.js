@@ -48,11 +48,11 @@ jQuery(document).ready(function () {
                 "mRender": function (val, data, full) {
                     var str = '';
                     if (full.payStatus == '0') {
-                        str = '待支付';
+                        str = '失败';
                     }else if (full.payStatus == '1') {
-                        str = '已取消';
+                        str = '失败';
                     }else if (full.payStatus == '2') {
-                        str = '已支付';
+                        str = '成功';
                     }
 
                     return str;

@@ -91,7 +91,6 @@ jQuery(document).ready(function () {
 function addRechargeConfig() {
     var data = getFormJson("addFrom");
     data = JSON.stringify(data);
-    alert(data);
     $.ajax({
         dataType: 'json',
         type: "POST",
