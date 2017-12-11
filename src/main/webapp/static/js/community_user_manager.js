@@ -58,8 +58,8 @@ jQuery(document).ready(function () {
                 "mRender": function (val, data, full) {
                     var str = '';
 
-                    str += '<a href="#"  onclick="deleteUserManager(' + full.id + ')"><span  style="color: blue"  data-toggle="tooltip"  title="点击禁用" > ' +
-                        '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
+                    str += '<a href="#"  onclick="deleteUserManager(' + full.id + ')"><span  style="color: blue"  data-toggle="tooltip"  title="点击删除" > ' +
+                        '<i class="delete1" style="width: 50px;height: 50px"></i></span></a> ';
 
 
                     str += '&nbsp&nbsp<span><a href="#add-config" data-toggle="modal"  onclick="addUserBut(' + full.id + ')"><i class="icon-edit" style="width: 50px;height: 50px"></i></span></a>';
@@ -139,15 +139,17 @@ function reLoad(data) {
 }
 
 function deleteUserManager(id) {
-    $.ajax({
-        dataType: 'json',
-        async: false,
-        url: $ctx + "/user/modify/managed?id=" + id +"&managed=false",
-        // data: "{}",
-        success: function (data) {
-            reLoad(data);
-        }
-    });
+    if (window.confirm("确定删除？")) {
+        $.ajax({
+            dataType: 'json',
+            async: false,
+            url: $ctx + "/user/modify/managed?id=" + id + "&managed=false",
+            // data: "{}",
+            success: function (data) {
+                reLoad(data);
+            }
+        });
+    }
 }
 
 function modifyUserManager(id) {
