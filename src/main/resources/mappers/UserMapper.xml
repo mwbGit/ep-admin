@@ -37,7 +37,7 @@
 		u.is_deleted AS user_is_deleted
 	</sql>
 
-    <insert id="insertOrUpdateUser"
+    <insert id="insertUser"
 		 parameterType="User"
 		 useGeneratedKeys="true"
 		 keyProperty="id">
@@ -67,13 +67,33 @@
 			#{updateDate},
 			#{updatedById},
 			#{updatedByName}
-		) ON DUPLICATE KEY UPDATE
-			update_date = NOW(),
-			is_deleted = #{deleted.code},
-			password = #{password},
-			updated_by_id = #{updatedById},
-			updated_by_name = #{updatedByName}
+		)
 	</insert>
+
+	<update id="updateUser"
+			parameterType="User">
+		UPDATE t_user
+		<set>
+			update_date = NOW(),
+			<if test="managed != null">
+				is_managed = #{managed.code},
+			</if>
+			<if test="deleted != null">
+				is_deleted = #{deleted.code},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="updatedById != null">
+				updated_by_id = #{updatedById},
+			</if>
+			<if test="updatedByName != null">
+			  updated_by_name = #{updatedByName}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 
 	<insert id="insertOrUpdateUserToken">
 		INSERT INTO t_user_token(
@@ -115,6 +135,9 @@
 			<if test="filter.name != null">
 				u.name LIKE #{filter.name}
 			</if>
+			<if test="filter.managed != null">
+				AND  u.is_managed = #{filter.managed.code}
+			</if>
 		</where>
 		ORDER BY u.create_date DESC
         <if test="filter.start != null and filter.size != null">
@@ -122,6 +145,21 @@
         </if>
 
     </select>
+
+	<select id="countUserList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_user u
+		<where>
+			<if test="filter.name != null">
+				u.name LIKE #{filter.name}
+			</if>
+			<if test="filter.managed != null ">
+				AND  u.is_managed = #{filter.managed.code}
+			</if>
+		</where>
+	</select>
 
 	<select id="selectUserById" resultMap="userResult">
 		SELECT
@@ -148,18 +186,6 @@
 		FROM
 		t_user u
 		WHERE `mobile` = #{mobile}
-	</select>
-
-    <select id="countUserList" resultType="int">
-		SELECT
-			COUNT(*)
-		FROM
-		t_user u
-		<where>
-			<if test="filter.name != null">
-				u.name LIKE #{filter.name}
-			</if>
-		</where>
 	</select>
 
 

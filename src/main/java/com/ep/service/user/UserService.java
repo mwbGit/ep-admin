@@ -36,7 +36,7 @@ public class UserService implements IUserService {
 
     @Override
     public void modifyUser(Integer[] spaceIds, User user) {
-        userMapper.insertOrUpdateUser(user);
+        userMapper.updateUser(user);
 
         spaceMapper.deleteUserSpaceByUserId(user.getId());
 
@@ -68,9 +68,10 @@ public class UserService implements IUserService {
                 user.setMobile(mobile);
                 user.setOpenId(openId);
                 user.setName(name);
+                user.setManaged(Bool.N);
                 user.setDeleted(Bool.N);
 
-                userMapper.insertOrUpdateUser(user);
+                userMapper.insertUser(user);
 
                 token = MD5.md5(openCode + mobile + new Date().getTime());
 

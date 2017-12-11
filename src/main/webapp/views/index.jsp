@@ -267,6 +267,30 @@
 
             </li>
 
+            <li>
+                <a href="javascript:;">
+
+                    <i class="icon-bullhorn"></i>
+
+                    <span class="title">社区管理</span>
+
+                    <span class="arrow "></span>
+
+                </a>
+
+                <ul class="sub-menu">
+
+                    <li id="community_manager-li">
+
+                        <a href="#" onclick="loadJsp('community_manager')">
+
+                            社区经理管理</a>
+                    </li>
+                </ul>
+
+            </li>
+
+
 
             <li>
                 <a href="javascript:;">

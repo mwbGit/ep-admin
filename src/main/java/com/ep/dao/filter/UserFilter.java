@@ -1,5 +1,6 @@
 package com.ep.dao.filter;
 
+import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PagingFilter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class UserFilter extends PagingFilter {
     private String name;
+    private Bool managed;
 
     public String getName() {
         return name;
@@ -18,5 +20,13 @@ public class UserFilter extends PagingFilter {
 
             this.name = "%" + name + "%";
         }
+    }
+
+    public Bool getManaged() {
+        return managed;
+    }
+
+    public void setManaged(Bool managed) {
+        this.managed = managed;
     }
 }

@@ -25,6 +25,7 @@ public class User implements Serializable{
     private Date updateDate;
     private Integer updatedById;
     private String updatedByName;
+    private Bool managed;
     private Bool deleted;
 
     public Integer getId() {
@@ -121,6 +122,14 @@ public class User implements Serializable{
 
     public void setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+    }
+
+    public Bool getManaged() {
+        return managed;
+    }
+
+    public void setManaged(Bool managed) {
+        this.managed = managed;
     }
 
     public Bool getDeleted() {

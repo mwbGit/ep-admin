@@ -27,7 +27,9 @@ public interface UserMapper {
 
     public int countUserList(@Param("filter") UserFilter filter);
 
-    public void insertOrUpdateUser(User user);
+    public void insertUser(User user);
+
+    public void updateUser(User user);
 
     public void insertOrUpdateUserToken(@Param("userId") Integer userId, @Param("openCode") String openCode, @Param("token") String token);
 

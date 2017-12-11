@@ -74,6 +74,7 @@ CREATE TABLE `t_user` (
   `update_date` date DEFAULT NULL,
   `updated_by_id` int(11) DEFAULT NULL,
   `updated_by_name` char(32) DEFAULT NULL,
+  `is_managed` char(1) NOT NULL,
   `is_deleted` char(1) NOT NULL,
   `open_id` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
