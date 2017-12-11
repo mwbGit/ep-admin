@@ -107,7 +107,7 @@ function loadJsp(item) {
         $('#dashboard').load($ctx + "/views/recharge_detail.jsp");
         $('#menuTitle').html("充值记录");
     } else if (item == "community_manager") {
-        $('#dashboard').load($ctx + "/views/community_manager.jsp");
+        $('#dashboard').load($ctx + "/views/community_user_manager.jsp");
         $('#menuTitle').html("社区经理管理");
     }
 }

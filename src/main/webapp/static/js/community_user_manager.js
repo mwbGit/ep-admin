@@ -58,15 +58,9 @@ jQuery(document).ready(function () {
                 "mRender": function (val, data, full) {
                     var str = '';
 
-                    if (val) {
-                        str += '<a href="#"  onclick="deleteUser(' + full.id + ')">' +
-                            '<span  style="color: red"  data-toggle="tooltip"  title="用户已被禁用,点击启用" > ' +
-                            '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
-                    } else {
+                    str += '<a href="#"  onclick="deleteUserManager(' + full.id + ')"><span  style="color: blue"  data-toggle="tooltip"  title="点击禁用" > ' +
+                        '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
 
-                        str += '<a href="#"  onclick="deleteUserManager(' + full.id + ')"><span  style="color: blue"  data-toggle="tooltip"  title="点击禁用" > ' +
-                            '<i class="icon-warning-sign" style="width: 50px;height: 50px"></i></span></a> ';
-                    }
 
                     str += '&nbsp&nbsp<span><a href="#add-config" data-toggle="modal"  onclick="addUserBut(' + full.id + ')"><i class="icon-edit" style="width: 50px;height: 50px"></i></span></a>';
 
@@ -114,7 +108,7 @@ jQuery(document).ready(function () {
 
 });
 
-function addUserBut(id) {
+function addUserBut() {
     $.ajax({
         dataType: 'json',
         type: "POST",
@@ -124,9 +118,10 @@ function addUserBut(id) {
         // data: {},
         success: function (data) {
             var str = '';
-            $.each(data.data, function (n, value) {
+            $.each(data.aaData, function (n, value) {
+                debugger
                 str += '<tr><td>' + value.name + '</td>' +
-                    '<td><button onclick="modifyUserManager(' + value.id + ')"></button></td>' +
+                    '<td><button onclick="modifyUserManager(' + value.id + ')" value="选择"></button></td>' +
                     '</tr>';
             });
 

@@ -44,8 +44,10 @@ public class UserController {
     @ResponseBody
     public PagingResponse<List<UserVO>> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch, Boolean managed) {
         UserFilter filter = new UserFilter();
-        filter.setStart(iDisplayStart);
-        filter.setSize(iDisplayLength);
+        if (iDisplayStart != null && iDisplayLength != null) {
+            filter.setStart(iDisplayStart);
+            filter.setSize(iDisplayLength);
+        }
         filter.setName(sSearch);
         filter.setManaged(Bool.fromValue(managed));
 
