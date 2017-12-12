@@ -21,8 +21,8 @@ public class EParkClientController {
     public BalanceResponse getBalance() {
         Double balance = null;
         BalanceResponse response = new BalanceResponse();
+        User user = ApplicationContextUtils.getUser();
         try {
-            User user = ApplicationContextUtils.getUser();
             balance = EParkeClient.getBalance(user.getMobile());
 //            balance = EParkeClient.getBalance("18511332532");
         } catch (Exception e) {
@@ -30,6 +30,7 @@ public class EParkClientController {
             response.setMessage("获取用户余额失败！");
         }
         response.setBalance(balance);
+        response.setTel(user.getMobile());
        return response;
     }
 }

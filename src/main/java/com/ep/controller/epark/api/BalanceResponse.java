@@ -8,6 +8,15 @@ import com.ep.controller.common.ServiceResponse;
 public class BalanceResponse extends ServiceResponse{
 
     private Double balance;
+    private String tel;
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
     public Double getBalance() {
         return balance;
