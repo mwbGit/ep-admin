@@ -154,20 +154,20 @@ function deleteDevice(id) {
 }
 
 function modifyDeviceOrderUp(id) {
-    modifyType(id, null, true);
+    modifyType(id, true);
 }
 
 function modifyDeviceOrderDown(id) {
-    modifyType(id, null, false);
+    modifyType(id, false);
 }
 
-function modifyType(id, name, asc) {
+function modifyType(id, asc) {
     $.ajax({
         dataType: 'json',
         type: "POST",
         async: false,
         // contentType:'application/json',
-        url: $ctx + "/community/device/modify?id=" + id + "&name=" + name + "&asc=" + asc,
+        url: $ctx + "/community/device/modify/order?id=" + id + "&asc=" + asc,
         // data: data,
         success: function (data) {
             reLoad(data);

@@ -93,31 +93,37 @@ public class CommunityController {
     @RequestMapping(value = "/device/modify")
     @ResponseBody
     public ServiceResponse deviceModify(@RequestParam(value = "imgUpload", required = false) MultipartFile imgUpload,
-                                        @RequestParam(value = "id") Integer id, String name, Boolean asc) {
+                                        @RequestParam(value = "id") Integer id, String name) {
         ServiceResponse response = new ServiceResponse();
         String url = null;
         if (imgUpload != null && !imgUpload.isEmpty()) {
-             url = uploadService.uploadImage(imgUpload);
+            url = uploadService.uploadImage(imgUpload);
         }
 
-        if (asc == null) {
-            int count = communityMapper.countCommunityDeviceByName(name, id);
-            if (count > 0) {
-                response.setCode("1");
-                response.setMessage("名称重复");
-                return response;
-            }
-
-            CommunityDevice communityDevice = new CommunityDevice();
-            communityDevice.setId(id);
-            communityDevice.setName(name);
-            communityDevice.setImg(url);
-
-            communityMapper.updateCommunityDevice(communityDevice);
-        } else {
-
-            communityService.modifyCommunityDeviceSequence(id, asc);
+        int count = communityMapper.countCommunityDeviceByName(name, id);
+        if (count > 0) {
+            response.setCode("1");
+            response.setMessage("名称重复");
+            return response;
         }
+
+        CommunityDevice communityDevice = new CommunityDevice();
+        communityDevice.setId(id);
+        communityDevice.setName(name);
+        communityDevice.setImg(url);
+
+        communityMapper.updateCommunityDevice(communityDevice);
+
+
+        return response;
+    }
+
+    @RequestMapping(value = "/device/modify/order")
+    @ResponseBody
+    public ServiceResponse deviceModifyOrder(@RequestParam(value = "id") Integer id, Boolean asc) {
+        ServiceResponse response = new ServiceResponse();
+
+        communityService.modifyCommunityDeviceSequence(id, asc);
 
         return response;
     }
@@ -125,7 +131,7 @@ public class CommunityController {
     @RequestMapping(value = "/device/add")
     @ResponseBody
     public ServiceResponse deviceAdd(@RequestParam("imgUpload") MultipartFile uploadFile,
-                                   @RequestParam(value = "name") String name) {
+                                     @RequestParam(value = "name") String name) {
         ServiceResponse response = new ServiceResponse();
         if (StringUtils.isBlank(name)) {
             response.setCode("1");

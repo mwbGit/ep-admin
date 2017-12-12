@@ -284,7 +284,7 @@
 
                         <a href="#" onclick="loadJsp('community_device_manager')">
 
-                            社区设备管理</a>
+                            社区设施管理</a>
                     </li>
 
                     <li id="community_manager-li">

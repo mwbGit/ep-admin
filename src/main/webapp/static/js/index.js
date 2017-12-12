@@ -111,7 +111,7 @@ function loadJsp(item) {
         $('#menuTitle').html("社区经理管理");
     } else if (item == "community_device_manager") {
         $('#dashboard').load($ctx + "/views/community_device_manager.jsp");
-        $('#menuTitle').html("社区设备管理");
+        $('#menuTitle').html("社区设施管理");
     }
 }
 

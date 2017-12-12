@@ -44,7 +44,7 @@
 
 		<button data-dismiss="modal" class="close" type="button"></button>
 
-		<h3>添加设备</h3>
+		<h3>添加设施</h3>
 
 	</div>
 
@@ -111,7 +111,7 @@
 
 		<button data-dismiss="modal" class="close" type="button"></button>
 
-		<h3>编辑设备</h3>
+		<h3>编辑设施</h3>
 
 	</div>
 
