@@ -53,16 +53,25 @@ jQuery(document).ready(function () {
                 "sClass": "center"
             }, {
                 "mDataProp": "deleted",
+                "sTitle": "是否禁用",
+                "sDefaultContent": "",
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    if (val){
+                        return "是";
+                    }else {
+                        return "否";
+                    }
+                }
+            },  {
+                "mDataProp": "id",
                 "sTitle": "操作",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
                     var str = '';
-
-                    str += '<a href="#"  onclick="deleteUserManager(' + full.id + ')"><span  style="color: blue"  data-toggle="tooltip"  title="点击删除" > ' +
-                        '<i class="delete1" style="width: 50px;height: 50px"></i></span></a> ';
-
-
-                    str += '&nbsp&nbsp<span><a href="#add-config" data-toggle="modal"  onclick="addUserBut(' + full.id + ')"><i class="icon-edit" style="width: 50px;height: 50px"></i></span></a>';
+                    str += '<a href="javascript:;"  onclick="deleteUserManager(' + val + ')">' +
+                        '<span  data-toggle="tooltip"  title="移除">'+
+                        '<i class=" icon-remove" ></i></span></a>';
 
                     return str;
                 }
@@ -118,12 +127,15 @@ function addUserBut() {
         // data: {},
         success: function (data) {
             var str = '';
-            $.each(data.aaData, function (n, value) {
-                debugger
-                str += '<tr><td>' + value.name + '</td>' +
-                    '<td><button onclick="modifyUserManager(' + value.id + ')" value="选择"></button></td>' +
-                    '</tr>';
-            });
+            if (data.totalCount == 0) {
+                str += '无可添加用户！'
+            }else {
+                $.each(data.aaData, function (n, value) {
+                    str += '<tr><td>' + value.name + '</td>' +
+                        '<td><button class="btn blue" onclick="modifyUserManager(' + value.id + ')" >选择</button></td>' +
+                        '</tr>';
+                });
+            }
 
             $("#showUsers").html(str);
         }
@@ -139,7 +151,7 @@ function reLoad(data) {
 }
 
 function deleteUserManager(id) {
-    if (window.confirm("确定删除？")) {
+    if (window.confirm("确定移除？")) {
         $.ajax({
             dataType: 'json',
             async: false,
@@ -157,9 +169,7 @@ function modifyUserManager(id) {
         dataType: 'json',
         type: "POST",
         async: false,
-        // contentType:'application/json',
         url: $ctx + "/user/modify/managed?id=" + id +"&managed=true",
-        data: data,
         success: function (data) {
             reLoad(data);
         }

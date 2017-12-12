@@ -24,7 +24,7 @@ CREATE TABLE `t_service_item` (
   `name` varchar(32) NOT NULL,
   `ratio` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='服务项';
 
 -- ----------------------------
 -- 维度
@@ -39,7 +39,7 @@ CREATE TABLE `t_dimension` (
   `item_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `t_dimension_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `t_service_item` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='维度';
 
 
 -- ----------------------------
@@ -56,7 +56,7 @@ CREATE TABLE `t_complain` (
   PRIMARY KEY (`id`),
   KEY `idx_complain_dimension` (`dimension_id`),
   CONSTRAINT `fk_complain_dimension` FOREIGN KEY (`dimension_id`) REFERENCES `t_dimension` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='吐槽';
 
 -- ----------------------------
 -- 用户
@@ -79,7 +79,7 @@ CREATE TABLE `t_user` (
   `open_id` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_mobile_open_id` (`mobile`,`open_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户';
 
 -- ----------------------------
 -- 空间
@@ -90,7 +90,7 @@ CREATE TABLE `t_space` (
   `name` varchar(32) DEFAULT NULL,
   `grade` decimal(18,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='空间';
 
 -- ----------------------------
 -- 入住空间
@@ -105,10 +105,7 @@ CREATE TABLE `t_user_space` (
   KEY `idx_user_space_space` (`space_id`),
   CONSTRAINT `fk_user_space_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `fk_user_space_space` FOREIGN KEY (`space_id`) REFERENCES `t_space` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/110520024/7cd4acbb91ec56ab77bc2d12583116b2', '男', '1302972767', '21232f297a57a5a743894a0e4a801fc3', '131', '2017-08-24', '2017-08-24', '1', '孟卫波','N','');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户入住空间';
 
 CREATE TABLE `t_recharge_detail` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -124,7 +121,7 @@ CREATE TABLE `t_recharge_detail` (
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 待支付 1已取消 2 已支付',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_RECHARGE_DETAIL_ORDER` (`order`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='充值流水';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='充值流水';
 
 -- ----------------------------
 -- 小程序登录认证
@@ -137,7 +134,7 @@ CREATE TABLE `t_user_token` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_user_token_user` (`user_id`),
   CONSTRAINT `ifk_user_token_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='小程序登录认证';
 
 -- ----------------------------
 -- 活动类别
@@ -150,7 +147,7 @@ CREATE TABLE `t_activity_type` (
   `is_deleted` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_activity_type_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='活动类别';
 
 -- ----------------------------
 -- 1级地址
@@ -160,7 +157,7 @@ CREATE TABLE `t_address` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='1级地址';
 
 -- ----------------------------
 -- 2级地址
@@ -172,7 +169,7 @@ CREATE TABLE `t_address_detail` (
   `address_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_address_detail_address` FOREIGN KEY (`address_id`) REFERENCES `t_address` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='2级地址';
 
 -- ----------------------------
 -- 活动
@@ -193,7 +190,7 @@ CREATE TABLE `t_activity` (
   UNIQUE KEY `uk_activity_type_title` (`title`),
   CONSTRAINT `fk_activity_type` FOREIGN KEY (`type_id`) REFERENCES `t_activity_type` (`id`),
   CONSTRAINT `fk_activity_address_detail` FOREIGN KEY (`address_detail_id`) REFERENCES `t_address_detail` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='活动';
 
 -- ----------------------------
 -- 报名名单
@@ -211,7 +208,7 @@ CREATE TABLE `t_activity_user` (
   KEY `idx_activity_user_activity` (`activity_id`),
   CONSTRAINT `fk_activity_user_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `fk_activity_user_activity` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='报名名单';
 -- ----------------------------
 -- 资讯
 -- ----------------------------
@@ -225,7 +222,7 @@ CREATE TABLE `t_advice` (
   `typeId` char(32) DEFAULT NULL,
   `clicksum` int(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资讯';
 
 DROP TABLE IF EXISTS  `t_advice_type` ;
 CREATE TABLE `t_advice_type` (
@@ -234,7 +231,7 @@ CREATE TABLE `t_advice_type` (
   `sequence` int(11) DEFAULT NULL,
   `is_deleted` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资讯类型';
 
 -- ----------------------------
 -- banner位置
@@ -246,7 +243,7 @@ CREATE TABLE `t_banner_position` (
   `description` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_banner_position_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='banner位置';
 
 -- ----------------------------
 -- banner 类型
@@ -258,7 +255,7 @@ CREATE TABLE `t_banner_type` (
   `description` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_banner_type_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='banner类型';
 
 -- ----------------------------
 -- banner
@@ -281,7 +278,27 @@ CREATE TABLE `t_banner` (
   CONSTRAINT `fk_banner_type` FOREIGN KEY (`type_id`) REFERENCES `t_banner_type` (`id`),
   CONSTRAINT `fk_banner_position` FOREIGN KEY (`position_id`) REFERENCES `t_banner_position` (`id`),
   CONSTRAINT `fk_banner_activity` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='轮播图';
 
+-- ----------------------------
+-- 社区设备
+-- ----------------------------
+DROP TABLE IF EXISTS `t_community_device` ;
+CREATE TABLE `t_community_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `img` varchar(128) DEFAULT NULL,
+  `sequence` int(11) NOT NULL,
+  `is_deleted` char(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_activity_type_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区设备';
+
+
+
+
+
+
+INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/110520024/7cd4acbb91ec56ab77bc2d12583116b2', '男', '1302972767', '21232f297a57a5a743894a0e4a801fc3', '131', '2017-08-24', '2017-08-24', '1', '孟卫波','N','');
 INSERT INTO `t_banner_position` VALUES ('1', 'HOME_PAGE', '首页轮播'),('2', 'E_CARD', 'E卡管理轮播');
 INSERT INTO `t_banner_type` VALUES ('1', 'ACTIVITY', '活动详情'),('2', 'CUSTOM', '自定义'),('3', 'NONE', '无');

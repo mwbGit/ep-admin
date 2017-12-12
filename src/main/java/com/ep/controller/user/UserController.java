@@ -71,7 +71,6 @@ public class UserController {
                     vo.setUpdatedByName(user.getUpdatedByName());
                     vo.setDeleted(user.getDeleted().getValue());
 
-
                     List<UserSpace> userSpaces = spaceMapper.selectUserSpaceByUserId(user.getId());
                     if (CollectionUtils.isNotEmpty(userSpaces)) {
                         StringBuilder sb = new StringBuilder();

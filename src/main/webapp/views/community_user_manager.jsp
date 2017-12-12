@@ -10,6 +10,23 @@
 
 		<div class="caption"><i class="icon-globe"></i>社区经理管理</div>
 
+		<div class="actions">
+
+			<div class="btn-group">
+
+				<a href="#add-config" data-toggle="modal" onclick="addUserBut()"><button class="btn" >
+					添加
+				</button>
+				</a>
+
+				<div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+
+				</div>
+
+			</div>
+
+		</div>
+
 	</div>
 
 	<div class="portlet-body">
@@ -33,13 +50,11 @@
 
 	<div class="modal-body">
 
-		<form method="post" class="form-horizontal" id="addUserManagerFrom">
-			<div class="control-group">
-				<table class="table table-striped table-bordered table-advance table-hover" id="showUsers">
-				</table>
-			</div>
+		<div class="control-group">
+			<table class="table table-striped table-bordered table-advance table-hover" id="showUsers">
+			</table>
+		</div>
 
-		</form>
 
 	</div>
 

@@ -270,7 +270,7 @@
             <li>
                 <a href="javascript:;">
 
-                    <i class="icon-bullhorn"></i>
+                    <i class="icon-windows"></i>
 
                     <span class="title">社区管理</span>
 
@@ -279,6 +279,13 @@
                 </a>
 
                 <ul class="sub-menu">
+
+                    <li id="community_device_manager-li">
+
+                        <a href="#" onclick="loadJsp('community_device_manager')">
+
+                            社区设备管理</a>
+                    </li>
 
                     <li id="community_manager-li">
 

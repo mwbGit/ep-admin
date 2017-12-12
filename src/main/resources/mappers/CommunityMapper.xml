@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ep.dao.mapper.CommunityMapper">
+	<resultMap id="userResult" type="User" extends="com.ep.dao.mapper.UserMapper.userResult" />
+	
+    <resultMap id="communityDeviceResult" type="CommunityDevice">
+        <id property="id" column="t_community_device_id"/>
+        <result property="name" column="t_community_device_name"/>
+        <result property="img" column="t_community_device_img"/>
+        <result property="sequence" column="t_community_device_sequence"/>
+        <result property="deleted" column="t_community_device_is_deleted" jdbcType="CHAR" javaType="Bool"/>
+    </resultMap>
+
+	<sql id="userColumns" >
+		<include refid="com.ep.dao.mapper.UserMapper.userColumns"/>
+	</sql>
+
+    <sql id="communityDeviceColumns">
+		u.id AS t_community_device_id,
+		u.name AS t_community_device_name,
+		u.img AS t_community_device_img,
+		u.sequence AS t_community_device_sequence,
+		u.is_deleted AS t_community_device_is_deleted
+	</sql>
+
+    <insert id="insertCommunityDevice"
+		 parameterType="CommunityDevice"
+		 useGeneratedKeys="true"
+		 keyProperty="id">
+		INSERT INTO t_community_device(
+			`name`,
+			`img`,
+			sequence,
+			is_deleted
+		) VALUES (
+			#{name},
+			#{img},
+			#{sequence},
+			#{deleted.code}
+		)
+	</insert>
+
+	<update id="updateCommunityDevice">
+		UPDATE t_community_device
+		<set>
+			<if test="img != null">
+				img = #{img},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="sequence != null">
+				sequence = #{sequence},
+			</if>
+			<if test="deleted != null">
+				is_deleted = #{deleted.code}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+    <select id="selectCommunityDeviceList" resultMap="communityDeviceResult">
+        SELECT
+        <include refid="communityDeviceColumns"/>
+        FROM
+			t_community_device u
+		WHERE
+			u.is_deleted = 'N'
+		ORDER BY u.sequence ASC
+        <if test="filter.start != null and filter.size != null">
+            limit #{filter.start}, #{filter.size}
+        </if>
+
+    </select>
+
+	<select id="countCommunityDeviceList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_community_device
+		WHERE
+			is_deleted = 'N'
+	</select>
+
+	<select id="selectCommunityDeviceById" resultMap="communityDeviceResult">
+		SELECT
+			<include refid="communityDeviceColumns"/>
+		FROM
+			t_community_device u
+		WHERE
+			id= #{id}
+	</select>
+	
+	<select id="countCommunityDeviceByName" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_community_device
+		WHERE
+			name= #{name}
+		<if test="id != null">
+			AND id != #{id}
+		</if>
+	</select>
+
+	<select id="selectMaxCommunityDeviceSequence" resultType="int">
+		SELECT
+			if(MAX(sequence) IS NULL, 1,MAX(sequence) + 1)
+		FROM
+			`t_community_device`
+	</select>
+
+	<select id="selectCommunityDeviceBySequence" resultMap="communityDeviceResult">
+		SELECT
+			<include refid="communityDeviceColumns"/>
+		FROM
+		t_community_device u
+		WHERE
+			is_deleted = 'N'
+		<if test="asc == true">
+			AND sequence<![CDATA[ < ]]> #{sequence}
+			ORDER BY sequence DESC
+		</if>
+		<if test="asc == false">
+			AND sequence<![CDATA[ > ]]> #{sequence}
+			ORDER BY sequence ASC
+		</if>
+
+		limit 1
+	</select>
+
+</mapper>
