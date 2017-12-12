@@ -42,11 +42,14 @@ public class UserController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public PagingResponse<List<UserVO>> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch) {
+    public PagingResponse<List<UserVO>> list(Integer iDisplayStart, Integer iDisplayLength, String sSearch, Boolean managed) {
         UserFilter filter = new UserFilter();
-        filter.setStart(iDisplayStart);
-        filter.setSize(iDisplayLength);
+        if (iDisplayStart != null && iDisplayLength != null) {
+            filter.setStart(iDisplayStart);
+            filter.setSize(iDisplayLength);
+        }
         filter.setName(sSearch);
+        filter.setManaged(Bool.fromValue(managed));
 
         List<User> users = userMapper.selectUserList(filter);
         int count = userMapper.countUserList(filter);
@@ -67,7 +70,6 @@ public class UserController {
                     vo.setUpdateDate(DateTimeUtility.formatYYYYMMDD(user.getUpdateDate()));
                     vo.setUpdatedByName(user.getUpdatedByName());
                     vo.setDeleted(user.getDeleted().getValue());
-
 
                     List<UserSpace> userSpaces = spaceMapper.selectUserSpaceByUserId(user.getId());
                     if (CollectionUtils.isNotEmpty(userSpaces)) {
@@ -109,7 +111,7 @@ public class UserController {
             user.setUpdatedById(curUser.getId());
             user.setUpdatedByName(curUser.getName());
 
-            userMapper.insertOrUpdateUser(user);
+            userMapper.updateUser(user);
         }
 
         return new ServiceResponse();
@@ -120,12 +122,32 @@ public class UserController {
     public ServiceResponse modify(Integer[] spaceIds, @RequestParam(value = "id") Integer id) {
 
         User curUser = ApplicationContextUtils.getUser();
-        User user = userMapper.selectUserById(id);
+        User user = new User();
+        user.setId(id);
         user.setUpdateDate(new Date());
         user.setUpdatedById(curUser.getId());
         user.setUpdatedByName(curUser.getName());
 
         userService.modifyUser(spaceIds, user);
+
+        return new ServiceResponse();
+    }
+
+    @RequestMapping(value = "/modify/managed")
+    @ResponseBody
+    public ServiceResponse modifyManaged(@RequestParam(value = "id") Integer id,
+                                         @RequestParam(value = "managed") Boolean managed) {
+
+        User curUser = ApplicationContextUtils.getUser();
+
+        User user = new User();
+        user.setId(id);
+        user.setManaged(Bool.fromValue(managed));
+        user.setUpdateDate(new Date());
+        user.setUpdatedById(curUser.getId());
+        user.setUpdatedByName(curUser.getName());
+
+        userMapper.updateUser(user);
 
         return new ServiceResponse();
     }
@@ -137,7 +159,7 @@ public class UserController {
         User user = ApplicationContextUtils.getUser();
         user.setPassword(MD5.md5(password));
 
-        userMapper.insertOrUpdateUser(user);
+        userMapper.updateUser(user);
 
         return new ServiceResponse();
     }

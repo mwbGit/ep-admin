@@ -155,6 +155,7 @@ function validateFromSub() {
         return;
     } else if ($("#title").val().length > 32) {
         alert("标题过长")
+        return;
     }
 
     if (!testStrMsg($("#d4311").val(), "活动时间") || !testStrMsg($("#d4312").val(), "活动时间")) {
