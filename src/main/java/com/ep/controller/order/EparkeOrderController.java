@@ -57,7 +57,7 @@ public class EparkeOrderController {
      * @param request
      * @param response
      */
-    @RequestMapping(value = "pay/we_chat/notify", method = {POST, GET})
+    @RequestMapping(value = "/pay/we_chat/notify", method = {POST, GET})
     public void weChatPayNotify(HttpServletRequest request, HttpServletResponse response) {
         try {
 

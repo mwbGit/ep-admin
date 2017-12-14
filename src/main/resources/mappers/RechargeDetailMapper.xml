@@ -2,10 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ep.dao.mapper.TRechargeDetailMapper">
 
+  <sql id="rechargeDetailFilter">
+    <if test="filter != null">
+      <if test="filter.userId != null">
+        user_id = #{filter.userId}
+      </if>
+    </if>
+  </sql>
+
   <select id="selectTRechargeDetailByFilter" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/>
     FROM t_recharge_detail
-
+    <where>
+      <include refid="rechargeDetailFilter"/>
+    </where>
     ORDER BY id
     <if test="filter.start != null and filter.size != null">
       limit #{filter.start}, #{filter.size}
@@ -14,6 +24,8 @@
 
   <select id="countTRechargeDetailByFilter" resultType="int">
     SELECT count(*) FROM t_recharge_detail
-
+    <where>
+      <include refid="rechargeDetailFilter"/>
+    </where>
   </select>
 </mapper>

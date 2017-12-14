@@ -7,4 +7,13 @@ import com.ep.dao.model.common.PagingFilter;
  */
 public class RechargeFilter extends PagingFilter{
 
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 }
