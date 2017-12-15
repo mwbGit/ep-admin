@@ -15,6 +15,7 @@ public class User implements Serializable{
 
     private Integer id;
     private String name;
+    private String img;
     private String company;
     private String sex;
     private String mobile;
@@ -42,6 +43,14 @@ public class User implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getPassword() {

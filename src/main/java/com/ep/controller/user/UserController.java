@@ -62,6 +62,7 @@ public class UserController {
                     UserVO vo = new UserVO();
                     vo.setId(user.getId());
                     vo.setName(user.getName());
+                    vo.setImg(user.getImg());
                     vo.setCompany(user.getCompany());
                     vo.setSex(user.getSex());
                     vo.setMobile(user.getMobile());

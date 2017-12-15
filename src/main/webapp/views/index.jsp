@@ -280,6 +280,13 @@
 
                 <ul class="sub-menu">
 
+                    <li id="community_add-li">
+
+                        <a href="#" onclick="loadJsp('community_add')">
+
+                            添加社区</a>
+                    </li>
+
                     <li id="community_device_manager-li">
 
                         <a href="#" onclick="loadJsp('community_device_manager')">

@@ -6,8 +6,8 @@ jQuery(document).ready(function () {
         "bPaginate": true, //是否显示（应用）分页器
         "bLengthChange": true, //开关，是否显示每页大小的下拉框
         "bSort": false,
-        "bAutoWidth" : true, //是否自适应宽度
-        "bFilter" : true, //是否启动过滤、搜索功能
+        "bAutoWidth": true, //是否自适应宽度
+        "bFilter": true, //是否启动过滤、搜索功能
 
         "aoColumns": [
             {
@@ -21,6 +21,14 @@ jQuery(document).ready(function () {
                 "sTitle": "姓名",
                 "sDefaultContent": "",
                 "sClass": "center"
+            }, {
+                "mDataProp": "img",
+                "sTitle": "头像",
+                "sDefaultContent": "",
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    return "<img src='" + val + "' style='width: 40px;height: 40px'/>";
+                }
             }, {
                 "mDataProp": "sex",
                 "sTitle": "性别",
@@ -57,20 +65,20 @@ jQuery(document).ready(function () {
                 "sDefaultContent": "",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
-                    if (val){
+                    if (val) {
                         return "是";
-                    }else {
+                    } else {
                         return "否";
                     }
                 }
-            },  {
+            }, {
                 "mDataProp": "id",
                 "sTitle": "操作",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
                     var str = '';
                     str += '<a href="javascript:;"  onclick="deleteUserManager(' + val + ')">' +
-                        '<span  data-toggle="tooltip"  title="移除">'+
+                        '<span  data-toggle="tooltip"  title="移除">' +
                         '<i class=" icon-remove" ></i></span></a>';
 
                     return str;
@@ -87,7 +95,7 @@ jQuery(document).ready(function () {
         // "bInfo": false, //是否显示页脚信息，DataTables插件左下角显示记录数
 
         "oLanguage": {
-            "sSearch" : "姓名",
+            "sSearch": "姓名",
             "sProcessing": "正在加载中......",
             "sZeroRecords": "对不起，查询不到相关数据！",
             "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
@@ -117,27 +125,54 @@ jQuery(document).ready(function () {
 
 });
 
-function addUserBut() {
+function addUserBut(curPage) {
+    var iDisplayLength = 2;
+    var lastStart = $("#lastStart").val();
+    if (curPage == 0) {
+        lastStart = 0;
+    }
+    var iDisplayStart = parseInt(lastStart) + (iDisplayLength * curPage);
+
     $.ajax({
         dataType: 'json',
         type: "POST",
         async: false,
         // contentType: 'application/json',
-        url: $ctx +"/user/list?managed=false",
+        url: $ctx + "/user/list?managed=false&iDisplayLength=" + iDisplayLength + "&iDisplayStart=" + iDisplayStart,
         // data: {},
         success: function (data) {
+            $("#lastStart").val(iDisplayStart);
+
             var str = '';
             if (data.totalCount == 0) {
-                str += '无可添加用户！'
-            }else {
+                str += '无可添加用户！';
+                $("#per").hide();
+                $("#next").hide();
+
+            } else {
                 $.each(data.aaData, function (n, value) {
-                    str += '<tr><td>' + value.name + '</td>' +
+                    str += '<tr><td> <img src="' + value.img + '" style="width: 40px;height: 40px"/></td>' +
+                        '<td>' + value.name + '</td> <td>' + value.mobile + '</td>' +
                         '<td><button class="btn blue" onclick="modifyUserManager(' + value.id + ')" >选择</button></td>' +
                         '</tr>';
                 });
-            }
 
-            $("#showUsers").html(str);
+                str += '<tr><td></td><td colspan="2" style="text-align: center"><button id="per" class="btn" onclick="addUserBut(-1)" >上一页</button>' +
+                    '<button id="next" class="btn" onclick="addUserBut(1)" >下一页</button></td>' +
+                    '<td></td></tr>';
+
+                $("#showUsers").html(str);
+                if (data.totalCount > iDisplayStart + iDisplayLength) {
+                    $("#next").show();
+                } else {
+                    $("#next").hide();
+                }
+                if (iDisplayStart >= iDisplayLength) {
+                    $("#per").show();
+                } else {
+                    $("#per").hide();
+                }
+            }
         }
     });
 }
@@ -146,7 +181,7 @@ function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {
         $('.close').click();
-        $('#dashboard').load( $ctx +"/views/community_user_manager.jsp");
+        $('#dashboard').load($ctx + "/views/community_user_manager.jsp");
     }
 }
 
@@ -169,7 +204,7 @@ function modifyUserManager(id) {
         dataType: 'json',
         type: "POST",
         async: false,
-        url: $ctx + "/user/modify/managed?id=" + id +"&managed=true",
+        url: $ctx + "/user/modify/managed?id=" + id + "&managed=true",
         success: function (data) {
             reLoad(data);
         }

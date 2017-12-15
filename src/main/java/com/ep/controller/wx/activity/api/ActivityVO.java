@@ -1,7 +1,7 @@
 package com.ep.controller.wx.activity.api;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -14,8 +14,12 @@ import com.ep.util.DateTimeUtility;
  */
 public class ActivityVO {
     private Integer id;
-    private String img;
     private String title;
+    private String img;
+    private String startTime;
+    private String endTime;
+    private BigDecimal price;
+    private String typeName;
 
     public static List<ActivityVO> toVOs(List<Activity> activities) {
         List<ActivityVO> vos = new ArrayList<>();
@@ -25,12 +29,48 @@ public class ActivityVO {
                 vo.setId(activity.getId());
                 vo.setTitle(activity.getTitle());
                 vo.setImg(activity.getImg());
+                vo.setPrice(activity.getPrice());
+                vo.setStartTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getStartTime()));
+                vo.setEndTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getEndTime()));
+                vo.setTypeName(activity.getType().getName());
 
                 vos.add(vo);
             }
         }
 
         return vos;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public Integer getId() {

@@ -14,7 +14,7 @@
 
 			<div class="btn-group">
 
-				<a href="#add-config" data-toggle="modal" onclick="addUserBut()"><button class="btn" >
+				<a href="#add-config" data-toggle="modal" onclick="addUserBut(0)"><button class="btn" >
 					添加
 				</button>
 				</a>
@@ -38,18 +38,17 @@
 
 </div>
 
-<div id="add-config" class="modal hide">
+<div id="add-config" class="modal hide ">
 
 	<div class="modal-header">
 
 		<button data-dismiss="modal" class="close" type="button"></button>
 
 		<h3>添加社区经理</h3>
-
 	</div>
 
 	<div class="modal-body">
-
+		<input type="hidden" id="lastStart" value="0">
 		<div class="control-group">
 			<table class="table table-striped table-bordered table-advance table-hover" id="showUsers">
 			</table>

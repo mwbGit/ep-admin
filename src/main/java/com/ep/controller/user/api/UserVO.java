@@ -6,6 +6,7 @@ package com.ep.controller.user.api;
 public class UserVO {
     private Integer id;
     private String name;
+    private String img;
     private String company;
     private String sex;
     private String mobile;
@@ -15,7 +16,6 @@ public class UserVO {
     private String updatedByName;
     private Boolean deleted;
     private String spaceNames;
-
 
     public Integer getId() {
         return id;
@@ -31,6 +31,14 @@ public class UserVO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getCompany() {

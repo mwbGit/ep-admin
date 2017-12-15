@@ -7,6 +7,7 @@
     <resultMap id="userResult" type="User">
         <id property="id" column="user_id"/>
         <result property="name" column="user_name"/>
+        <result property="img" column="user_img"/>
         <result property="company" column="user_company"/>
         <result property="sex" column="user_sex"/>
         <result property="mobile" column="user_mobile"/>
@@ -24,6 +25,7 @@
     <sql id="userColumns">
 		u.id AS user_id,
 		u.name AS user_name,
+		u.img AS user_img,
 		u.company AS user_company,
 		u.sex AS user_sex,
 		u.mobile AS user_mobile,
@@ -43,6 +45,7 @@
 		 keyProperty="id">
 		INSERT INTO t_user(
 			`name`,
+			img,
 			company,
 			sex,
 			mobile,
@@ -56,6 +59,7 @@
 			updated_by_name
 		) VALUES (
 			#{name},
+			#{img},
 			#{company},
 			#{sex},
 			#{mobile},

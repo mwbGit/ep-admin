@@ -112,6 +112,9 @@ function loadJsp(item) {
     } else if (item == "community_device_manager") {
         $('#dashboard').load($ctx + "/views/community_device_manager.jsp");
         $('#menuTitle').html("社区设施管理");
+    } else if (item == "community_add") {
+        $('#dashboard').load($ctx + "/views/community_add.jsp");
+        $('#menuTitle').html("添加社区");
     }
 }
 
