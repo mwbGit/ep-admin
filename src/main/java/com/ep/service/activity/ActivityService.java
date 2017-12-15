@@ -37,7 +37,7 @@ public class ActivityService implements IActivityService {
     }
 
     @Override
-    public synchronized boolean enrollActivity(Activity activity, Integer userId) {
+    public synchronized boolean addActivityUser(Activity activity, Integer userId) {
         ActivityUserFilter filter = new ActivityUserFilter();
         filter.setActivityId(activity.getId());
 

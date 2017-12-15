@@ -9,6 +9,6 @@ public interface IActivityService {
 
     public void modifyActivityTypeSequence(Integer id, Boolean asc);
 
-    public boolean enrollActivity(Activity activity, Integer userId);
+    public boolean addActivityUser(Activity activity, Integer userId);
 
 }

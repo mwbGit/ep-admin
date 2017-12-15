@@ -85,7 +85,7 @@ public class WxActivityController {
         User user = ApplicationContextUtils.getUser();
         if (user == null) {
             response.setCode("1");
-            response.setMessage("请登录");
+            response.setMessage("未登录");
 
             return response;
         }
@@ -101,7 +101,7 @@ public class WxActivityController {
             return response;
         }
 
-        boolean successful = activityService.enrollActivity(activity, user.getId());
+        boolean successful = activityService.addActivityUser(activity, user.getId());
         if (!successful) {
             response.setCode("3");
             response.setMessage("报名人数达到上限");
