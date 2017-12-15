@@ -2,6 +2,7 @@ package com.ep.controller.wx.activity.api;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -20,6 +21,7 @@ public class ActivityVO {
     private String endTime;
     private BigDecimal price;
     private String typeName;
+    private String status;
 
     public static List<ActivityVO> toVOs(List<Activity> activities) {
         List<ActivityVO> vos = new ArrayList<>();
@@ -33,12 +35,29 @@ public class ActivityVO {
                 vo.setStartTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getStartTime()));
                 vo.setEndTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getEndTime()));
                 vo.setTypeName(activity.getType().getName());
+                Date now = new Date();
+                if (now.before(activity.getEndTime()) && now.after(activity.getStartTime())) {
+                    vo.setStatus("进行中");
+                } else if (now.after(activity.getEndTime())) {
+                    vo.setStatus("已结束");
+                } else {
+                    vo.setStatus("未开始");
+                }
+
 
                 vos.add(vo);
             }
         }
 
         return vos;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getStartTime() {
