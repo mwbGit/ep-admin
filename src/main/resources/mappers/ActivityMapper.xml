@@ -10,6 +10,7 @@
         <result property="title" column="t_activity_title"/>
         <result property="startTime" column="t_activity_start_time"/>
         <result property="endTime" column="t_activity_end_time"/>
+        <result property="limit" column="t_activity_limit"/>
         <result property="price" column="t_activity_price"/>
         <result property="img" column="t_activity_img"/>
         <result property="content" column="t_activity_content"/>
@@ -61,6 +62,7 @@
 		aa.title AS t_activity_title,
 		aa.start_time AS t_activity_start_time,
 		aa.end_time AS t_activity_end_time,
+		aa.limit AS t_activity_limit,
 		aa.price AS t_activity_price,
 		aa.img AS t_activity_img,
 		aa.content AS t_activity_content,
@@ -93,6 +95,7 @@
 		`title`,
 		start_time,
 		end_time,
+		`limit`,
 		price,
 		img,
 		content,
@@ -103,6 +106,7 @@
 		#{title},
 		#{startTime},
 		#{endTime},
+		#{limit},
 		#{price},
 		#{img},
 		#{content},
@@ -117,6 +121,9 @@
 		<set>
 		<if  test="img != null">
 			img = #{img},
+		</if>
+		<if  test="limit != null">
+			`limit` = #{limit},
 		</if>
 		<if  test="title != null">
 			title = #{title},
@@ -154,6 +161,23 @@
 		DELETE FROM t_activity
 		WHERE id = #{id}
 	</delete>
+
+    <insert id="insertActivityUser"
+		 parameterType="ActivityUser"
+		 useGeneratedKeys="true"
+		 keyProperty="id">
+		INSERT INTO t_activity_user(
+			`price`,
+			create_date,
+			user_id,
+			activity_id
+		) VALUES (
+			#{price},
+			NOW(),
+			#{userId},
+			#{activityId}
+		)
+	</insert>
 
     <insert id="insertActivityType"
 		 parameterType="ActivityType"

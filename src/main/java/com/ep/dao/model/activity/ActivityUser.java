@@ -12,6 +12,8 @@ public class ActivityUser {
     private Integer id;
     private BigDecimal price;
     private Date createDate;
+    private Integer userId;
+    private Integer activityId;
     private User user;
     private Activity activity;
 
@@ -53,5 +55,21 @@ public class ActivityUser {
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 }

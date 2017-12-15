@@ -11,6 +11,7 @@ public class AddActivityRequest {
     private String startTime;
     private String endTime;
     private BigDecimal price;
+    private Integer limit;
     private Integer addressId;
     private String content;
     private Integer typeId;
@@ -21,6 +22,14 @@ public class AddActivityRequest {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     public BigDecimal getPrice() {

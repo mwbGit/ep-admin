@@ -10,6 +10,7 @@ import com.ep.controller.common.ServiceResponse;
 public class ActivityInfoResponse extends ServiceResponse{
     private Integer id;
     private String title;
+    private String limit;
     private String img;
     private String startTime;
     private String endTime;
@@ -40,6 +41,14 @@ public class ActivityInfoResponse extends ServiceResponse{
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
     }
 
     public String getContent() {

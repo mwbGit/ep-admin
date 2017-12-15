@@ -15,6 +15,7 @@ import com.ep.util.DateTimeUtility;
  */
 public class ActivityVO {
     private Integer id;
+    private String limit;
     private String title;
     private String img;
     private String startTime;
@@ -43,7 +44,11 @@ public class ActivityVO {
                 } else {
                     vo.setStatus("未开始");
                 }
-
+                if (activity.getLimit() == null) {
+                    vo.setLimit("无限制");
+                } else {
+                    vo.setLimit(String.valueOf(activity.getLimit()));
+                }
 
                 vos.add(vo);
             }
@@ -62,6 +67,14 @@ public class ActivityVO {
 
     public String getStartTime() {
         return startTime;
+    }
+
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
     }
 
     public void setStartTime(String startTime) {

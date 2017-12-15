@@ -93,6 +93,7 @@ function detail(id) {
         // data: {},
         success: function (data) {
             $("#title").val(data.title);
+            $("#limit").val(data.limit);
             $("#d4311").val(data.startTime);
             $("#d4312").val(data.endTime);
             $("#price").val(data.price);

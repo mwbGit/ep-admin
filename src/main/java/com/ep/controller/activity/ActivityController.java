@@ -252,6 +252,7 @@ public class ActivityController {
         Activity activity = new Activity();
         activity.setId(activityRequest.getId());
         activity.setTitle(activityRequest.getTitle());
+        activity.setLimit(activityRequest.getLimit());
         activity.setStartTime(DateTimeUtility.parseYYYYMMDDHHMM(activityRequest.getStartTime()));
         activity.setEndTime(DateTimeUtility.parseYYYYMMDDHHMM(activityRequest.getEndTime()));
         activity.setPrice(activityRequest.getPrice());
@@ -292,6 +293,7 @@ public class ActivityController {
         if (activity != null) {
             response.setId(activity.getId());
             response.setImg(activity.getImg());
+            response.setLimit(activity.getLimit());
             response.setTitle(activity.getTitle());
             response.setPrice(activity.getPrice());
             response.setContent(activity.getContent());

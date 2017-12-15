@@ -1,5 +1,8 @@
 package com.ep.service.activity;
 
+import com.ep.dao.filter.ActivityUserFilter;
+import com.ep.dao.model.activity.Activity;
+import com.ep.dao.model.activity.ActivityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +34,26 @@ public class ActivityService implements IActivityService {
         activityMapper.updateActivityType(activityType);
 
         activityMapper.updateActivityType(replaceType);
+    }
+
+    @Override
+    public synchronized boolean enrollActivity(Activity activity, Integer userId) {
+        ActivityUserFilter filter = new ActivityUserFilter();
+        filter.setActivityId(activity.getId());
+
+        int count = activityMapper.countActivityUserList(filter);
+
+        if (activity.getLimit() != null && activity.getLimit() <= count){
+            return false;
+        }
+
+        ActivityUser activityUser = new ActivityUser();
+        activityUser.setPrice(activity.getPrice());
+        activityUser.setActivityId(activity.getId());
+        activityUser.setUserId(userId);
+
+        activityMapper.insertActivityUser(activityUser);
+
+        return true;
     }
 }

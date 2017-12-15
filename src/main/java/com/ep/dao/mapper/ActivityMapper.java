@@ -25,6 +25,8 @@ public interface ActivityMapper {
 
     public int countActivityUserList(@Param("filter") ActivityUserFilter filter);
 
+    public void insertActivityUser(ActivityUser activityUser);
+
     public List<Address>  selectAllAddressList();
 
     public List<AddressDetail>  selectAllAddressDetailListByAddressId(@Param("addressId") Integer addressId);

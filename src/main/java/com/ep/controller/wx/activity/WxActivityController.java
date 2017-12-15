@@ -1,7 +1,13 @@
 package com.ep.controller.wx.activity;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ep.controller.common.ServiceResponse;
+import com.ep.controller.util.ApplicationContextUtils;
+import com.ep.dao.model.user.User;
+import com.ep.service.activity.ActivityService;
+import com.ep.service.activity.api.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +31,9 @@ import com.ep.util.DateTimeUtility;
 public class WxActivityController {
 
     @Autowired
+    private IActivityService activityService;
+
+    @Autowired
     private ActivityMapper activityMapper;
 
     @RequestMapping(value = "/list")
@@ -32,7 +41,7 @@ public class WxActivityController {
     public ActivityListResponse list(@RequestBody PagingRequest request) {
         ActivityListResponse response = new ActivityListResponse();
         ActivityFilter filter = new ActivityFilter();
-        filter.setUnFinished(true);
+//        filter.setUnFinished(true);
         filter.setOnline(Bool.Y);
         filter.setSize(request.getPageSize());
         filter.setStart((request.getPageNumber() - 1) * request.getPageSize());
@@ -54,10 +63,48 @@ public class WxActivityController {
             response.setTitle(activity.getTitle());
             response.setContent(activity.getContent());
             response.setPrice(activity.getPrice());
+
+            if (activity.getLimit() == null) {
+                response.setLimit("无限制");
+            } else {
+                response.setLimit(String.valueOf(activity.getLimit()));
+            }
             response.setStartTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getStartTime()));
             response.setEndTime(DateTimeUtility.formatYYYYMMDDHHMM(activity.getEndTime()));
             response.setTypeName(activity.getType().getName());
             response.setAddress(activity.getAddressDetail().getAddress().getName() + activity.getAddressDetail().getName());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/enroll")
+    @ResponseBody
+    public ServiceResponse enroll(@RequestParam Integer id) {
+        ServiceResponse response = new ServiceResponse();
+        User user = ApplicationContextUtils.getUser();
+        if (user == null) {
+            response.setCode("1");
+            response.setMessage("请登录");
+
+            return response;
+        }
+
+        Activity activity = activityMapper.selectActivityById(id);
+        Date now = new Date();
+
+        if (!activity.getOnline().getValue()
+                || now.after(activity.getStartTime())) {
+            response.setCode("2");
+            response.setMessage("报名已截止");
+
+            return response;
+        }
+
+        boolean successful = activityService.enrollActivity(activity, user.getId());
+        if (!successful) {
+            response.setCode("3");
+            response.setMessage("报名人数达到上限");
         }
 
         return response;

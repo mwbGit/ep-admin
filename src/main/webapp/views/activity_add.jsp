@@ -117,6 +117,19 @@
 
                     <div class="control-group">
 
+                        <label class="control-label">上限人数：</label>
+
+                        <div class="controls">
+
+                            <input type="text" class="m-wrap small" name="limit" id="limit"/>
+
+                            <span class="help-inline">人</span>
+                        </div>
+
+                    </div>
+
+                    <div class="control-group">
+
                         <label class="control-label">封面图片：</label>
 
                         <div class="controls">

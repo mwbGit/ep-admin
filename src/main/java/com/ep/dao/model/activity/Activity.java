@@ -17,6 +17,7 @@ public class Activity {
     private BigDecimal price;
     private String img;
     private String content;
+    private Integer limit;
     private ActivityType type;
     private AddressDetail addressDetail;
 
@@ -90,6 +91,14 @@ public class Activity {
 
     public void setType(ActivityType type) {
         this.type = type;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     public AddressDetail getAddressDetail() {

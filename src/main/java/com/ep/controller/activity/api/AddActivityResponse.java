@@ -11,6 +11,7 @@ public class AddActivityResponse extends ServiceResponse{
     private Integer id;
     private String title;
     private String img;
+    private Integer limit;
     private String startTime;
     private String endTime;
     private BigDecimal price;
@@ -25,6 +26,14 @@ public class AddActivityResponse extends ServiceResponse{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     public String getImg() {
