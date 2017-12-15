@@ -57,7 +57,7 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
-    public Boolean notifyPayed(String order, String outOrder) {
+    public Boolean modifyNotifyPayed(String order, String outOrder) {
         Long id = rechargeDetailMapper.selectOrderIdByOrder(order);
         if (id == null) {
             logger.error("订单回调时发现我方单号不存在，返回值为：我方单号：" + order + " 对方单号：" + outOrder);
@@ -65,7 +65,7 @@ public class RechargeServiceImpl implements RechargeService {
         }
         TRechargeDetail detail = rechargeDetailMapper.selectByPrimaryKey(id);
         setOrderPayed(order, outOrder);
-        Boolean result =  EParkeClient.topUp(detail.getTel(), detail.getTel(), new Date(), detail.getRechargeAmount().doubleValue());
+        Boolean result =  EParkeClient.topUp(detail.getTel(), detail.getTel(), new Date(), detail.getRechargeAmount());
         return result;
     }
 
