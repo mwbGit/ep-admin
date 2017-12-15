@@ -8,7 +8,6 @@ import com.ep.dao.filter.RechargeFilter;
 import com.ep.dao.mapper.TConfigRechargeMapper;
 import com.ep.dao.mapper.TRechargeDetailMapper;
 import com.ep.dao.mapper.UserMapper;
-import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PreOrderResult;
 import com.ep.dao.model.generated.TConfigRecharge;
 import com.ep.dao.model.generated.TRechargeDetail;
@@ -58,7 +57,7 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
-    public Boolean notifyPayed(String order, String outOrder) {
+    public Boolean modifyNotifyPayed(String order, String outOrder) {
         Long id = rechargeDetailMapper.selectOrderIdByOrder(order);
         if (id == null) {
             logger.error("订单回调时发现我方单号不存在，返回值为：我方单号：" + order + " 对方单号：" + outOrder);
@@ -66,7 +65,7 @@ public class RechargeServiceImpl implements RechargeService {
         }
         TRechargeDetail detail = rechargeDetailMapper.selectByPrimaryKey(id);
         setOrderPayed(order, outOrder);
-        Boolean result =  EParkeClient.topUp(detail.getTel(), detail.getTel(), new Date(), detail.getRechargeAmount().doubleValue());
+        Boolean result =  EParkeClient.topUp(detail.getTel(), detail.getTel(), new Date(), detail.getRechargeAmount());
         return result;
     }
 
@@ -138,8 +137,8 @@ public class RechargeServiceImpl implements RechargeService {
             throw new RuntimeException("订单号:" + orderId + "不存在");
         }
         if (outOrderCode != null) {
-            rechargeDetailMapper.setOutPayCodeById(outOrderCode, orderId);
-            rechargeDetailMapper.setPayedById(orderId);
+            rechargeDetailMapper.updateOutPayCodeById(outOrderCode, orderId);
+            rechargeDetailMapper.updatePayedById(orderId);
         }
 
     }

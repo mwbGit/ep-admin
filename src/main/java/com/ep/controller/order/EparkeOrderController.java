@@ -74,7 +74,7 @@ public class EparkeOrderController {
                 //transaction_id 是微信订单号，对于我们来说是outCode
                 String outCode = params.get("transaction_id");
                 String code = params.get("out_trade_no");
-                rechargeService.notifyPayed(code, outCode);
+                rechargeService.modifyNotifyPayed(code, outCode);
             }
             Map<String, Object> map = new HashMap<>();
             map.put("return_code", "SUCCESS");

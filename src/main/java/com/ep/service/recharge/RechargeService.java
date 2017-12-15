@@ -16,7 +16,7 @@ import java.util.List;
 public interface RechargeService {
     PreOrderResult createClientOrder(String  tel, Float moneySum) throws Exception;
 
-    public Boolean notifyPayed(String code, String outCode);
+    public Boolean modifyNotifyPayed(String code, String outCode);
 
     PagingResponse<List<TRechargeDetail>> getTRechargeList(RechargeFilter filter);
 

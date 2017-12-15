@@ -30,7 +30,7 @@ public class EParkeClient {
     private static final String TopUpUrl = host+"/topUp";
 
 
-    public static Boolean topUp(String operationPhone, String topUpPhone, Date time, Double money) {
+    public static Boolean topUp(String operationPhone, String topUpPhone, Date time, Float money) {
         //money 是元，这里转成分
         JSONObject jsonParam = new JSONObject();
         jsonParam.put("type", 1);

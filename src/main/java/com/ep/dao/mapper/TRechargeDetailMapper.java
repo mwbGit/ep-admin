@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface TRechargeDetailMapper extends BaseMapper<TRechargeDetail, Long, TRechargeDetailExample> {
 
-    @Select("select id from t_recharge_detail where order = #{order}")
+    @Select("select id from t_recharge_detail where sys_order = #{order}")
     Long selectOrderIdByOrder(@Param("order") String order);
 
-    @Update("update table t_recharge_detail set status = 2 and date = now()  where id = #{orderId}")
-    Integer setPayedById(@Param("orderId") Long orderId);
-    @Update("update table t_recharge_detail set out_pay_code = #{outOrderCode} where id = #{orderId}")
-    Integer setOutPayCodeById(@Param("outOrderCode") String outOrderCode, @Param("orderId") Long orderId);
+    @Update("update t_recharge_detail set pay_status = 2 ,date = now()  where id = #{orderId}")
+    Integer updatePayedById(@Param("orderId") Long orderId);
+    @Update("update t_recharge_detail set out_pay_code = #{outOrderCode} where id = #{orderId}")
+    Integer updateOutPayCodeById(@Param("outOrderCode") String outOrderCode, @Param("orderId") Long orderId);
 
     List<TRechargeDetail> selectTRechargeDetailByFilter(@Param("filter") RechargeFilter filter);
 
