@@ -16,7 +16,7 @@
     <where>
       <include refid="rechargeDetailFilter"/>
     </where>
-    ORDER BY id
+    ORDER BY date DESC,id DESC 
     <if test="filter.start != null and filter.size != null">
       limit #{filter.start}, #{filter.size}
     </if>

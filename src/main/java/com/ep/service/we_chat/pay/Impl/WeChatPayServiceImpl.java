@@ -25,6 +25,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +53,7 @@ public class WeChatPayServiceImpl implements WeChatPayService{
      * 退款网址
      */
     private static final String URL_REFUND = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-    private Log logger = LogFactory.getLog(WeChatPayServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(WeChatPayServiceImpl.class);
     @Autowired
     private WxPayConfig wxPayConfig;
     @Autowired
@@ -127,7 +129,7 @@ public class WeChatPayServiceImpl implements WeChatPayService{
         params.put("trade_type", "JSAPI");
         params.put("openid", precreateRequest.getOpenId());
         sign(params);
-//
+        logger.info("WeChatPayServiceImpl--params={}-{}",params,precreateRequest.getNotifyUrl());
         String out = null;
         try {
             out = HttpKit.post(

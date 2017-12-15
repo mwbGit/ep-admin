@@ -7,6 +7,8 @@ import com.ep.dao.model.common.PreOrderResult;
 import com.ep.service.recharge.RechargeService;
 import com.ep.service.we_chat.pay.api.WxPayConfig;
 import com.ep.service.we_chat.pay.util.WechatXmlUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +31,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/wx")
 public class EparkeOrderController {
 
+    Logger logger = LoggerFactory.getLogger(EparkeOrderController.class);
 
     @Autowired
     private WxPayConfig wxPayConfig;
@@ -59,11 +62,12 @@ public class EparkeOrderController {
      */
     @RequestMapping(value = "/pay/we_chat/notify", method = {POST, GET})
     public void weChatPayNotify(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("-------------------------------------- in wechat notify ------------------------------------------");
         try {
 
             Map<String, String> params = WechatXmlUtil.xmlToMap(request
                     .getInputStream());
-
+            logger.info("params={}",params);
             String tradeStatus = params.get("result_code");
             if (tradeStatus != null && tradeStatus.equals("SUCCESS")) {
                 //注意out_trade_no 是商户的订单号，因为商户对于微信是out。
