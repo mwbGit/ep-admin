@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface TRechargeDetailMapper extends BaseMapper<TRechargeDetail, Long, TRechargeDetailExample> {
 
-    @Select("select id from t_recharge_detail where order = #{order}")
+    @Select("select id from t_recharge_detail where sys_order = #{order}")
     Long selectOrderIdByOrder(@Param("order") String order);
 
     @Update("update table t_recharge_detail set status = 2 and date = now()  where id = #{orderId}")
