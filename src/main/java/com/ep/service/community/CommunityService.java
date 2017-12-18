@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommunityService implements ICommunityService {
 
-    @Autowired
+//    @Autowired
     private CommunityMapper communityMapper;
 
     @Override
