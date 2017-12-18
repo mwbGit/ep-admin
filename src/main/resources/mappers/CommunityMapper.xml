@@ -42,7 +42,7 @@
 		)
 	</insert>
 
-	<update id="updateCommunityDevice">
+	<update id="updateCommunityDevice" parameterType="CommunityDevice">
 		UPDATE t_community_device
 		<set>
 			<if test="img != null">
