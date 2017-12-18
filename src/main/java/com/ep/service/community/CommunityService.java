@@ -1,8 +1,7 @@
 package com.ep.service.community;
 
 import com.ep.dao.mapper.CommunityMapper;
-import com.ep.dao.model.activity.ActivityType;
-import com.ep.dao.model.communit.CommunityDevice;
+import com.ep.dao.model.community.CommunityDevice;
 import com.ep.service.community.api.ICommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

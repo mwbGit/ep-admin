@@ -9,10 +9,8 @@ public class PagingFilter {
     }
 
     public PagingFilter(Integer start, Integer size) {
-        if (size > 0) {
-            this.start = start;
-            this.size = size;
-        }
+        this.start = start;
+        this.size = size;
     }
 
     public Integer getStart() {

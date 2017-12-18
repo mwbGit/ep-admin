@@ -86,7 +86,7 @@ public class WxActivityController {
         if (user == null) {
             response.setCode("1");
             response.setMessage("未登录");
-
+            System.out.println("");
             return response;
         }
 

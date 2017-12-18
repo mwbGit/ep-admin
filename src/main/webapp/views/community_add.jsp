@@ -3,6 +3,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <link href="${ctx }/static/js/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${ctx }/static/media/css/multi-select-metro.css"/>
 
 <script type="text/javascript">
     var activity_id = "${param.id}";
@@ -31,7 +32,7 @@
             <div class="portlet-body form">
 
                 <form id="form_activity_add"
-                      action="" class="form-horizontal" method="post" enctype="multipart/form-data" >
+                      action="" class="form-horizontal" method="post" enctype="multipart/form-data">
                     <br>
                     <div class="control-group">
                         <input type="hidden" id="communityId" name="id">
@@ -52,9 +53,8 @@
 
                         <div class="controls">
 
-                            <select class="medium m-wrap" tabindex="1" name="tag" id="tag">
+                            <input type="text" class="m-wrap medium" name="name" id="tag"/>
 
-                            </select>
 
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="fileupload-preview fileupload-exists thumbnail"
-                                     style="max-width: 200px; max-height: 150px; line-height: 20px;" >
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;">
                                 </div>
                                 <div>
 
@@ -100,7 +100,7 @@
                                 </div>
 
                                 <div class="fileupload-preview fileupload-exists thumbnail"
-                                     style="max-width: 200px; max-height: 150px; line-height: 20px;" >
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;">
                                 </div>
                                 <div>
 
@@ -118,11 +118,105 @@
                             </div>
 
                         </div>
+                        <div class="controls">
+
+                            <div class="fileupload fileupload-new" data-provides="fileupload" style="float: left">
+
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="" id="imgShow3" style="width: 200px; height: 150px;">
+                                </div>
+
+                                <div class="fileupload-preview fileupload-exists thumbnail"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                </div>
+                                <div>
+
+									<span class="btn btn-file"><span
+                                            class="fileupload-new">选择</span>
+
+									<span class="fileupload-exists">更改</span>
+
+									<input type="file" class="default" name="imgUpload" id="imgUpload3"/></span>
+
+                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="controls">
+
+                            <div class="fileupload fileupload-new" data-provides="fileupload" style="float: left">
+
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="" id="imgShow4" style="width: 200px; height: 150px;">
+                                </div>
+
+                                <div class="fileupload-preview fileupload-exists thumbnail"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                </div>
+                                <div>
+
+									<span class="btn btn-file"><span
+                                            class="fileupload-new">选择</span>
+
+									<span class="fileupload-exists">更改</span>
+
+									<input type="file" class="default" name="imgUpload" id="imgUpload4"/></span>
+
+                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="controls">
+
+                            <div class="fileupload fileupload-new" data-provides="fileupload" style="float: left">
+
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="" id="imgShow5" style="width: 200px; height: 150px;">
+                                </div>
+
+                                <div class="fileupload-preview fileupload-exists thumbnail"
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                </div>
+                                <div>
+
+									<span class="btn btn-file"><span
+                                            class="fileupload-new">选择</span>
+
+									<span class="fileupload-exists">更改</span>
+
+									<input type="file" class="default" name="imgUpload" id="imgUpload5"/></span>
+
+                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="control-group">
+
+                        <label class="control-label">Tips：</label>
+
+                        <div class="controls">
+
+                            <textarea class="span6 m-wrap" rows="3"></textarea>
+
+                        </div>
 
                     </div>
 
                     <div class="control-group">
-
+                        <label class="control-label">社区简介：</label>
                         <div class="controls">
                             <textarea name="content" type="text/plain"
                                       id="myEditor" style="height: 240px;width:724px"></textarea>
@@ -131,12 +225,28 @@
 
                     </div>
 
+                    <div class="control-group">
+
+                        <label class="control-label">设施/经理：</label>
+
+                        <div class="controls">
+
+                            <select multiple="multiple" id="device_list" name="my_multi_select1[]">
+                            </select>
+                            <select multiple="multiple" id="user_list" name="my_multi_select1[]" >
+                            </select>
+
+                        </div>
+
+                    </div>
+
 
                     <div class="form-actions">
 
-                        <button type="button" class="btn blue" onclick="validateFromSub()"><i class="icon-ok"></i> 提交</button>
+                        <button type="button" class="btn blue"  onclick="validateFromSub()"><i class="icon-ok"></i> 提交
+                        </button>
 
-                        <button type="button" class="btn blue" onclick="ret()">返回</button>
+                        <button type="button" class="btn blue"  onclick="preservation()">保存</button>
 
                     </div>
 
@@ -154,16 +264,23 @@
 </div>
 
 
-
 <script type="text/javascript" src="${ctx }/static/js/umeditor/third-party/template.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx }/static/js/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx }/static/js/umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="${ctx }/static/js/umeditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript" src="media/js/jquery.multi-select.js"></script>
 
-<script type="text/javascript" src="${ctx }/static/js/activity_add.js"></script>
+
+<script type="text/javascript" src="${ctx }/static/media/js/bootstrap-timepicker.js"></script>
+
+<script type="text/javascript" src="${ctx }/static/media/js/jquery.inputmask.bundle.min.js"></script>
+
+<script type="text/javascript" src="${ctx }/static/media/js/jquery.input-ip-address-control-1.0.min.js"></script>
+<script type="text/javascript" src="${ctx }/static/media/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="${ctx }/static/js/community_add.js"></script>
+
 
 <script type="text/javascript">
     //实例化编辑器
     var um = UM.getEditor('myEditor');
+
 </script>

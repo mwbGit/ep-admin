@@ -1,7 +1,7 @@
 package com.ep.dao.mapper;
 
 import com.ep.dao.model.common.PagingFilter;
-import com.ep.dao.model.communit.CommunityDevice;
+import com.ep.dao.model.community.CommunityDevice;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

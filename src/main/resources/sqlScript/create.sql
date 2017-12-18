@@ -296,10 +296,56 @@ CREATE TABLE `t_community_device` (
   UNIQUE KEY `uk_activity_type_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区设备';
 
+-- ----------------------------
+-- 社区
+-- ----------------------------
+DROP TABLE IF EXISTS `t_community` ;
+CREATE TABLE `t_community_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL COMMENT '名称',
+  `tag` varchar(64) DEFAULT NULL COMMENT '标签',
+  `tips` text DEFAULT NULL COMMENT '提示',
+  `content` text DEFAULT NULL COMMENT '介绍',
+  `station_total` int(11)  DEFAULT '0' COMMENT '工位',
+  `rent_num` int(11)  DEFAULT '0' COMMENT '租赁工位数量',
+  `surplus_num` int(11)  DEFAULT '0' COMMENT '剩余工位数量',
+  `is_online` char(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_activity_type_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区';
 
+-- ----------------------------
+-- 社区图片
+-- ----------------------------
+DROP TABLE IF EXISTS `t_community_picture` ;
+CREATE TABLE `t_community_picture` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(128) NOT NULL,
+  `community_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区图片';
 
+-- ----------------------------
+-- 社区设施
+-- ----------------------------
+DROP TABLE IF EXISTS `t_community_picture` ;
+CREATE TABLE `t_community_picture` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) NOT NULL,
+  `community_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区设施';
 
-
+-- ----------------------------
+-- 社区经理
+-- ----------------------------
+DROP TABLE IF EXISTS `t_community_user` ;
+CREATE TABLE `t_community_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `community_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区经理';
 
 INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/110520024/7cd4acbb91ec56ab77bc2d12583116b2', '男', '1302972767', '21232f297a57a5a743894a0e4a801fc3', '131', '2017-08-24', '2017-08-24', '1', '孟卫波','N','');
 INSERT INTO `t_banner_position` VALUES ('1', 'HOME_PAGE', '首页轮播'),('2', 'E_CARD', 'E卡管理轮播');

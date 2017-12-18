@@ -1,4 +1,4 @@
-package com.ep.dao.model.communit;
+package com.ep.dao.model.community;
 
 import com.ep.dao.model.common.Bool;
 

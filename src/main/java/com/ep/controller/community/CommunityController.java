@@ -6,7 +6,7 @@ import com.ep.controller.community.api.CommunityDeviceVO;
 import com.ep.dao.mapper.CommunityMapper;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PagingFilter;
-import com.ep.dao.model.communit.CommunityDevice;
+import com.ep.dao.model.community.CommunityDevice;
 import com.ep.service.community.api.ICommunityService;
 import com.ep.service.upload.api.IUploadService;
 import org.apache.commons.collections.CollectionUtils;
@@ -45,6 +45,10 @@ public class CommunityController {
         if (CollectionUtils.isNotEmpty(devices)) {
 
             if (CollectionUtils.isNotEmpty(devices)) {
+                if (iDisplayStart == null) {
+                    iDisplayStart = 0;
+                }
+
                 for (int i = 0; i < devices.size(); i++) {
                     CommunityDevice device = devices.get(i);
                     CommunityDeviceVO vo = new CommunityDeviceVO();
