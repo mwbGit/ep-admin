@@ -25,10 +25,10 @@ import java.util.List;
 @Controller
 public class CommunityController {
 
-    @Autowired
+//    @Autowired
     private CommunityMapper communityMapper;
 
-    @Autowired
+//    @Autowired
     private ICommunityService communityService;
 
     @Autowired
