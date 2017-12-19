@@ -1,4 +1,4 @@
-var resourceList ;
+var resourceList;
 
 $(function () {
     // window.location.assign($ctx + "/views/index.jsp");
@@ -16,16 +16,16 @@ $(function () {
             resourceList = data;
         },
         complete: function (XMLHttpRequest, status) {
-           if (status == 'error' || status == 'parsererror'){
-               window.location.href = $ctx + "/views/login.jsp";
-           }
+            if (status == 'error' || status == 'parsererror') {
+                window.location.href = $ctx + "/views/login.jsp";
+            }
         }
     });
 
 });
 function testNumber(number) {
     var re = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
-    if (number== null || number =='' || !re.test(number)) {
+    if (number == null || number == '' || !re.test(number)) {
         alert("非法数字！");
         return false;
     }
@@ -35,11 +35,11 @@ function testNumber(number) {
 
 function testPrice(num, msg) {
     var exp = /^[\-\+]?([0-9]\d*|0|[1-9]\d{0,2}(,\d{3})*)(\.\d+)?$/;
-    if(!testStrMsg(num,msg)){
+    if (!testStrMsg(num, msg)) {
         return false;
     }
 
-    if (!exp.test(num)){
+    if (!exp.test(num)) {
         msg += "格式不正确！";
         alert(msg);
         return false;
@@ -48,7 +48,7 @@ function testPrice(num, msg) {
 }
 
 function testStr(str) {
-    if (str== null || str ==''){
+    if (str == null || str == '') {
         alert("不能为空！");
         return false;
     }
@@ -57,7 +57,7 @@ function testStr(str) {
 
 function testStrMsg(str, msg) {
     msg += "不能为空！";
-    if (str== null || str ==''){
+    if (str == null || str == '') {
         alert(msg);
         return false;
     }
@@ -88,13 +88,13 @@ function loadJsp(item) {
     } else if (item == "activity_manager") {
         $('#dashboard').load($ctx + "/views/activity_manager.jsp");
         $('#menuTitle').html("活动管理");
-    }else if (item == "adviceAdd") {
+    } else if (item == "adviceAdd") {
         $('#dashboard').load($ctx + "/views/adviceAdd.jsp");
         $('#menuTitle').html("添加资讯");
-    }else if (item == "advice_manager") {
+    } else if (item == "advice_manager") {
         $('#dashboard').load($ctx + "/views/advice_manager.jsp");
         $('#menuTitle').html("内容管理");
-    }else if (item == "advice_type") {
+    } else if (item == "advice_type") {
         $('#dashboard').load($ctx + "/views/advice_type.jsp");
         $('#menuTitle').html("分类管理");
     } else if (item == "banner_manager") {
@@ -107,6 +107,9 @@ function loadJsp(item) {
         $('#dashboard').load($ctx + "/views/recharge_detail.jsp");
         $('#menuTitle').html("充值记录");
     } else if (item == "community_manager") {
+        $('#dashboard').load($ctx + "/views/community_manager.jsp");
+        $('#menuTitle').html("社区设施管理");
+    } else if (item == "community_user_manager") {
         $('#dashboard').load($ctx + "/views/community_user_manager.jsp");
         $('#menuTitle').html("社区经理管理");
     } else if (item == "community_device_manager") {
@@ -140,7 +143,7 @@ function subPassword() {
             type: "POST",
             async: false,
             // contentType: 'application/json',
-            url: $ctx +"/user/reset/password",
+            url: $ctx + "/user/reset/password",
             data: {"password": password},
             success: function (data) {
                 alert(data.message);

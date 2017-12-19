@@ -6,8 +6,8 @@ jQuery(document).ready(function () {
         "bPaginate": true, //是否显示（应用）分页器
         "bLengthChange": true, //开关，是否显示每页大小的下拉框
         "bSort": false,
-        "bAutoWidth" : true, //是否自适应宽度
-        "bFilter" : true, //是否启动过滤、搜索功能
+        "bAutoWidth": true, //是否自适应宽度
+        "bFilter": false, //是否启动过滤、搜索功能
 
         "aoColumns": [
             {
@@ -17,48 +17,60 @@ jQuery(document).ready(function () {
                 "sClass": "center",
                 "bVisible": false //此列不显示
             }, {
-                "mDataProp": "title",
-                "sTitle": "标题",
+                "mDataProp": "name",
+                "sTitle": "社区名称",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "typeName",
-                "sTitle": "活动类别",
+                "mDataProp": "tag",
+                "sTitle": "标签",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "status",
-                "sTitle": "活动状态",
+                "mDataProp": "stationTotal",
+                "sTitle": "总工位数量",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "timeRange",
-                "sTitle": "活动时间",
+                "mDataProp": "rentNum",
+                "sTitle": "租赁工位数量",
                 "sDefaultContent": "",
                 "sClass": "center"
-            },{
+            }, {
+                "mDataProp": "surplusNum",
+                "sTitle": "剩余工位数量",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "roomNum",
+                "sTitle": "会议室数量",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "activityNum",
+                "sTitle": "活动场所数量",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "updatedByName",
+                "sTitle": "操作员",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
                 "mDataProp": "online",
                 "sTitle": "操作",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
                     var str = '';
 
-                    str += '&nbsp&nbsp<a href="javascript:;" onclick="editActivity(' + full.id + ')">' +
+                    str += '&nbsp&nbsp<a href="javascript:;" onclick="editCommunity(' + full.id + ')">' +
                         '<span  data-toggle="tooltip"  title="编辑" ><i class="icon-edit"></i></span></a>&nbsp';
 
-                    if (!val) {
+                    if (val == 'N') {
                         str += '<a href="javascript:;"  onclick="publish(' + full.id + ')">' +
                             '<span   data-toggle="tooltip"  title="发布" > ' +
                             '<i class="icon-bullhorn" ></i></span></a> &nbsp';
                     }
-
-                    str += '<a href="javascript:;" onclick="users(' + full.id + ')">' +
-                        '<span data-toggle="tooltip"  title="报名列表" > ' +
-                        '<i class="icon-user" ></i></span></a>&nbsp&nbsp';
-
-                    str += '<a href="javascript:;"  onclick="deleteActivity(' + full.id + ')">' +
-                        '<span   data-toggle="tooltip"  title="删除活动">'+
-                        '<i class=" icon-remove" ></i></span></a>';
 
                     return str;
                 }
@@ -74,7 +86,7 @@ jQuery(document).ready(function () {
         // "bInfo": false, //是否显示页脚信息，DataTables插件左下角显示记录数
 
         "oLanguage": {
-            "sSearch" : "标题",
+            "sSearch": "标题",
             "sProcessing": "正在加载中......",
             "sZeroRecords": "对不起，查询不到相关数据！",
             "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
@@ -89,7 +101,7 @@ jQuery(document).ready(function () {
         },
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": $ctx + "/activity/list",
+        "sAjaxSource": $ctx + "/community/list",
         "fnServerData": function (sSource, aDataSet, fnCallback, oSettings) {
             oSettings.jqXHR = $.ajax({
                 dataType: 'json',
@@ -110,52 +122,27 @@ function publish(id) {
             type: "POST",
             async: false,
             contentType: 'application/json',
-            url: $ctx + "/activity/publish?id=" + id,
+            url: $ctx + "/community/publish?id=" + id,
             // data: {},
             success: function (data) {
                 reLoad(data);
             }
         });
     }
-}
-
-function deleteActivity(id) {
-    if (window.confirm("确定删除？")) {
-        $.ajax({
-            dataType: 'json',
-            type: "POST",
-            async: false,
-            contentType: 'application/json',
-            url: $ctx + "/activity/delete?id=" + id,
-            // data: {},
-            success: function (data) {
-                reLoad(data);
-            }
-        });
-    }
-}
-
-function editActivity(id) {
-    var p = {
-        id: id
-    };
-
-    $('#dashboard').load($ctx + "/views/activity_add.jsp", p);
 }
 
 function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {
         $('.close').click();
-        $('#dashboard').load($ctx + "/views/activity_manager.jsp");
+        $('#dashboard').load($ctx + "/views/community_manager.jsp");
     }
 }
-
-function users(activityId) {
+function editCommunity(id) {
     var p = {
-        id: activityId
+        id: id
     };
-    $('#menuTitle').html("报名列表");
-    $('#dashboard').load($ctx + "/views/activity_user.jsp", p);
 
+    $('#dashboard').load($ctx + "/views/community_add.jsp", p);
 }
+

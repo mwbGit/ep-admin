@@ -1,17 +1,14 @@
-package com.ep.dao.model.community;
+package com.ep.controller.community.api;
 
-import com.ep.dao.model.common.Bool;
+import com.ep.controller.common.ServiceResponse;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by mengweibo on 2017/12/18.
+ * Created by MengWeiBo on 2017-10-12
  */
-public class Community implements Serializable {
-    private static final long serialVersionUID = 1549226849768969923L;
-
+public class CommunityInfoResponse extends ServiceResponse {
     private Integer id;
     private String name;
     private String tag;
@@ -20,13 +17,6 @@ public class Community implements Serializable {
     private Integer stationTotal;
     private Integer rentNum;
     private Integer surplusNum;
-    private Integer roomNum;
-    private Integer activityNum;
-    private Bool online;
-    private Date createdDate;
-    private Date updatedDate;
-    private Integer updatedById;
-    private String updatedByName;
     private List<Integer> userIds;
     private List<Integer> devices;
     private List<String> pictures;
@@ -91,64 +81,8 @@ public class Community implements Serializable {
         return surplusNum;
     }
 
-    public Integer getRoomNum() {
-        return roomNum;
-    }
-
-    public void setRoomNum(Integer roomNum) {
-        this.roomNum = roomNum;
-    }
-
-    public Integer getActivityNum() {
-        return activityNum;
-    }
-
-    public void setActivityNum(Integer activityNum) {
-        this.activityNum = activityNum;
-    }
-
     public void setSurplusNum(Integer surplusNum) {
         this.surplusNum = surplusNum;
-    }
-
-    public Bool getOnline() {
-        return online;
-    }
-
-    public void setOnline(Bool online) {
-        this.online = online;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public Integer getUpdatedById() {
-        return updatedById;
-    }
-
-    public void setUpdatedById(Integer updatedById) {
-        this.updatedById = updatedById;
-    }
-
-    public String getUpdatedByName() {
-        return updatedByName;
-    }
-
-    public void setUpdatedByName(String updatedByName) {
-        this.updatedByName = updatedByName;
     }
 
     public List<Integer> getUserIds() {

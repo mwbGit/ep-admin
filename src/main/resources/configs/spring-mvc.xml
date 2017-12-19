@@ -49,7 +49,7 @@
         </mvc:interceptor>
 
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
+            <mvc:mapping path="/2131**"/>
             <mvc:exclude-mapping path="/wx/**"/>
             <mvc:exclude-mapping path="/upload/**"/>
             <mvc:exclude-mapping path="/login"/>

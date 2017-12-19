@@ -5,7 +5,25 @@
 <mapper namespace="com.ep.dao.mapper.CommunityMapper">
 	<resultMap id="userResult" type="User" extends="com.ep.dao.mapper.UserMapper.userResult" />
 	
-    <resultMap id="communityDeviceResult" type="CommunityDevice">
+    <resultMap id="communityResult" type="Community">
+        <id property="id" column="t_community_id"/>
+        <result property="name" column="t_community_name"/>
+        <result property="tag" column="t_community_tag"/>
+        <result property="tips" column="t_community_tips"/>
+        <result property="content" column="t_community_content"/>
+        <result property="stationTotal" column="t_community_station_total"/>
+        <result property="rentNum" column="t_community_rent_num"/>
+        <result property="surplusNum" column="t_community_surplus_num"/>
+        <result property="roomNum" column="t_community_room_num"/>
+        <result property="activityNum" column="t_community_activity_num"/>
+        <result property="createdDate" column="t_community_created_date"/>
+        <result property="updatedDate" column="t_community_updated_date"/>
+        <result property="updatedById" column="t_community_updated_by_id"/>
+        <result property="updatedByName" column="t_community_updated_by_name"/>
+        <result property="online" column="t_community_is_online" jdbcType="CHAR" javaType="Bool"/>
+    </resultMap>
+
+    <resultMap id="deviceResult" type="Device">
         <id property="id" column="t_community_device_id"/>
         <result property="name" column="t_community_device_name"/>
         <result property="img" column="t_community_device_img"/>
@@ -17,7 +35,25 @@
 		<include refid="com.ep.dao.mapper.UserMapper.userColumns"/>
 	</sql>
 
-    <sql id="communityDeviceColumns">
+    <sql id="communityColumns">
+		c.id AS t_community_id,
+		c.name AS t_community_name,
+		c.tag AS t_community_tag,
+		c.tips AS t_community_tips,
+		c.content AS t_community_content,
+		c.station_total AS t_community_station_total,
+		c.rent_num AS t_community_rent_num,
+		c.surplus_num AS t_community_surplus_num,
+		c.room_num AS t_community_room_num,
+		c.activity_num AS t_community_activity_num,
+		c.created_date AS t_community_created_date,
+		c.updated_date AS t_community_updated_date,
+		c.updated_by_id AS t_community_updated_by_id,
+		c.updated_by_name AS t_community_updated_by_name,
+		c.is_online AS t_community_is_online
+	</sql>
+
+    <sql id="deviceColumns">
 		u.id AS t_community_device_id,
 		u.name AS t_community_device_name,
 		u.img AS t_community_device_img,
@@ -25,11 +61,11 @@
 		u.is_deleted AS t_community_device_is_deleted
 	</sql>
 
-    <insert id="insertCommunityDevice"
-		 parameterType="CommunityDevice"
+    <insert id="insertDevice"
+		 parameterType="Device"
 		 useGeneratedKeys="true"
 		 keyProperty="id">
-		INSERT INTO t_community_device(
+		INSERT INTO t_device(
 			`name`,
 			`img`,
 			sequence,
@@ -42,8 +78,8 @@
 		)
 	</insert>
 
-	<update id="updateCommunityDevice" parameterType="CommunityDevice">
-		UPDATE t_community_device
+	<update id="updateDevice" parameterType="Device">
+		UPDATE t_device
 		<set>
 			<if test="img != null">
 				img = #{img},
@@ -60,12 +96,66 @@
 		</set>
 		WHERE id = #{id}
 	</update>
-	
-    <select id="selectCommunityDeviceList" resultMap="communityDeviceResult">
+
+	<select id="selectCommunityPictureByCommunityId" resultType="string">
+		SELECT
+			url
+		FROM
+			t_community_picture
+		WHERE community_id = #{communityId}
+	</select>
+
+	<select id="selectCommunityDeviceByCommunityId" resultType="int">
+		SELECT
+			device_id
+		FROM
+			t_community_device
+		WHERE community_id = #{communityId}
+	</select>
+
+	<select id="selectCommunityUserByCommunityId" resultType="int">
+		SELECT
+			user_id
+		FROM
+			t_community_user
+		WHERE community_id = #{communityId}
+	</select>
+
+    <select id="selectCommunityById" resultMap="communityResult">
         SELECT
-        <include refid="communityDeviceColumns"/>
+        	<include refid="communityColumns"/>
         FROM
-			t_community_device u
+			t_community c
+		WHERE c.id = #{id}
+    </select>
+
+    <select id="selectCommunityList" resultMap="communityResult">
+        SELECT
+        <include refid="communityColumns"/>
+        FROM
+			t_community c
+		ORDER BY c.id DESC
+        <if test="filter.start != null and filter.size != null">
+            limit #{filter.start}, #{filter.size}
+        </if>
+
+    </select>
+
+	<select id="countCommunityList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_community c
+		<if test="filter.start != null and filter.size != null">
+			limit #{filter.start}, #{filter.size}
+		</if>
+	</select>
+
+    <select id="selectDeviceList" resultMap="deviceResult">
+        SELECT
+        <include refid="deviceColumns"/>
+        FROM
+			t_device u
 		WHERE
 			u.is_deleted = 'N'
 		ORDER BY u.sequence ASC
@@ -75,29 +165,32 @@
 
     </select>
 
-	<select id="countCommunityDeviceList" resultType="int">
+	<select id="countDeviceList" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
-			t_community_device
+			t_device
 		WHERE
 			is_deleted = 'N'
+		<if test="filter.start != null and filter.size != null">
+			limit #{filter.start}, #{filter.size}
+		</if>
 	</select>
 
-	<select id="selectCommunityDeviceById" resultMap="communityDeviceResult">
+	<select id="selectDeviceById" resultMap="deviceResult">
 		SELECT
-			<include refid="communityDeviceColumns"/>
+			<include refid="deviceColumns"/>
 		FROM
-			t_community_device u
+			t_device u
 		WHERE
 			id= #{id}
 	</select>
 	
-	<select id="countCommunityDeviceByName" resultType="int">
+	<select id="countDeviceByName" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
-			t_community_device
+			t_device
 		WHERE
 			name= #{name}
 		<if test="id != null">
@@ -105,18 +198,18 @@
 		</if>
 	</select>
 
-	<select id="selectMaxCommunityDeviceSequence" resultType="int">
+	<select id="selectMaxDeviceSequence" resultType="int">
 		SELECT
 			if(MAX(sequence) IS NULL, 1,MAX(sequence) + 1)
 		FROM
-			`t_community_device`
+			`t_device`
 	</select>
 
-	<select id="selectCommunityDeviceBySequence" resultMap="communityDeviceResult">
+	<select id="selectDeviceBySequence" resultMap="deviceResult">
 		SELECT
-			<include refid="communityDeviceColumns"/>
+			<include refid="deviceColumns"/>
 		FROM
-		t_community_device u
+		t_device u
 		WHERE
 			is_deleted = 'N'
 		<if test="asc == true">
@@ -131,4 +224,125 @@
 		limit 1
 	</select>
 
+	<insert id="insertCommunity"
+		parameterType="Community"
+		useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO t_community(
+			`name`,
+			`tag`,
+			`tips`,
+			`content`,
+			`updated_by_id`,
+			`updated_by_name`,
+			`created_date`,
+			`updated_date`,
+			`is_online`
+		) VALUES (
+			#{name},
+			#{tag},
+			#{tips},
+			#{content},
+			#{updatedById},
+			#{updatedByName},
+			NOW(),
+			NOW(),
+			'N'
+		)
+	</insert>
+
+	<update id="updateCommunity" parameterType="Community">
+		UPDATE t_community
+		<set>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+			<if test="tag != null">
+				`tag` = #{tag},
+			</if>
+			<if test="tips != null">
+				tips = #{tips},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+			<if test="updatedById != null">
+				updated_by_id = #{updatedById},
+			</if>
+			<if test="updatedByName != null">
+				updated_by_name = #{updatedByName},
+			</if>
+			<if test="online != null">
+				is_online = #{online.code},
+			</if>
+			<if test="stationTotal != null">
+				station_total = #{stationTotal},
+			</if>
+			<if test="rentNum != null">
+				rent_num = #{rentNum},
+			</if>
+			<if test="surplusNum != null">
+				surplus_num = #{surplusNum},
+			</if>
+			<if test="roomNum != null">
+				room_num = #{roomNum},
+			</if>
+			<if test="activityNum != null">
+				activity_num = #{activityNum},
+			</if>
+			updated_date = NOW()
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="batchDeleteCommunityDevice" parameterType="map">
+		DELETE FROM t_community_device
+		WHERE community_id = #{communityId}
+	</delete>
+
+	<delete id="batchDeleteCommunityUser" parameterType="map">
+		DELETE FROM t_community_user
+		WHERE community_id = #{communityId}
+	</delete>
+
+	<delete id="batchDeleteCommunityPicture" parameterType="map">
+		DELETE FROM t_community_picture
+		WHERE community_id = #{communityId}
+	</delete>
+
+	<insert id="batchInsertCommunityUser"
+		parameterType="map">
+		INSERT INTO t_community_user(
+			`user_id`,
+			`community_id`
+		) VALUES
+		<foreach collection="userIds" item="userId" index="index" separator=",">
+			(#{userId},
+			#{communityId})
+		</foreach>
+	</insert>
+
+	<insert id="batchInsertCommunityDevice"
+		parameterType="map">
+		INSERT INTO t_community_device(
+			`device_id`,
+			`community_id`
+		) VALUES
+		<foreach collection="deviceIds" item="deviceId" index="index" separator=",">
+			(#{deviceId},
+			#{communityId})
+		</foreach>
+	</insert>
+
+	<insert id="batchInsertCommunityPicture"
+		parameterType="map">
+		INSERT INTO t_community_picture(
+			`url`,
+			`community_id`
+		) VALUES
+		<foreach collection="pictures" item="picture" index="index" separator=",">
+			(#{picture},
+			#{communityId})
+		</foreach>
+	</insert>
 </mapper>

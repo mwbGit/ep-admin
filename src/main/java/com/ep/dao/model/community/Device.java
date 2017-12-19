@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by mengweibo on 2017/12/12.
  */
-public class CommunityDevice implements Serializable {
+public class Device implements Serializable {
     private static final long serialVersionUID = 1549226849768969923L;
 
     private Integer id;

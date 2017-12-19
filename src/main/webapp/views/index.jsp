@@ -287,6 +287,12 @@
                             添加社区</a>
                     </li>
 
+                    <li id="community_manager-li">
+
+                        <a href="#" onclick="loadJsp('community_manager')">
+
+                            社区维护管理</a>
+                    </li>
                     <li id="community_device_manager-li">
 
                         <a href="#" onclick="loadJsp('community_device_manager')">
@@ -294,9 +300,9 @@
                             社区设施管理</a>
                     </li>
 
-                    <li id="community_manager-li">
+                    <li id="community_user_manager-li">
 
-                        <a href="#" onclick="loadJsp('community_manager')">
+                        <a href="#" onclick="loadJsp('community_user_manager')">
 
                             社区经理管理</a>
                     </li>

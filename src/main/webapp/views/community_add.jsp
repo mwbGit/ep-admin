@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="${ctx }/static/media/css/multi-select-metro.css"/>
 
 <script type="text/javascript">
-    var activity_id = "${param.id}";
+    var community_id = "${param.id}";
 </script>
 
 <div class="row-fluid">
@@ -31,15 +31,15 @@
 
             <div class="portlet-body form">
 
-                <form id="form_activity_add"
+                <form id="form_community_add"
                       action="" class="form-horizontal" method="post" enctype="multipart/form-data">
                     <br>
                     <div class="control-group">
-                        <input type="hidden" id="communityId" name="id">
                         <label class="control-label">社区名称：</label>
 
                         <div class="controls">
 
+                            <input type="hidden" class="m-wrap medium" name="id" id="communityId"/>
                             <input type="text" class="m-wrap medium" name="name" id="name"/>
 
                         </div>
@@ -53,7 +53,7 @@
 
                         <div class="controls">
 
-                            <input type="text" class="m-wrap medium" name="name" id="tag"/>
+                            <input type="text" class="m-wrap medium" name="tag" id="tag"/>
 
 
                         </div>
@@ -82,7 +82,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUpload" id="imgUpload1"/></span>
+									<input type="file" class="default" name="imgUploads" id="imgUpload1"/></span>
 
                                     <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
@@ -109,7 +109,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUpload" id="imgUpload2"/></span>
+									<input type="file" class="default" name="imgUploads" id="imgUpload2"/></span>
 
                                     <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
@@ -136,7 +136,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUpload" id="imgUpload3"/></span>
+									<input type="file" class="default" name="imgUploads" id="imgUpload3"/></span>
 
                                     <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
@@ -163,7 +163,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUpload" id="imgUpload4"/></span>
+									<input type="file" class="default" name="imgUploads" id="imgUpload4"/></span>
 
                                     <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
@@ -190,7 +190,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUpload" id="imgUpload5"/></span>
+									<input type="file" class="default" name="imgUploads" id="imgUpload5"/></span>
 
                                     <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
@@ -209,7 +209,7 @@
 
                         <div class="controls">
 
-                            <textarea class="span6 m-wrap" rows="3"></textarea>
+                            <textarea class="span6 m-wrap" rows="3" name="tips" id="tips"></textarea>
 
                         </div>
 
@@ -231,9 +231,9 @@
 
                         <div class="controls">
 
-                            <select multiple="multiple" id="device_list" name="my_multi_select1[]">
+                            <select multiple="multiple" id="device_list" name="devices">
                             </select>
-                            <select multiple="multiple" id="user_list" name="my_multi_select1[]" >
+                            <select multiple="multiple" id="user_list" name="userIds" >
                             </select>
 
                         </div>
@@ -242,9 +242,6 @@
 
 
                     <div class="form-actions">
-
-                        <button type="button" class="btn blue"  onclick="validateFromSub()"><i class="icon-ok"></i> 提交
-                        </button>
 
                         <button type="button" class="btn blue"  onclick="preservation()">保存</button>
 

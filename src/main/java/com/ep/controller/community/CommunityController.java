@@ -3,10 +3,14 @@ package com.ep.controller.community;
 import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.community.api.CommunityDeviceVO;
+import com.ep.controller.community.api.CommunityInfoResponse;
+import com.ep.controller.util.ApplicationContextUtils;
 import com.ep.dao.mapper.CommunityMapper;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PagingFilter;
-import com.ep.dao.model.community.CommunityDevice;
+import com.ep.dao.model.community.Community;
+import com.ep.dao.model.community.Device;
+import com.ep.dao.model.user.User;
 import com.ep.service.community.api.ICommunityService;
 import com.ep.service.upload.api.IUploadService;
 import org.apache.commons.collections.CollectionUtils;
@@ -25,10 +29,10 @@ import java.util.List;
 @Controller
 public class CommunityController {
 
-//    @Autowired
+    @Autowired
     private CommunityMapper communityMapper;
 
-//    @Autowired
+    @Autowired
     private ICommunityService communityService;
 
     @Autowired
@@ -38,8 +42,8 @@ public class CommunityController {
     @ResponseBody
     public PagingResponse<List<CommunityDeviceVO>> deviceList(Integer iDisplayStart, Integer iDisplayLength) {
 
-        List<CommunityDevice> devices = communityMapper.selectCommunityDeviceList(new PagingFilter(iDisplayStart, iDisplayLength));
-        int count = communityMapper.countCommunityDeviceList(new PagingFilter(iDisplayStart, iDisplayLength));
+        List<Device> devices = communityMapper.selectDeviceList(new PagingFilter(iDisplayStart, iDisplayLength));
+        int count = communityMapper.countDeviceList(new PagingFilter(iDisplayStart, iDisplayLength));
 
         List<CommunityDeviceVO> vos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(devices)) {
@@ -50,7 +54,7 @@ public class CommunityController {
                 }
 
                 for (int i = 0; i < devices.size(); i++) {
-                    CommunityDevice device = devices.get(i);
+                    Device device = devices.get(i);
                     CommunityDeviceVO vo = new CommunityDeviceVO();
 
                     vo.setId(device.getId());
@@ -85,11 +89,11 @@ public class CommunityController {
     @ResponseBody
     public ServiceResponse deviceDelete(@RequestParam(value = "id") Integer id) {
 
-        CommunityDevice communityDevice = new CommunityDevice();
-        communityDevice.setId(id);
-        communityDevice.setDeleted(Bool.Y);
+        Device device = new Device();
+        device.setId(id);
+        device.setDeleted(Bool.Y);
 
-        communityMapper.updateCommunityDevice(communityDevice);
+        communityMapper.updateDevice(device);
 
         return new ServiceResponse();
     }
@@ -104,19 +108,19 @@ public class CommunityController {
             url = uploadService.uploadImage(imgUpload);
         }
 
-        int count = communityMapper.countCommunityDeviceByName(name, id);
+        int count = communityMapper.countDeviceByName(name, id);
         if (count > 0) {
             response.setCode("1");
             response.setMessage("名称重复");
             return response;
         }
 
-        CommunityDevice communityDevice = new CommunityDevice();
-        communityDevice.setId(id);
-        communityDevice.setName(name);
-        communityDevice.setImg(url);
+        Device device = new Device();
+        device.setId(id);
+        device.setName(name);
+        device.setImg(url);
 
-        communityMapper.updateCommunityDevice(communityDevice);
+        communityMapper.updateDevice(device);
 
 
         return response;
@@ -127,7 +131,7 @@ public class CommunityController {
     public ServiceResponse deviceModifyOrder(@RequestParam(value = "id") Integer id, Boolean asc) {
         ServiceResponse response = new ServiceResponse();
 
-        communityService.modifyCommunityDeviceSequence(id, asc);
+        communityService.modifyDeviceSequence(id, asc);
 
         return response;
     }
@@ -151,24 +155,127 @@ public class CommunityController {
             return response;
         }
 
-        int count = communityMapper.countCommunityDeviceByName(name, null);
+        int count = communityMapper.countDeviceByName(name, null);
         if (count > 0) {
             response.setCode("2");
             response.setMessage("名称重复");
             return response;
         }
 
-        int sequence = communityMapper.selectMaxCommunityDeviceSequence();
+        int sequence = communityMapper.selectMaxDeviceSequence();
 
-        CommunityDevice communityDevice = new CommunityDevice();
-        communityDevice.setName(name);
-        communityDevice.setImg(url);
-        communityDevice.setDeleted(Bool.N);
-        communityDevice.setSequence(sequence);
+        Device device = new Device();
+        device.setName(name);
+        device.setImg(url);
+        device.setDeleted(Bool.N);
+        device.setSequence(sequence);
 
-        communityMapper.insertCommunityDevice(communityDevice);
+        communityMapper.insertDevice(device);
 
         return response;
     }
 
+    @RequestMapping(value = "/detail")
+    @ResponseBody
+    public CommunityInfoResponse detail(@RequestParam(value = "id") Integer id) {
+        CommunityInfoResponse response = new CommunityInfoResponse();
+
+        Community community = communityService.getCommunity(id);
+
+        if (community != null) {
+            response.setName(community.getName());
+            response.setTag(community.getTag());
+            response.setTips(community.getTips());
+            response.setContent(community.getContent());
+            response.setUserIds(community.getUserIds());
+            response.setDevices(community.getDevices());
+            response.setPictures(community.getPictures());
+            response.setStationTotal(community.getStationTotal());
+            response.setRentNum(community.getRentNum());
+            response.setSurplusNum(community.getSurplusNum());
+            response.setUserIds(community.getUserIds());
+            response.setDevices(community.getDevices());
+            response.setPictures(community.getPictures());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public PagingResponse list(Integer iDisplayStart, Integer iDisplayLength) {
+        PagingResponse<List<Community>> response = new PagingResponse<>();
+
+        List<Community> communities = communityMapper.selectCommunityList(new PagingFilter(iDisplayStart, iDisplayLength));
+        int count = communityMapper.countCommunityList(new PagingFilter(iDisplayStart, iDisplayLength));
+
+        response.setAaData(communities);
+        response.setTotalCount(count);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/publish")
+    @ResponseBody
+    public ServiceResponse publish(Integer id) {
+        ServiceResponse response = new ServiceResponse();
+
+        Community community = communityService.getCommunity(id);
+        if (StringUtils.isBlank(community.getTips())) {
+            response.setCode("1");
+            response.setMessage("请完善资料, tips!");
+        } else if (StringUtils.isBlank(community.getContent())) {
+            response.setCode("2");
+            response.setMessage("请完善资料, 社区介绍!");
+        } else if (CollectionUtils.isEmpty(community.getPictures())) {
+            response.setCode("3");
+            response.setMessage("请完善资料, 社区图片!");
+        } else if (CollectionUtils.isEmpty(community.getDevices())) {
+            response.setCode("4");
+            response.setMessage("请完善资料, 社区设施!");
+        } else if (CollectionUtils.isEmpty(community.getUserIds())) {
+            response.setCode("5");
+            response.setMessage("请完善资料, 社区经理!");
+        } else {
+            //todo
+            User user = ApplicationContextUtils.getUser();
+
+            Community upCommunity = new Community();
+            upCommunity.setId(id);
+            upCommunity.setUpdatedById(user.getId());
+            upCommunity.setUpdatedByName(user.getName());
+
+            communityMapper.updateCommunity(community);
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public ServiceResponse add(@RequestParam(value = "imgUploads", required = false) MultipartFile[] uploadFiles,
+                               Community community) {
+        ServiceResponse response = new ServiceResponse();
+
+        //todo
+//        User user = ApplicationContextUtils.getUser();
+//        community.setUpdatedById(user.getId());
+//        community.setUpdatedByName(user.getName());
+
+        List<String> pictures = new ArrayList<>();
+        if (uploadFiles != null) {
+            for (MultipartFile file : uploadFiles) {
+                String url = uploadService.uploadImage(file);
+                if (url != null) {
+                    pictures.add(url);
+                }
+            }
+            community.setPictures(pictures);
+        }
+
+
+        communityService.addCommunity(community);
+
+        return response;
+    }
 }
