@@ -316,7 +316,7 @@ CREATE TABLE `t_community` (
   `updated_date` date NOT NULL,
   `updated_by_id` int(11) NOT NULL,
   `updated_by_name` char(32) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区';
 
 -- ----------------------------

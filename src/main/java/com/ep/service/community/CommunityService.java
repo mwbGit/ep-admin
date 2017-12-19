@@ -45,10 +45,18 @@ public class CommunityService implements ICommunityService {
             communityMapper.updateCommunity(community);
         }
 
-        communityMapper.batchInsertCommunityUser(community.getUserIds(), community.getId());
+        communityMapper.batchDeleteCommunityDevice(community.getId());
 
-        communityMapper.batchInsertCommunityDevice(community.getDevices(), community.getId());
+        communityMapper.batchDeleteCommunityPicture(community.getId());
 
+        communityMapper.batchDeleteCommunityUser(community.getId());
+
+        if (CollectionUtils.isNotEmpty(community.getUserIds())) {
+            communityMapper.batchInsertCommunityUser(community.getUserIds(), community.getId());
+        }
+        if (CollectionUtils.isNotEmpty(community.getDevices())) {
+            communityMapper.batchInsertCommunityDevice(community.getDevices(), community.getId());
+        }
         if (CollectionUtils.isNotEmpty(community.getPictures())) {
             communityMapper.batchInsertCommunityPicture(community.getPictures(), community.getId());
         }

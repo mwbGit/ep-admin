@@ -237,7 +237,6 @@ public class CommunityController {
             response.setCode("5");
             response.setMessage("请完善资料, 社区经理!");
         } else {
-            //todo
             User user = ApplicationContextUtils.getUser();
 
             Community upCommunity = new Community();
@@ -257,10 +256,9 @@ public class CommunityController {
                                Community community) {
         ServiceResponse response = new ServiceResponse();
 
-        //todo
-//        User user = ApplicationContextUtils.getUser();
-//        community.setUpdatedById(user.getId());
-//        community.setUpdatedByName(user.getName());
+        User user = ApplicationContextUtils.getUser();
+        community.setUpdatedById(user.getId());
+        community.setUpdatedByName(user.getName());
 
         List<String> pictures = new ArrayList<>();
         if (uploadFiles != null) {

@@ -21,6 +21,7 @@ jQuery(document).ready(function () {
                     $.each(users, function (i, v) {
                         if (v == value.id) {
                             trs += '" selected ';
+
                         }
                     });
                 }
@@ -28,6 +29,7 @@ jQuery(document).ready(function () {
                 trs += '">&nbsp' + value.name + '</option>';
 
             });
+
             $('#user_list').html(trs);
         }
     });
