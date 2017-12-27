@@ -309,7 +309,7 @@ CREATE TABLE `t_community` (
   `station_total` int(11)  DEFAULT '0' COMMENT '工位',
   `rent_num` int(11)  DEFAULT '0' COMMENT '租赁工位数量',
   `surplus_num` int(11)  DEFAULT '0' COMMENT '剩余工位数量',
-  `room_num` int(11)  DEFAULT '0' COMMENT '会议室数量',
+  `meeting_num` int(11)  DEFAULT '0' COMMENT '会议室数量',
   `activity_num` int(11)  DEFAULT '0' COMMENT '活动场所数量',
   `is_online` char(1) NOT NULL,
   `created_date` date NOT NULL,
