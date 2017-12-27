@@ -1,5 +1,6 @@
 package com.ep.service.community.api;
 
+import com.ep.dao.model.community.ActivityMeetingSpace;
 import com.ep.dao.model.community.Community;
 
 import java.util.List;
@@ -12,6 +13,12 @@ public interface ICommunityService {
     public void modifyDeviceSequence(Integer id, Boolean asc);
 
     public void addCommunity(Community community);
+
+    public void addActivityMeetingSpace(ActivityMeetingSpace space);
+
+    public void updateActivityMeetingSpace(ActivityMeetingSpace space);
+
+    public void deleteActivityMeetingSpace(Integer spaceId);
 
     public Community getCommunity(Integer id);
 

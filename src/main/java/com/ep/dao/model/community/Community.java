@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 社区
  * Created by mengweibo on 2017/12/18.
  */
 public class Community implements Serializable {
@@ -20,7 +21,7 @@ public class Community implements Serializable {
     private Integer stationTotal;
     private Integer rentNum;
     private Integer surplusNum;
-    private Integer roomNum;
+    private Integer meetingNum;
     private Integer activityNum;
     private Bool online;
     private Date createdDate;
@@ -91,12 +92,12 @@ public class Community implements Serializable {
         return surplusNum;
     }
 
-    public Integer getRoomNum() {
-        return roomNum;
+    public Integer getMeetingNum() {
+        return meetingNum;
     }
 
-    public void setRoomNum(Integer roomNum) {
-        this.roomNum = roomNum;
+    public void setMeetingNum(Integer meetingNum) {
+        this.meetingNum = meetingNum;
     }
 
     public Integer getActivityNum() {

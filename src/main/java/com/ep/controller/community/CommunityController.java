@@ -2,12 +2,18 @@ package com.ep.controller.community;
 
 import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
+import com.ep.controller.community.api.ActivityMeetingSpaceInfoResponse;
 import com.ep.controller.community.api.CommunityDeviceVO;
 import com.ep.controller.community.api.CommunityInfoResponse;
 import com.ep.controller.util.ApplicationContextUtils;
+import com.ep.dao.filter.BannerFilter;
+import com.ep.dao.filter.CommunitySpaceFilter;
 import com.ep.dao.mapper.CommunityMapper;
+import com.ep.dao.model.banner.Banner;
+import com.ep.dao.model.banner.BannerPosition;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PagingFilter;
+import com.ep.dao.model.community.ActivityMeetingSpace;
 import com.ep.dao.model.community.Community;
 import com.ep.dao.model.community.Device;
 import com.ep.dao.model.user.User;
@@ -271,8 +277,77 @@ public class CommunityController {
             community.setPictures(pictures);
         }
 
-
         communityService.addCommunity(community);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/space/delete")
+    @ResponseBody
+    public ServiceResponse spaceDelete(@RequestParam(value = "id") Integer id) {
+
+        communityService.deleteActivityMeetingSpace(id);
+
+        return new ServiceResponse();
+    }
+
+    @RequestMapping(value = "/space/detail")
+    @ResponseBody
+    public ActivityMeetingSpaceInfoResponse getSpace(@RequestParam(value = "id") Integer id) {
+        ActivityMeetingSpaceInfoResponse response = new ActivityMeetingSpaceInfoResponse();
+
+        ActivityMeetingSpace space = communityMapper.selectActivityMeetingSpaceById(id);
+        List<Integer> deviceIds = communityMapper.selectActivityMeetingSpaceDevice(id);
+
+        response.setId(space.getId());
+        response.setName(space.getName());
+        response.setCapacity(space.getCapacity());
+        response.setAmount(space.getAmount());
+        response.setPosition(space.getPosition());
+        response.setType(space.getType());
+        response.setImg(space.getImg());
+        response.setCommunityId(space.getCommunityId());
+        response.setDevices(deviceIds);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/space/add")
+    @ResponseBody
+    public ServiceResponse spaceAdd(@RequestParam(value = "imgUpload") MultipartFile uploadFile,
+                                    ActivityMeetingSpace community) {
+        ServiceResponse response = new ServiceResponse();
+
+        String url = uploadService.uploadImage(uploadFile);
+        community.setImg(url);
+        if (community.getId() == null) {
+            communityService.addActivityMeetingSpace(community);
+        } else {
+            communityService.updateActivityMeetingSpace(community);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/space/list")
+    @ResponseBody
+    public PagingResponse spaceList(Integer iDisplayStart, Integer iDisplayLength, String type, Integer communityId) {
+
+        CommunitySpaceFilter filter = new CommunitySpaceFilter();
+        filter.setStart(iDisplayStart);
+        filter.setSize(iDisplayLength);
+        filter.setCommunityId(communityId);
+        if (type.equals("Activity")) {
+            filter.setType(0);
+        } else {
+            filter.setType(1);
+        }
+
+        List<ActivityMeetingSpace> spaces = communityMapper.selectActivityMeetingSpaceList(filter);
+        int count = communityMapper.countActivityMeetingSpaceList(filter);
+
+        PagingResponse<List<ActivityMeetingSpace>> response = new PagingResponse<>();
+        response.setTotalCount(count);
+        response.setAaData(spaces);
 
         return response;
     }

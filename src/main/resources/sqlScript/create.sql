@@ -352,6 +352,37 @@ CREATE TABLE `t_community_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='社区经理';
 
+-- ----------------------------
+-- 活动会议场所
+-- ----------------------------
+DROP TABLE IF EXISTS `t_activity_meeting_space` ;
+CREATE TABLE `t_activity_meeting_space` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL,
+  `position` varchar(64) DEFAULT NULL,
+  `img` varchar(128) DEFAULT NULL,
+  `capacity` int(11) NOT NULL,
+  `amount` decimal(18,2) NOT NULL,
+  `type` int(1) NOT NULL COMMENT '0 活动 1 会议室',
+  `community_id` int(11) NOT NULL,
+  `created_date` date NOT NULL,
+  `updated_date` date NOT NULL,
+  `updated_by_id` int(11) NOT NULL,
+  `updated_by_name` char(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='活动会议场所';
+
+-- ----------------------------
+-- 活动会议场所设施
+-- ----------------------------
+DROP TABLE IF EXISTS `t_activity_meeting_space_device` ;
+CREATE TABLE `t_activity_meeting_space_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) NOT NULL,
+  `space_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='活动会议场所设施';
+
 INSERT INTO `t_user` VALUES ('1', 'admin', 'http://img04.sogoucdn.com/app/a/110520024/7cd4acbb91ec56ab77bc2d12583116b2', '男', '1302972767', '21232f297a57a5a743894a0e4a801fc3', '131', '2017-08-24', '2017-08-24', '1', '孟卫波','N','');
 INSERT INTO `t_banner_position` VALUES ('1', 'HOME_PAGE', '首页轮播'),('2', 'E_CARD', 'E卡管理轮播');
 INSERT INTO `t_banner_type` VALUES ('1', 'ACTIVITY', '活动详情'),('2', 'CUSTOM', '自定义'),('3', 'NONE', '无');

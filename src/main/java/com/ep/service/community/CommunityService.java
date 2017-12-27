@@ -1,8 +1,11 @@
 package com.ep.service.community;
 
+import com.ep.controller.util.ApplicationContextUtils;
 import com.ep.dao.mapper.CommunityMapper;
+import com.ep.dao.model.community.ActivityMeetingSpace;
 import com.ep.dao.model.community.Community;
 import com.ep.dao.model.community.Device;
+import com.ep.dao.model.user.User;
 import com.ep.service.community.api.ICommunityService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +80,66 @@ public class CommunityService implements ICommunityService {
         }
 
         return community;
+    }
+
+    @Override
+    public void addActivityMeetingSpace(ActivityMeetingSpace space) {
+        User user = ApplicationContextUtils.getUser();
+
+        //todo
+        if (user != null) {
+            space.setUpdatedById(user.getId());
+            space.setUpdatedByName(user.getName());
+        }
+        communityMapper.insertActivityMeetingSpace(space);
+
+        if (CollectionUtils.isNotEmpty(space.getDevices())) {
+            communityMapper.batchInsertActivityMeetingSpaceDevice(space.getDevices(), space.getId());
+        }
+
+        Community community = communityMapper.selectCommunityById(space.getCommunityId());
+        if (space.getType() == 0) {
+            community.setActivityNum(community.getActivityNum() + 1);
+        } else {
+            community.setMeetingNum(community.getMeetingNum() + 1);
+        }
+
+        communityMapper.updateCommunity(community);
+    }
+
+    @Override
+    public void updateActivityMeetingSpace(ActivityMeetingSpace space) {
+        User user = ApplicationContextUtils.getUser();
+
+        //todo
+        if (user != null) {
+            space.setUpdatedById(user.getId());
+            space.setUpdatedByName(user.getName());
+        }
+        communityMapper.updateActivityMeetingSpace(space);
+
+        communityMapper.batchDeleteActivityMeetingSpaceDevice(space.getId());
+
+        if (CollectionUtils.isNotEmpty(space.getDevices())) {
+            communityMapper.batchInsertActivityMeetingSpaceDevice(space.getDevices(), space.getId());
+        }
+    }
+
+    @Override
+    public void deleteActivityMeetingSpace(Integer spaceId) {
+        ActivityMeetingSpace space = communityMapper.selectActivityMeetingSpaceById(spaceId);
+        Community community = communityMapper.selectCommunityById(space.getCommunityId());
+
+        if (space.getType() == 0) {
+            community.setActivityNum(community.getActivityNum() - 1);
+        } else {
+            community.setMeetingNum(community.getMeetingNum() - 1);
+        }
+
+        communityMapper.updateCommunity(community);
+
+        communityMapper.batchDeleteActivityMeetingSpaceDevice(spaceId);
+
+        communityMapper.deleteActivityMeetingSpaceDevice(spaceId);
     }
 }

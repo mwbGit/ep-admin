@@ -1,5 +1,11 @@
+var typeName = 1;
 jQuery(document).ready(function () {
-    $('#community_manager').dataTable({
+    init("Meeting");
+    init("Activity");
+
+});
+function init(id) {
+    $('#' + id).dataTable({
         // "bScrollInfinite": true,
         // "bScrollCollapse": true,
         // "sScrollY": "200px",//长200像素,
@@ -17,67 +23,64 @@ jQuery(document).ready(function () {
                 "sClass": "center",
                 "bVisible": false //此列不显示
             }, {
-                "mDataProp": "name",
-                "sTitle": "社区名称",
+                "mDataProp": "img",
+                "sTitle": "封面",
                 "sDefaultContent": "",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
-                    var str = '';
-
-                    str += '<a href="javascript:;" onclick="editCommunitySpace(' + full.id + ')">' + val + '</a>';
-
-                    return str;
+                    return '<img style="width: 50px;height: 50px" src="' + val + '"/>';
                 }
             }, {
-                "mDataProp": "tag",
-                "sTitle": "标签",
+                "mDataProp": "name",
+                "sTitle": "名称",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "stationTotal",
-                "sTitle": "总工位数量",
+                "mDataProp": "capacity",
+                "sTitle": "容纳人数",
                 "sDefaultContent": "",
-                "sClass": "center"
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    return val + "人"
+                }
             }, {
-                "mDataProp": "rentNum",
-                "sTitle": "租赁工位数量",
+                "mDataProp": "amount",
+                "sTitle": "计费标准",
                 "sDefaultContent": "",
-                "sClass": "center"
+                "sClass": "center",
+                "mRender": function (val, data, full) {
+                    return val + '/元/小时';
+                }
             }, {
-                "mDataProp": "surplusNum",
-                "sTitle": "剩余工位数量",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }, {
-                "mDataProp": "meetingNum",
-                "sTitle": "会议室数量",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }, {
-                "mDataProp": "activityNum",
-                "sTitle": "活动场所数量",
+                "mDataProp": "position",
+                "sTitle": "位置",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
                 "mDataProp": "updatedByName",
-                "sTitle": "操作员",
+                "sTitle": "操作人",
                 "sDefaultContent": "",
                 "sClass": "center"
             }, {
-                "mDataProp": "online",
+                "mDataProp": "updateDate",
+                "sTitle": "操作时间",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "id",
                 "sTitle": "操作",
                 "sClass": "center",
                 "mRender": function (val, data, full) {
                     var str = '';
 
-                    str += '&nbsp&nbsp<a href="javascript:;" onclick="editCommunity(' + full.id + ')">' +
+                    str += '&nbsp&nbsp<a href="#" ' +
+                        ' onclick="edit(' + val + ')">' +
                         '<span  data-toggle="tooltip"  title="编辑" ><i class="icon-edit"></i></span></a>&nbsp';
 
-                    if (val == 'N') {
-                        str += '<a href="javascript:;"  onclick="publish(' + full.id + ')">' +
-                            '<span   data-toggle="tooltip"  title="发布" > ' +
-                            '<i class="icon-bullhorn" ></i></span></a> &nbsp';
-                    }
+
+                    str += '<a href="javascript:;"  onclick="deleteSpace(' + val + ')">' +
+                        '<span   data-toggle="tooltip"  title="删除">' +
+                        '<i class=" icon-remove" ></i></span></a>';
 
                     return str;
                 }
@@ -93,7 +96,7 @@ jQuery(document).ready(function () {
         // "bInfo": false, //是否显示页脚信息，DataTables插件左下角显示记录数
 
         "oLanguage": {
-            "sSearch": "标题",
+            "sSearch": "姓名",
             "sProcessing": "正在加载中......",
             "sZeroRecords": "对不起，查询不到相关数据！",
             "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
@@ -108,7 +111,7 @@ jQuery(document).ready(function () {
         },
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": $ctx + "/community/list",
+        "sAjaxSource": $ctx + "/community/space/list?type=" + id + "&communityId=" + community_id,
         "fnServerData": function (sSource, aDataSet, fnCallback, oSettings) {
             oSettings.jqXHR = $.ajax({
                 dataType: 'json',
@@ -121,20 +124,34 @@ jQuery(document).ready(function () {
         }
     });
 
-});
-function publish(id) {
-    if (window.confirm("确定发布？")) {
-        $.ajax({
-            dataType: 'json',
-            type: "POST",
-            async: false,
-            contentType: 'application/json',
-            url: $ctx + "/community/publish?id=" + id,
-            // data: {},
-            success: function (data) {
-                reLoad(data);
-            }
-        });
+    // initResource();
+}
+
+function add() {
+    var p = {
+        id: community_id,
+        type: typeName
+    };
+
+    $('#dashboard').load($ctx + "/views/community_space_add.jsp", p);
+}
+
+function edit(id) {
+    var p = {
+        id: community_id,
+        spaceId: id,
+        type: typeName
+    };
+
+    $('#dashboard').load($ctx + "/views/community_space_add.jsp", p);
+}
+
+function typeChange(type) {
+    typeName = type;
+    if (type == "0") {
+        $('#addType').text("添加活动场所");
+    } else {
+        $('#addType').text("添加会议室");
     }
 }
 
@@ -142,22 +159,27 @@ function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {
         $('.close').click();
-        $('#dashboard').load($ctx + "/views/community_manager.jsp");
+
+        var p = {
+            id: community_id,
+            type: typeName
+        };
+
+        $('#dashboard').load($ctx + "/views/community_space_manager.jsp", p);
     }
 }
-function editCommunity(id) {
-    var p = {
-        id: id
-    };
 
-    $('#dashboard').load($ctx + "/views/community_add.jsp", p);
+function deleteSpace(id) {
+    if (window.confirm("确定删除？")) {
+
+        $.ajax({
+            dataType: 'json',
+            async: false,
+            url: $ctx + "/community/space/delete?id=" + id,
+            // data: "{}",
+            success: function (data) {
+                reLoad(data);
+            }
+        });
+    }
 }
-
-function editCommunitySpace(id) {
-    var p = {
-        id: id
-    };
-
-    $('#dashboard').load($ctx + "/views/community_space_manager.jsp", p);
-}
-

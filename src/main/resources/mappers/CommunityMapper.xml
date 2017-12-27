@@ -14,7 +14,7 @@
         <result property="stationTotal" column="t_community_station_total"/>
         <result property="rentNum" column="t_community_rent_num"/>
         <result property="surplusNum" column="t_community_surplus_num"/>
-        <result property="roomNum" column="t_community_room_num"/>
+        <result property="meetingNum" column="t_community_meeting_num"/>
         <result property="activityNum" column="t_community_activity_num"/>
         <result property="createdDate" column="t_community_created_date"/>
         <result property="updatedDate" column="t_community_updated_date"/>
@@ -31,6 +31,17 @@
         <result property="deleted" column="t_community_device_is_deleted" jdbcType="CHAR" javaType="Bool"/>
     </resultMap>
 
+    <resultMap id="activityMeetingSpaceResult" type="ActivityMeetingSpace">
+        <id property="id" column="t_activity_meeting_space_id"/>
+        <result property="name" column="t_activity_meeting_space_name"/>
+        <result property="img" column="t_activity_meeting_space_img"/>
+        <result property="position" column="t_activity_meeting_space_position"/>
+        <result property="capacity" column="t_activity_meeting_space_capacity"/>
+        <result property="amount" column="t_activity_meeting_space_amount"/>
+        <result property="type" column="t_activity_meeting_space_type"/>
+        <result property="communityId" column="t_activity_meeting_space_community_id"/>
+    </resultMap>
+
 	<sql id="userColumns" >
 		<include refid="com.ep.dao.mapper.UserMapper.userColumns"/>
 	</sql>
@@ -44,7 +55,7 @@
 		c.station_total AS t_community_station_total,
 		c.rent_num AS t_community_rent_num,
 		c.surplus_num AS t_community_surplus_num,
-		c.room_num AS t_community_room_num,
+		c.meeting_num AS t_community_meeting_num,
 		c.activity_num AS t_community_activity_num,
 		c.created_date AS t_community_created_date,
 		c.updated_date AS t_community_updated_date,
@@ -59,6 +70,17 @@
 		u.img AS t_community_device_img,
 		u.sequence AS t_community_device_sequence,
 		u.is_deleted AS t_community_device_is_deleted
+	</sql>
+
+	<sql id="activityMeetingSpaceColumns">
+		ams.id AS t_activity_meeting_space_id,
+		ams.name AS t_activity_meeting_space_name,
+		ams.img AS t_activity_meeting_space_img,
+		ams.position AS t_activity_meeting_space_position,
+		ams.capacity AS t_activity_meeting_space_capacity,
+		ams.amount AS t_activity_meeting_space_amount,
+		ams.type AS t_activity_meeting_space_type,
+		ams.community_id AS t_activity_meeting_space_community_id
 	</sql>
 
     <insert id="insertDevice"
@@ -138,7 +160,6 @@
         <if test="filter.start != null and filter.size != null">
             limit #{filter.start}, #{filter.size}
         </if>
-
     </select>
 
 	<select id="countCommunityList" resultType="int">
@@ -146,9 +167,6 @@
 			COUNT(*)
 		FROM
 			t_community c
-		<if test="filter.start != null and filter.size != null">
-			limit #{filter.start}, #{filter.size}
-		</if>
 	</select>
 
     <select id="selectDeviceList" resultMap="deviceResult">
@@ -172,9 +190,6 @@
 			t_device
 		WHERE
 			is_deleted = 'N'
-		<if test="filter.start != null and filter.size != null">
-			limit #{filter.start}, #{filter.size}
-		</if>
 	</select>
 
 	<select id="selectDeviceById" resultMap="deviceResult">
@@ -284,8 +299,8 @@
 			<if test="surplusNum != null">
 				surplus_num = #{surplusNum},
 			</if>
-			<if test="roomNum != null">
-				room_num = #{roomNum},
+			<if test="meetingNum != null">
+				meeting_num = #{meetingNum},
 			</if>
 			<if test="activityNum != null">
 				activity_num = #{activityNum},
@@ -345,4 +360,133 @@
 			#{communityId})
 		</foreach>
 	</insert>
+
+	<select id="selectActivityMeetingSpaceById" resultMap="activityMeetingSpaceResult">
+		SELECT
+			<include refid="activityMeetingSpaceColumns"/>
+		FROM
+			t_activity_meeting_space ams
+		WHERE
+			ams.id = #{id}
+	</select>
+
+	<select id="selectActivityMeetingSpaceDevice" resultType="int">
+		SELECT
+			device_id
+		FROM
+			t_activity_meeting_space_device
+		WHERE
+			space_id = #{spaceId}
+	</select>
+
+	<select id="selectActivityMeetingSpaceList" resultMap="activityMeetingSpaceResult">
+		SELECT
+			<include refid="activityMeetingSpaceColumns"/>
+		FROM
+			t_activity_meeting_space ams
+		WHERE
+			ams.community_id = #{filter.communityId}
+			AND ams.type = #{filter.type}
+		ORDER BY ams.id ASC
+		<if test="filter.start != null and filter.size != null">
+			limit #{filter.start}, #{filter.size}
+		</if>
+	</select>
+
+	<select id="countActivityMeetingSpaceList" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_activity_meeting_space ams
+		WHERE
+			ams.community_id = #{filter.communityId}
+			AND ams.type = #{filter.type}
+		ORDER BY ams.id ASC
+	</select>
+
+	<insert id="batchInsertActivityMeetingSpaceDevice"
+			parameterType="map">
+		INSERT INTO t_activity_meeting_space_device(
+		`device_id`,
+		`space_id`
+		) VALUES
+		<foreach collection="deviceIds" item="deviceId" index="index" separator=",">
+			(#{deviceId},
+			#{spaceId})
+		</foreach>
+	</insert>
+
+	<delete id="batchDeleteActivityMeetingSpaceDevice" parameterType="map">
+		DELETE FROM t_activity_meeting_space_device
+		WHERE space_id = #{spaceId}
+	</delete>
+
+	<delete id="deleteActivityMeetingSpaceDevice" parameterType="map">
+		DELETE FROM t_activity_meeting_space
+		WHERE id = #{spaceId}
+	</delete>
+
+	<insert id="insertActivityMeetingSpace"
+			parameterType="ActivityMeetingSpace"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO t_activity_meeting_space(
+			`name`,
+			`position`,
+			`img`,
+			`capacity`,
+			`amount`,
+			`type`,
+			`community_id`,
+			`updated_by_id`,
+			`updated_by_name`,
+			`created_date`,
+			`updated_date`
+		) VALUES (
+			#{name},
+			#{position},
+			#{img},
+			#{capacity},
+			#{amount},
+			#{type},
+			#{communityId},
+			#{updatedById},
+			#{updatedByName},
+			NOW(),
+			NOW()
+		)
+	</insert>
+
+	<update id="updateActivityMeetingSpace" parameterType="ActivityMeetingSpace">
+		UPDATE t_activity_meeting_space
+		<set>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+			<if test="position != null">
+				`position` = #{position},
+			</if>
+			<if test="img != null">
+				img = #{img},
+			</if>
+			<if test="capacity != null">
+				capacity = #{capacity},
+			</if>
+			<if test="updatedById != null">
+				updated_by_id = #{updatedById},
+			</if>
+			<if test="updatedByName != null">
+				updated_by_name = #{updatedByName},
+			</if>
+			<if test="amount != null">
+				amount = #{amount},
+			</if>
+			<if test="type != null">
+				`type` = #{type},
+			</if>
+			updated_date = NOW()
+		</set>
+		WHERE id = #{id}
+	</update>
+
 </mapper>

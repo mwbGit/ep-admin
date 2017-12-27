@@ -4,8 +4,7 @@ var pictures = null;
 jQuery(document).ready(function () {
     if (community_id != null && community_id != '') {
         $('#communityId').val(community_id);
-        $('#menuTitle').html("修改活动");
-        $('#titleSpan').html("修改活动");
+        $('#titleSpan').html("修改");
         detail(community_id)
     }
 
