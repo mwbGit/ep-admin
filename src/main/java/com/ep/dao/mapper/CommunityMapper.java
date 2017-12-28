@@ -1,10 +1,12 @@
 package com.ep.dao.mapper;
 
+import com.ep.dao.filter.CommunityFilter;
 import com.ep.dao.filter.CommunitySpaceFilter;
 import com.ep.dao.model.common.PagingFilter;
 import com.ep.dao.model.community.ActivityMeetingSpace;
 import com.ep.dao.model.community.Community;
 import com.ep.dao.model.community.Device;
+import com.ep.dao.model.user.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,13 +36,13 @@ public interface CommunityMapper {
 
     List<String> selectCommunityPictureByCommunityId(@Param("communityId") Integer communityId);
 
-    List<Integer> selectCommunityDeviceByCommunityId(@Param("communityId") Integer communityId);
+    List<Device> selectCommunityDeviceByCommunityId(@Param("communityId") Integer communityId);
 
-    List<Integer> selectCommunityUserByCommunityId(@Param("communityId") Integer communityId);
+    List<User> selectCommunityUserByCommunityId(@Param("communityId") Integer communityId);
 
-    List<Community> selectCommunityList(@Param("filter") PagingFilter filter);
+    List<Community> selectCommunityList(@Param("filter") CommunityFilter filter);
 
-    int countCommunityList(@Param("filter") PagingFilter filter);
+    int countCommunityList(@Param("filter") CommunityFilter filter);
 
     void updateCommunity(Community community);
 

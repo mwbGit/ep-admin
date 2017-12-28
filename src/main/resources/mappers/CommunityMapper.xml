@@ -127,20 +127,22 @@
 		WHERE community_id = #{communityId}
 	</select>
 
-	<select id="selectCommunityDeviceByCommunityId" resultType="int">
+	<select id="selectCommunityDeviceByCommunityId" resultMap="deviceResult">
 		SELECT
-			device_id
+			<include refid="deviceColumns"/>
 		FROM
-			t_community_device
-		WHERE community_id = #{communityId}
+			t_community_device cd
+		INNER JOIN t_device u ON  u.id = cd.device_id
+		WHERE cd.community_id = #{communityId} AND u.is_deleted = 'N'
 	</select>
 
-	<select id="selectCommunityUserByCommunityId" resultType="int">
+	<select id="selectCommunityUserByCommunityId" resultMap="userResult">
 		SELECT
-			user_id
+			<include refid="userColumns"/>
 		FROM
-			t_community_user
-		WHERE community_id = #{communityId}
+			t_community_user cu
+		INNER JOIN t_user u ON  u.id = cu.user_id
+		WHERE cu.community_id = #{communityId} AND u.is_deleted = 'N'
 	</select>
 
     <select id="selectCommunityById" resultMap="communityResult">
@@ -156,6 +158,11 @@
         <include refid="communityColumns"/>
         FROM
 			t_community c
+		<where>
+			<if test="filter.online != null">
+				c.is_online = #{filter.online.code}
+			</if>
+		</where>
 		ORDER BY c.id DESC
         <if test="filter.start != null and filter.size != null">
             limit #{filter.start}, #{filter.size}
@@ -167,6 +174,11 @@
 			COUNT(*)
 		FROM
 			t_community c
+		<where>
+			<if test="filter.online != null">
+				c.is_online = #{filter.online.code}
+			</if>
+		</where>
 	</select>
 
     <select id="selectDeviceList" resultMap="deviceResult">

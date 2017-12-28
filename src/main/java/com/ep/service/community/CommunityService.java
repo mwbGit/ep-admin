@@ -1,6 +1,7 @@
 package com.ep.service.community;
 
 import com.ep.controller.util.ApplicationContextUtils;
+import com.ep.dao.filter.CommunityFilter;
 import com.ep.dao.mapper.CommunityMapper;
 import com.ep.dao.model.community.ActivityMeetingSpace;
 import com.ep.dao.model.community.Community;
@@ -40,7 +41,7 @@ public class CommunityService implements ICommunityService {
     }
 
     @Override
-    public void addCommunity(Community community) {
+    public void addCommunity(Community community, List<Integer> userIds, List<Integer> deviceIds) {
 
         if (community.getId() == null) {
             communityMapper.insertCommunity(community);
@@ -54,11 +55,11 @@ public class CommunityService implements ICommunityService {
 
         communityMapper.batchDeleteCommunityUser(community.getId());
 
-        if (CollectionUtils.isNotEmpty(community.getUserIds())) {
-            communityMapper.batchInsertCommunityUser(community.getUserIds(), community.getId());
+        if (CollectionUtils.isNotEmpty(userIds)) {
+            communityMapper.batchInsertCommunityUser(userIds, community.getId());
         }
-        if (CollectionUtils.isNotEmpty(community.getDevices())) {
-            communityMapper.batchInsertCommunityDevice(community.getDevices(), community.getId());
+        if (CollectionUtils.isNotEmpty(deviceIds)) {
+            communityMapper.batchInsertCommunityDevice(deviceIds, community.getId());
         }
         if (CollectionUtils.isNotEmpty(community.getPictures())) {
             communityMapper.batchInsertCommunityPicture(community.getPictures(), community.getId());
@@ -68,18 +69,35 @@ public class CommunityService implements ICommunityService {
     @Override
     public Community getCommunity(Integer id) {
         Community community = communityMapper.selectCommunityById(id);
-
-        if (community != null) {
-            List<Integer> devices = communityMapper.selectCommunityDeviceByCommunityId(id);
-            List<String> urls = communityMapper.selectCommunityPictureByCommunityId(id);
-            List<Integer> users = communityMapper.selectCommunityUserByCommunityId(id);
-
-            community.setDevices(devices);
-            community.setUserIds(users);
-            community.setPictures(urls);
-        }
+        setCommunity(community);
 
         return community;
+    }
+
+    public void setCommunity(Community community){
+        if (community != null) {
+            Integer id = community.getId();
+            List<Device> devices = communityMapper.selectCommunityDeviceByCommunityId(id);
+            List<String> urls = communityMapper.selectCommunityPictureByCommunityId(id);
+            List<User> users = communityMapper.selectCommunityUserByCommunityId(id);
+
+            community.setDevices(devices);
+            community.setUsers(users);
+            community.setPictures(urls);
+        }
+    }
+
+    @Override
+    public List<Community> getCommunityList(CommunityFilter  filter) {
+        List<Community> communitys = communityMapper.selectCommunityList(filter);
+
+        if (CollectionUtils.isNotEmpty(communitys)) {
+            for (Community community: communitys) {
+                setCommunity(community);
+            }
+
+        }
+        return communitys;
     }
 
     @Override

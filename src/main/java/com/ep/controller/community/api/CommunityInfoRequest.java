@@ -1,19 +1,16 @@
-package com.ep.dao.model.community;
+package com.ep.controller.community.api;
 
 import com.ep.dao.model.common.Bool;
+import com.ep.dao.model.community.Community;
 import com.ep.dao.model.user.User;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 社区
- * Created by mengweibo on 2017/12/18.
+ * Created by MengWeiBo on 2017-10-12
  */
-public class Community implements Serializable {
-    private static final long serialVersionUID = 1549226849768969923L;
-
+public class CommunityInfoRequest {
     private Integer id;
     private String name;
     private String tag;
@@ -29,9 +26,26 @@ public class Community implements Serializable {
     private Date updatedDate;
     private Integer updatedById;
     private String updatedByName;
-    private List<User> users;
-    private List<Device> devices;
+    private List<Integer> userIds;
+    private List<Integer> devices;
     private List<String> pictures;
+
+    public Community toCommunity(){
+        Community community = new Community();
+        community.setId(this.id);
+        community.setName(this.name);
+        community.setTag(this.tag);
+        community.setTips(this.tips);
+        community.setContent(this.content);
+        community.setStationTotal(this.stationTotal);
+        community.setRentNum(this.rentNum);
+        community.setSurplusNum(this.surplusNum);
+        community.setMeetingNum(this.meetingNum);
+        community.setActivityNum(this.activityNum);
+        community.setPictures(this.pictures);
+
+        return community;
+    }
 
     public Integer getId() {
         return id;
@@ -93,6 +107,10 @@ public class Community implements Serializable {
         return surplusNum;
     }
 
+    public void setSurplusNum(Integer surplusNum) {
+        this.surplusNum = surplusNum;
+    }
+
     public Integer getMeetingNum() {
         return meetingNum;
     }
@@ -107,10 +125,6 @@ public class Community implements Serializable {
 
     public void setActivityNum(Integer activityNum) {
         this.activityNum = activityNum;
-    }
-
-    public void setSurplusNum(Integer surplusNum) {
-        this.surplusNum = surplusNum;
     }
 
     public Bool getOnline() {
@@ -153,20 +167,20 @@ public class Community implements Serializable {
         this.updatedByName = updatedByName;
     }
 
-    public List<Device> getDevices() {
+    public List<Integer> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<Integer> userIds) {
+        this.userIds = userIds;
+    }
+
+    public List<Integer> getDevices() {
         return devices;
     }
 
-    public void setDevices(List<Device> devices) {
+    public void setDevices(List<Integer> devices) {
         this.devices = devices;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public List<String> getPictures() {

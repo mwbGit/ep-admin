@@ -5,6 +5,7 @@ import com.ep.dao.model.common.Bool;
 import java.io.Serializable;
 
 /**
+ * -
  * Created by mengweibo on 2017/12/12.
  */
 public class Device implements Serializable {

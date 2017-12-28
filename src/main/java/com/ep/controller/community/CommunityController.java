@@ -4,13 +4,12 @@ import com.ep.controller.common.PagingResponse;
 import com.ep.controller.common.ServiceResponse;
 import com.ep.controller.community.api.ActivityMeetingSpaceInfoResponse;
 import com.ep.controller.community.api.CommunityDeviceVO;
+import com.ep.controller.community.api.CommunityInfoRequest;
 import com.ep.controller.community.api.CommunityInfoResponse;
 import com.ep.controller.util.ApplicationContextUtils;
-import com.ep.dao.filter.BannerFilter;
+import com.ep.dao.filter.CommunityFilter;
 import com.ep.dao.filter.CommunitySpaceFilter;
 import com.ep.dao.mapper.CommunityMapper;
-import com.ep.dao.model.banner.Banner;
-import com.ep.dao.model.banner.BannerPosition;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.common.PagingFilter;
 import com.ep.dao.model.community.ActivityMeetingSpace;
@@ -193,15 +192,25 @@ public class CommunityController {
             response.setTag(community.getTag());
             response.setTips(community.getTips());
             response.setContent(community.getContent());
-            response.setUserIds(community.getUserIds());
-            response.setDevices(community.getDevices());
             response.setPictures(community.getPictures());
             response.setStationTotal(community.getStationTotal());
             response.setRentNum(community.getRentNum());
             response.setSurplusNum(community.getSurplusNum());
-            response.setUserIds(community.getUserIds());
-            response.setDevices(community.getDevices());
             response.setPictures(community.getPictures());
+            List<Integer> devices = new ArrayList<>();
+            response.setDevices(devices);
+            if (CollectionUtils.isNotEmpty(community.getDevices())) {
+                for (Device device : community.getDevices()) {
+                    devices.add(device.getId());
+                }
+            }
+            List<Integer> userIds = new ArrayList<>();
+            response.setUserIds(userIds);
+            if (CollectionUtils.isNotEmpty(community.getUsers())) {
+                for (User user : community.getUsers()) {
+                    userIds.add(user.getId());
+                }
+            }
         }
 
         return response;
@@ -211,9 +220,12 @@ public class CommunityController {
     @ResponseBody
     public PagingResponse list(Integer iDisplayStart, Integer iDisplayLength) {
         PagingResponse<List<Community>> response = new PagingResponse<>();
+        CommunityFilter filter = new CommunityFilter();
+        filter.setSize(iDisplayLength);
+        filter.setStart(iDisplayStart);
 
-        List<Community> communities = communityMapper.selectCommunityList(new PagingFilter(iDisplayStart, iDisplayLength));
-        int count = communityMapper.countCommunityList(new PagingFilter(iDisplayStart, iDisplayLength));
+        List<Community> communities = communityMapper.selectCommunityList(filter);
+        int count = communityMapper.countCommunityList(filter);
 
         response.setAaData(communities);
         response.setTotalCount(count);
@@ -239,7 +251,7 @@ public class CommunityController {
         } else if (CollectionUtils.isEmpty(community.getDevices())) {
             response.setCode("4");
             response.setMessage("请完善资料, 社区设施!");
-        } else if (CollectionUtils.isEmpty(community.getUserIds())) {
+        } else if (CollectionUtils.isEmpty(community.getUsers())) {
             response.setCode("5");
             response.setMessage("请完善资料, 社区经理!");
         } else {
@@ -259,10 +271,11 @@ public class CommunityController {
     @RequestMapping(value = "/add")
     @ResponseBody
     public ServiceResponse add(@RequestParam(value = "imgUploads", required = false) MultipartFile[] uploadFiles,
-                               Community community) {
+                               CommunityInfoRequest request) {
         ServiceResponse response = new ServiceResponse();
 
         User user = ApplicationContextUtils.getUser();
+        Community community = request.toCommunity();
         community.setUpdatedById(user.getId());
         community.setUpdatedByName(user.getName());
 
@@ -277,7 +290,7 @@ public class CommunityController {
             community.setPictures(pictures);
         }
 
-        communityService.addCommunity(community);
+        communityService.addCommunity(community, request.getUserIds(), request.getDevices());
 
         return response;
     }

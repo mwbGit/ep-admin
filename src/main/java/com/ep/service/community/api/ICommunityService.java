@@ -1,5 +1,6 @@
 package com.ep.service.community.api;
 
+import com.ep.dao.filter.CommunityFilter;
 import com.ep.dao.model.community.ActivityMeetingSpace;
 import com.ep.dao.model.community.Community;
 
@@ -12,7 +13,7 @@ public interface ICommunityService {
 
     public void modifyDeviceSequence(Integer id, Boolean asc);
 
-    public void addCommunity(Community community);
+    public void addCommunity(Community community, List<Integer> userIds, List<Integer> deviceIds);
 
     public void addActivityMeetingSpace(ActivityMeetingSpace space);
 
@@ -21,5 +22,7 @@ public interface ICommunityService {
     public void deleteActivityMeetingSpace(Integer spaceId);
 
     public Community getCommunity(Integer id);
+
+    public List<Community> getCommunityList(CommunityFilter filter);
 
 }

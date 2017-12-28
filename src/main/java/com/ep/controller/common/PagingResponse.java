@@ -12,6 +12,7 @@ public class PagingResponse<T> extends ServiceResponse implements Serializable {
     private int iTotalRecords;
     private int totalCount;
     private T aaData;
+    private T data;
 
     public int getiTotalDisplayRecords() {
         return iTotalDisplayRecords;
@@ -45,5 +46,13 @@ public class PagingResponse<T> extends ServiceResponse implements Serializable {
 
     public void setAaData(T aaData) {
         this.aaData = aaData;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }
