@@ -51,8 +51,6 @@ public class CommunityService implements ICommunityService {
 
         communityMapper.batchDeleteCommunityDevice(community.getId());
 
-        communityMapper.batchDeleteCommunityPicture(community.getId());
-
         communityMapper.batchDeleteCommunityUser(community.getId());
 
         if (CollectionUtils.isNotEmpty(userIds)) {
