@@ -9,9 +9,11 @@ import com.ep.dao.model.community.Device;
 import com.ep.dao.model.user.User;
 import com.ep.service.community.api.ICommunityService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,11 +80,26 @@ public class CommunityService implements ICommunityService {
         if (community != null) {
             Integer id = community.getId();
             List<Device> devices = communityMapper.selectCommunityDeviceByCommunityId(id);
-            List<String> urls = communityMapper.selectCommunityPictureByCommunityId(id);
             List<User> users = communityMapper.selectCommunityUserByCommunityId(id);
 
             community.setDevices(devices);
             community.setUsers(users);
+            List<String> urls = new ArrayList<>();
+            if (StringUtils.isNotBlank(community.getImg1())){
+                urls.add(community.getImg1());
+            }
+            if (StringUtils.isNotBlank(community.getImg2())){
+                urls.add(community.getImg2());
+            }
+            if (StringUtils.isNotBlank(community.getImg3())){
+                urls.add(community.getImg3());
+            }
+            if (StringUtils.isNotBlank(community.getImg4())){
+                urls.add(community.getImg4());
+            }
+            if (StringUtils.isNotBlank(community.getImg5())){
+                urls.add(community.getImg5());
+            }
             community.setPictures(urls);
         }
     }
