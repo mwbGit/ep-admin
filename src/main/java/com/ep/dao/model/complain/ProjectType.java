@@ -7,11 +7,10 @@ import java.util.Map;
 
 import com.ep.dao.model.common.IdInterface;
 
+//todo
 public enum ProjectType implements IdInterface {
     ACTIVE(1, "ACTIVE", "Active"),
-    LOCKED(2, "LOCKED", "Locked"),
-    SUSPENDED(3, "SUSPENDED", "Suspended"),
-    CANCELLED(4, "CANCELLED", "Cancelled");
+    LOCKED(2, "LOCKED", "Locked");
 
     private static final Map<String, ProjectType> code2DimensionTypes;
     private static final List<Integer> unQuitStatusIds;
@@ -31,7 +30,6 @@ public enum ProjectType implements IdInterface {
 
         unQuitStatusIds.add(ACTIVE.getId());
         unQuitStatusIds.add(LOCKED.getId());
-        unQuitStatusIds.add(SUSPENDED.getId());
     }
 
     public static ProjectType fromCode(String code) {

@@ -33,12 +33,12 @@ DROP TABLE IF EXISTS `t_dimension`;
 CREATE TABLE `t_dimension` (
 	`id` INT (11) NOT NULL AUTO_INCREMENT,
   `name` varchar(36) NOT NULL,
-  `ratio` int(11) NOT NULL,
+  `ratio` int(11) NOT NULL COMMENT '所占比例',
   `type_id` int(11) NOT NULL,
   `project_type_id` int(11) DEFAULT NULL,
   `item_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `t_dimension_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `t_service_item` (`id`)
+  CONSTRAINT `t_dimension_item` FOREIGN KEY (`item_id`) REFERENCES `t_service_item` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='维度';
 
 
@@ -66,7 +66,7 @@ CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `img` varchar(128) DEFAULT NULL,
-  `company` varchar(128) DEFAULT NULL,
+  `company` varchar(128) DEFAULT NULL COMMENT '公司',
   `sex` char(4) DEFAULT NULL,
   `mobile` varchar(16) NOT NULL,
   `password` varchar(128) DEFAULT NULL,
@@ -75,8 +75,8 @@ CREATE TABLE `t_user` (
   `update_date` date DEFAULT NULL,
   `updated_by_id` int(11) DEFAULT NULL,
   `updated_by_name` varchar(32) DEFAULT NULL,
-  `is_managed` char(1) NOT NULL,
-  `is_deleted` char(1) NOT NULL,
+  `is_managed` char(1) NOT NULL COMMENT '社区经理',
+  `is_deleted` char(1) NOT NULL COMMENT '是否删除',
   `open_id` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_mobile_open_id` (`mobile`,`open_id`)
@@ -89,7 +89,7 @@ DROP TABLE IF EXISTS `t_space` ;
 CREATE TABLE `t_space` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) DEFAULT NULL,
-  `grade` decimal(18,2) DEFAULT NULL,
+  `grade` decimal(18,2) DEFAULT NULL COMMENT '分数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='空间';
 
@@ -144,7 +144,7 @@ DROP TABLE IF EXISTS  `t_activity_type` ;
 CREATE TABLE `t_activity_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) DEFAULT NULL,
-  `sequence` int(11) NOT NULL,
+  `sequence` int(11) NOT NULL COMMENT '优先级',
   `is_deleted` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_activity_type_name` (`name`)
