@@ -107,8 +107,6 @@
 
 									<input type="file" class="default" name="imgUpload" id="imgUpload"/></span>
 
-                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-
                                 </div>
 
                             </div>

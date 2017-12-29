@@ -74,7 +74,11 @@ function detail(id) {
             $("#tag").val(data.tag);
             $("#tips").html(data.tips);
             $("#myEditor").val(data.content);
-            // $("#imgShow").attr("src", data.img);
+            $("#imgShow1").attr("src", data.img1);
+            $("#imgShow2").attr("src", data.img2);
+            $("#imgShow3").attr("src", data.img3);
+            $("#imgShow4").attr("src", data.img4);
+            $("#imgShow5").attr("src", data.img5);
 
             users = data.userIds;
             devices = data.devices;
@@ -83,7 +87,6 @@ function detail(id) {
         }
     });
 }
-
 
 function preservation() {
     if (!testStrMsg($("#name").val(), "名称")) {

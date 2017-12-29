@@ -44,6 +44,8 @@ public interface CommunityMapper {
 
     int countCommunityList(@Param("filter") CommunityFilter filter);
 
+    void deleteCommunityImg(@Param("img") String img, @Param("id") Integer id);
+
     void updateCommunity(Community community);
 
     void insertCommunity(Community community);

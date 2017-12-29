@@ -82,9 +82,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUploads" id="imgUpload1"/></span>
-
-                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+									<input type="file" class="default" name="img1" id="imgUpload1"/></span>
 
                                 </div>
 
@@ -109,9 +107,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUploads" id="imgUpload2"/></span>
-
-                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+									<input type="file" class="default" name="img2" id="imgUpload2"/></span>
 
                                 </div>
 
@@ -136,9 +132,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUploads" id="imgUpload3"/></span>
-
-                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+									<input type="file" class="default" name="img3" id="imgUpload3"/></span>
 
                                 </div>
 
@@ -163,9 +157,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUploads" id="imgUpload4"/></span>
-
-                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+									<input type="file" class="default" name="img4" id="imgUpload4"/></span>
 
                                 </div>
 
@@ -181,7 +173,7 @@
                                 </div>
 
                                 <div class="fileupload-preview fileupload-exists thumbnail"
-                                     style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                     style="max-width: 200px; max-height: 150px; line-height: 20px;" id="img5">
                                 </div>
                                 <div>
 
@@ -190,9 +182,7 @@
 
 									<span class="fileupload-exists">更改</span>
 
-									<input type="file" class="default" name="imgUploads" id="imgUpload5"/></span>
-
-                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+									<input type="file" class="default" name="img5" id="imgUpload5"/></span>
 
                                 </div>
 

@@ -3,6 +3,7 @@ package com.ep.controller.community.api;
 import com.ep.dao.model.common.Bool;
 import com.ep.dao.model.community.Community;
 import com.ep.dao.model.user.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,11 @@ public class CommunityInfoRequest {
     private Date updatedDate;
     private Integer updatedById;
     private String updatedByName;
+    private MultipartFile img1;
+    private MultipartFile img2;
+    private MultipartFile img3;
+    private MultipartFile img4;
+    private MultipartFile img5;
     private List<Integer> userIds;
     private List<Integer> devices;
     private List<String> pictures;
@@ -189,5 +195,45 @@ public class CommunityInfoRequest {
 
     public void setPictures(List<String> pictures) {
         this.pictures = pictures;
+    }
+
+    public MultipartFile getImg1() {
+        return img1;
+    }
+
+    public void setImg1(MultipartFile img1) {
+        this.img1 = img1;
+    }
+
+    public MultipartFile getImg2() {
+        return img2;
+    }
+
+    public void setImg2(MultipartFile img2) {
+        this.img2 = img2;
+    }
+
+    public MultipartFile getImg3() {
+        return img3;
+    }
+
+    public void setImg3(MultipartFile img3) {
+        this.img3 = img3;
+    }
+
+    public MultipartFile getImg4() {
+        return img4;
+    }
+
+    public void setImg4(MultipartFile img4) {
+        this.img4 = img4;
+    }
+
+    public MultipartFile getImg5() {
+        return img5;
+    }
+
+    public void setImg5(MultipartFile img5) {
+        this.img5 = img5;
     }
 }

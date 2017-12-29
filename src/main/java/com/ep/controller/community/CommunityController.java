@@ -196,7 +196,12 @@ public class CommunityController {
             response.setStationTotal(community.getStationTotal());
             response.setRentNum(community.getRentNum());
             response.setSurplusNum(community.getSurplusNum());
-            response.setPictures(community.getPictures());
+            response.setImg1(community.getImg1());
+            response.setImg2(community.getImg2());
+            response.setImg3(community.getImg3());
+            response.setImg4(community.getImg4());
+            response.setImg5(community.getImg5());
+
             List<Integer> devices = new ArrayList<>();
             response.setDevices(devices);
             if (CollectionUtils.isNotEmpty(community.getDevices())) {
@@ -279,20 +284,24 @@ public class CommunityController {
         community.setUpdatedById(user.getId());
         community.setUpdatedByName(user.getName());
 
-        List<String> pictures = new ArrayList<>();
-        if (uploadFiles != null) {
-            for (MultipartFile file : uploadFiles) {
-                String url = uploadService.uploadImage(file);
-                if (url != null) {
-                    pictures.add(url);
-                }
-            }
-            community.setPictures(pictures);
-        }
+        community.setImg1(uploadService.uploadImage(request.getImg1()));
+        community.setImg2(uploadService.uploadImage(request.getImg2()));
+        community.setImg3(uploadService.uploadImage(request.getImg3()));
+        community.setImg4(uploadService.uploadImage(request.getImg4()));
+        community.setImg5(uploadService.uploadImage(request.getImg5()));
 
         communityService.addCommunity(community, request.getUserIds(), request.getDevices());
 
         return response;
+    }
+
+    @RequestMapping(value = "/picture/delete")
+    @ResponseBody
+    public ServiceResponse pictureDelete(@RequestParam(value = "img") String img, @RequestParam(value = "id") Integer id) {
+
+        communityMapper.deleteCommunityImg(img, id);
+
+        return new ServiceResponse();
     }
 
     @RequestMapping(value = "/space/delete")

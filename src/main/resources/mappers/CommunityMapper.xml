@@ -20,6 +20,11 @@
         <result property="updatedDate" column="t_community_updated_date"/>
         <result property="updatedById" column="t_community_updated_by_id"/>
         <result property="updatedByName" column="t_community_updated_by_name"/>
+        <result property="img1" column="t_community_img1"/>
+        <result property="img2" column="t_community_img2"/>
+        <result property="img3" column="t_community_img3"/>
+        <result property="img4" column="t_community_img4"/>
+        <result property="img5" column="t_community_img5"/>
         <result property="online" column="t_community_is_online" jdbcType="CHAR" javaType="Bool"/>
     </resultMap>
 
@@ -61,6 +66,11 @@
 		c.updated_date AS t_community_updated_date,
 		c.updated_by_id AS t_community_updated_by_id,
 		c.updated_by_name AS t_community_updated_by_name,
+		c.img1 AS t_community_img1,
+		c.img2 AS t_community_img2,
+		c.img3 AS t_community_img3,
+		c.img4 AS t_community_img4,
+		c.img5 AS t_community_img5,
 		c.is_online AS t_community_is_online
 	</sql>
 
@@ -264,6 +274,11 @@
 			`updated_by_name`,
 			`created_date`,
 			`updated_date`,
+			`img1`,
+			`img2`,
+			`img3`,
+			`img4`,
+			`img5`,
 			`is_online`
 		) VALUES (
 			#{name},
@@ -274,6 +289,11 @@
 			#{updatedByName},
 			NOW(),
 			NOW(),
+			#{img1},
+			#{img2},
+			#{img3},
+			#{img4},
+			#{img5},
 			'N'
 		)
 	</insert>
@@ -317,8 +337,30 @@
 			<if test="activityNum != null">
 				activity_num = #{activityNum},
 			</if>
+			<if test="img1 != null">
+				img1 = #{img1},
+			</if>
+			<if test="img2 != null">
+				img2 = #{img2},
+			</if>
+			<if test="img3 != null">
+				img3 = #{img3},
+			</if>
+			<if test="img4 != null">
+				img4 = #{img4},
+			</if>
+			<if test="img5 != null">
+				img5 = #{img5},
+			</if>
 			updated_date = NOW()
 		</set>
+		WHERE id = #{id}
+	</update>
+
+	<update id="deleteCommunityImg" parameterType="map">
+		UPDATE t_community
+		SET
+			${img} = NULL
 		WHERE id = #{id}
 	</update>
 

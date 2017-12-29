@@ -60,6 +60,8 @@ public class CommunityService implements ICommunityService {
             communityMapper.batchInsertCommunityDevice(deviceIds, community.getId());
         }
         if (CollectionUtils.isNotEmpty(community.getPictures())) {
+            communityMapper.batchDeleteCommunityPicture(community.getId());
+
             communityMapper.batchInsertCommunityPicture(community.getPictures(), community.getId());
         }
     }
