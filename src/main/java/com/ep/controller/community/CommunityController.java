@@ -264,10 +264,11 @@ public class CommunityController {
 
             Community upCommunity = new Community();
             upCommunity.setId(id);
+            upCommunity.setOnline(Bool.Y);
             upCommunity.setUpdatedById(user.getId());
             upCommunity.setUpdatedByName(user.getName());
 
-            communityMapper.updateCommunity(community);
+            communityMapper.updateCommunity(upCommunity);
         }
 
         return response;

@@ -15,17 +15,16 @@ jQuery(document).ready(function () {
         success: function (data) {
             var trs = "";
             $.each(data.aaData, function (n, value) {
-                trs += '<option value="' + value.id;
+                trs += '<option value="' + value.id + '"';
                 if (users !== null) {
                     $.each(users, function (i, v) {
                         if (v == value.id) {
-                            trs += '" selected ';
-
+                            trs += ' selected ';
                         }
                     });
                 }
 
-                trs += '">&nbsp' + value.name + '</option>';
+                trs += '>&nbsp' + value.name + '</option>';
 
             });
 
@@ -38,22 +37,22 @@ jQuery(document).ready(function () {
         async: false,
         url: $ctx + "/community/device/list",
         success: function (data) {
-            var trs = "";
+            var str = "";
             $.each(data.aaData, function (n, value) {
-                trs += '<option value="' + value.id;
+                str += '<option value="' + value.id + '"';
 
                 if (devices !== null) {
                     $.each(devices, function (i, v) {
                         if (v == value.id) {
-                            trs += '" selected ';
+                            str += ' selected ';
                         }
                     });
                 }
-                trs += '">&nbsp' + value.name + '</option>';
+                str += '>&nbsp' + value.name + '</option>';
 
             });
 
-            $('#device_list').html(trs);
+            $('#device_list').html(str);
         }
     });
 
