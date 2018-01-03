@@ -83,7 +83,7 @@ function validateFromSub() {
     });
 }
 
-/*function validateFromSub2() {
+function validateFromSub2() {
 var type2 = "laster";
     $.ajax({
         type: 'get',
@@ -92,27 +92,12 @@ var type2 = "laster";
         cache: false,
         contentType: false,
         processData: false,
-        url: $ctx + "/wx/information/list?theneid="+49+"&count="+3+"&type="+type2,
+        url: $ctx + "/wx/information/list?themeid="+72+"&count="+3+"&type="+type2,
         success: function (data) {
             reLoad(data);
         }
     });
-}*/
-/*function validateFromSub2() {
-    var type2 = "laster";
-    $.ajax({
-        type: 'get',
-
-        async: false,
-        cache: false,
-        contentType: false,
-        processData: false,
-        url: $ctx + "/wx/information/topInformation",
-        success: function (data) {
-            reLoad(data);
-        }
-    });
-}*/
+}
 function reLoad(data) {
     alert(data.message)
     if (data.code == '0') {

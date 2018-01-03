@@ -81,7 +81,7 @@
 										<label class="control-label">封面图片：</label>
 										<div class="controls">
 
-											<div class="fileupload fileupload-new" data-provides="fileupload">
+											<div class="fileupload fileupload-new" data-provides="fileupload" style="float: left">
 
 												<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
 													<img src="" id="imgShow" style="width: 200px; height: 150px;">
@@ -109,7 +109,7 @@
 
 										<div class="controls">
 
-											<div class="fileupload fileupload-new" data-provides="fileupload">
+											<div class="fileupload fileupload-new" data-provides="fileupload" style="float: left">
 
 												<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
 													<img src="" id="imgShow2" style="width: 200px; height: 150px;">
@@ -137,7 +137,7 @@
 
 										<div class="controls">
 
-											<div class="fileupload fileupload-new" data-provides="fileupload">
+											<div class="fileupload fileupload-new" data-provides="fileupload" style="float: left">
 
 												<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
 													<img src="" id="imgShow3" style="width: 200px; height: 150px;">
@@ -163,7 +163,6 @@
 
 										</div>
 
-
 									</div>
 
 									<div class="control-group">
@@ -182,10 +181,7 @@
 									<div class="form-actions">
 
 										<button type="button" class="btn blue"  type="submit" onclick="validateFromSub()"><i class="icon-ok"></i> 保存</button>
-<%--
-										<button type="button" class="btn blue"  type="submit" onclick="validateFromSub2()"><i class="icon-ok"></i> 保存2</button>
---%>
-										<button class="btn" type="button">取消</button>
+										<button class="btn" type="button" onclick="ret()">取消</button>
 
 									</div>
 

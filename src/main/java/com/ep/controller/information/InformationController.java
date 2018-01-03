@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping(value = "/advice")
 @Controller
@@ -121,21 +118,60 @@ public class InformationController {
         String url = uploadService.uploadImage(uploadFile);
         String url2 = uploadService.uploadImage(uploadFile2);
         String url3 = uploadService.uploadImage(uploadFile3);
-        if (StringUtil.isNotBlank(url2)){
-            url=url+","+url2;
-        }if (StringUtil.isNotBlank(url3)){
-            url=url+","+url3;
-        }
+
+
         //id存在更新资讯信息，为null添加资讯
         if (addAdviceRequest.getId()!=null){
-            if(url==null){
+            /*if(url==null){
                 StringBuffer sql =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"' " +" where id = '"+addAdviceRequest.getId()+"'");
                 sqlAdapterMappe.updateSQL(sql.toString());
             }else {
                 StringBuffer sql =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"',img = '"+url +"' where id = '"+addAdviceRequest.getId()+"'");
                 sqlAdapterMappe.updateSQL(sql.toString());
+            }*/
+            StringBuffer sql =new StringBuffer("Select t.img from  t_advice t where t.id = "+addAdviceRequest.getId()+"");
+            List<Map<String,Object>> list = sqlAdapterMappe.selectSQL(sql.toString());
+            String img = list.get(0).get("img").toString();
+            String []imgs = img.split(",");
+            List<String> imgsList = new ArrayList<String>();
+            Collections.addAll(imgsList, imgs);
+            if(StringUtil.isNotBlank(url)){
+                imgsList.set(0,url);
+            }if (StringUtil.isNotBlank(url2)){
+                imgsList.set(1,url2);
+            }if (StringUtil.isNotBlank(url3)){
+                imgsList.set(2,url3);
             }
+            StringBuilder result = new StringBuilder();
+                boolean flag=false;
+            for(String string : imgsList) {
+                if(flag) {
+                    result.append(",");
+                }else{
+                    flag=true;
+                }
+                result.append(string);
+            }
+            String urls = result.toString();
+            StringBuffer sqls =new StringBuffer("update t_advice set createTime = NOW(),content = '"+addAdviceRequest.getContent()+"',title= '"+addAdviceRequest.getTitle()+"' , minitext ='"+addAdviceRequest.getMiniText()+"' ,typeId='"+addAdviceRequest.getTypeId()+"',img = '"+urls +"' where id = '"+addAdviceRequest.getId()+"'");
+            sqlAdapterMappe.updateSQL(sqls.toString());
         }else {
+
+            if(StringUtil.isNotBlank(url)){
+                url= url;
+            }else {
+                url= "null";
+            }
+            if (StringUtil.isNotBlank(url2)){
+                url=url+","+url2;
+            }else {
+                url= url+","+"null";
+            }
+            if (StringUtil.isNotBlank(url3)){
+                url=url+","+url3;
+            }else {
+                url= url+","+"null";
+            }
             StringBuffer sql =new StringBuffer("insert into t_advice(createTime,content,title,minitext,typeId,img) values (NOW(),'"+addAdviceRequest.getContent()+"','"+addAdviceRequest.getTitle()+"',"+"'"+addAdviceRequest.getMiniText()+"','"+addAdviceRequest.getTypeId()+"','"+url+"')");
 
             sqlAdapterMappe.insertSQL(sql.toString());
