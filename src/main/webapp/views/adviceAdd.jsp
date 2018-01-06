@@ -68,7 +68,7 @@
 
 										<div class="controls">
 
-											<textarea id="miniText" name="miniText" class="large m-wrap" rows="3" onkeydown="textdown()"></textarea>
+											<textarea id="miniText" name="miniText" class="large m-wrap" rows="3"></textarea>
 
 											<span id="a" class="help-inline"></span>
 
@@ -99,7 +99,6 @@
 
 												<input type="file" class="default" name="imgUpload" id="imgUpload"/></span>
 
-													<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
 												</div>
 
@@ -127,7 +126,6 @@
 
 												<input type="file" class="default" name="imgUpload2" id="imgUpload2"/></span>
 
-													<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
 												</div>
 
@@ -155,7 +153,6 @@
 
 												<input type="file" class="default" name="imgUpload3" id="imgUpload3"/></span>
 
-													<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
 												</div>
 

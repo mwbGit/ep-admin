@@ -286,7 +286,7 @@ public class InformationController {
     public ServiceResponse typeAdd(@RequestParam(value = "name") String name) {
         ServiceResponse response = new ServiceResponse();
         //验证添加资讯类别名称是否为空
-        if (!StringUtils.isBlank(name)) {
+        if (StringUtils.isBlank(name)) {
             response.setCode("1");
             response.setMessage("名称为空");
             return response;

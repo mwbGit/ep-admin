@@ -118,6 +118,12 @@ function loadJsp(item) {
     } else if (item == "community_add") {
         $('#dashboard').load($ctx + "/views/community_add.jsp");
         $('#menuTitle').html("添加社区");
+    } else if (item == "custom_visitor_manager") {
+        $('#dashboard').load($ctx + "/views/custom_visitor_manager.jsp");
+        $('#menuTitle').html("客户访客管理");
+    } else if (item == "room_visitor_manager") {
+        $('#dashboard').load($ctx + "/views/room_visitor_manager.jsp");
+        $('#menuTitle').html("空间访客管理");
     }
 }
 

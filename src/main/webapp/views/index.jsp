@@ -432,6 +432,41 @@
 
                 </ul>
             </li>
+
+            <li>
+
+                <a href="javascript:;">
+
+                    <i class="icon-user"></i>
+
+                    <span class="title">访客管理</span>
+
+                    <span class="arrow "></span>
+
+                </a>
+
+                <ul class="sub-menu">
+
+
+
+                    <li id="adviceManage">
+
+                        <a href="#" onclick="loadJsp('custom_visitor_manager')">
+
+                            客户访客管理</a>
+
+                    </li>
+
+                    <li id="adviceClass">
+
+                        <a href="#" onclick="loadJsp('room_visitor_manager')">
+
+                            空间访客管理</a>
+
+                    </li>
+
+                </ul>
+            </li>
         </ul>
 
         <!-- END SIDEBAR MENU -->

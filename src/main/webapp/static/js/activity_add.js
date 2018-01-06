@@ -174,6 +174,7 @@ function validateFromSub() {
         return;
     }
 
+
     if (!testStrMsg($("#myEditor").val(), "内容")) {
         return;
     }
