@@ -438,9 +438,18 @@
 			<include refid="activityMeetingSpaceColumns"/>
 		FROM
 			t_activity_meeting_space ams
-		WHERE
-			ams.community_id = #{filter.communityId}
-			AND ams.type = #{filter.type}
+		INNER JOIN t_community c ON  c.id = ams.community_id
+		<where>
+			<if test="filter.communityId != null">
+				ams.community_id = #{filter.communityId}
+			</if>
+			<if test="filter.type != null">
+				AND ams.type = #{filter.type}
+			</if>
+			<if test="filter.online != null and filter.online == true">
+				AND c.is_online = 'Y'
+			</if>
+		</where>
 		ORDER BY ams.id ASC
 		<if test="filter.start != null and filter.size != null">
 			limit #{filter.start}, #{filter.size}
@@ -451,11 +460,19 @@
 		SELECT
 			COUNT(*)
 		FROM
-			t_activity_meeting_space ams
-		WHERE
-			ams.community_id = #{filter.communityId}
-			AND ams.type = #{filter.type}
-		ORDER BY ams.id ASC
+		t_activity_meeting_space ams
+		INNER JOIN t_community c ON  c.id = ams.community_id
+		<where>
+			<if test="filter.communityId != null">
+				ams.community_id = #{filter.communityId}
+			</if>
+			<if test="filter.type != null">
+				AND ams.type = #{filter.type}
+			</if>
+			<if test="filter.online != null and filter.online == true">
+				AND c.is_online = 'Y'
+			</if>
+		</where>
 	</select>
 
 	<insert id="batchInsertActivityMeetingSpaceDevice"

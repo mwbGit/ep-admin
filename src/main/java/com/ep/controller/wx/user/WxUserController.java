@@ -98,7 +98,7 @@ public class WxUserController {
     public UserTokenResponse getToken(@RequestParam("openCode") String openCode) {
         UserTokenResponse response = new UserTokenResponse();
 
-        String openId = userService.getTokenByOpenId(openCode);
+        String openId = userService.getOpenId(openCode);
         if (openId != null) {
             String token = userMapper.selectTokenByOpenId(openId);
 

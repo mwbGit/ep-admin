@@ -47,7 +47,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public String getToken(String openCode){
+    public String getOpenId(String openCode){
         String openId = null;
         try {
             AccessTokenAndOpenId andOpenId = weChatService.getAccessTokenAndOpenId(openCode);
@@ -63,29 +63,28 @@ public class UserService implements IUserService {
 
     @Override
     public String createUser(String openCode, String mobile, String name) {
-        String openId = getTokenByOpenId(openCode);
+        String openId = getOpenId(openCode);
         String token = null;
         if (openId != null) {
             token = userMapper.selectTokenByOpenId(openId);
-
             User user;
             if (token == null) {
-                user = new User();
-                user.setMobile(mobile);
-                user.setOpenId(openId);
-                user.setName(name);
-                user.setManaged(Bool.N);
-                user.setDeleted(Bool.N);
-
-                userMapper.insertUser(user);
+                user = userMapper.selectUserByOpenId(openId);
+                if (user == null) {
+                    user = new User();
+                    user.setMobile(mobile);
+                    user.setOpenId(openId);
+                    user.setName(name);
+                    user.setManaged(Bool.N);
+                    user.setDeleted(Bool.N);
+                    userMapper.insertUser(user);
+                }
 
                 token = MD5.md5(openCode + mobile + new Date().getTime());
-
-                userMapper.insertOrUpdateUserToken(user.getId(), openCode, token);
-            } else {
-                user = userMapper.selectUserByToken(token);
+                userMapper.insertOrUpdateUserToken(user.getId(), openId, token);
             }
 
+            user = userMapper.selectUserByToken(token);
             ApplicationContextUtils.setUser(user);
         }
 

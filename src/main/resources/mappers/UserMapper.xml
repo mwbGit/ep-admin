@@ -120,6 +120,15 @@
 			ut.token=#{token}
     </select>
 
+    <select id="selectUserByOpenId" resultMap="userResult">
+        SELECT
+        <include refid="userColumns"/>
+        FROM
+        t_user u
+       	WHERE
+			u.open_id=#{openId}
+    </select>
+
     <select id="selectTokenByOpenId" resultType="string">
         SELECT
 			ut.token

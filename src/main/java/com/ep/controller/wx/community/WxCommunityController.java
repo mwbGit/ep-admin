@@ -7,7 +7,10 @@ import com.ep.controller.user.api.UserVO;
 import com.ep.controller.wx.community.api.CommunityInfoResponse;
 import com.ep.controller.wx.community.api.CommunityVO;
 import com.ep.dao.filter.CommunityFilter;
+import com.ep.dao.filter.CommunitySpaceFilter;
+import com.ep.dao.mapper.CommunityMapper;
 import com.ep.dao.model.common.Bool;
+import com.ep.dao.model.community.ActivityMeetingSpace;
 import com.ep.dao.model.community.Community;
 import com.ep.dao.model.community.Device;
 import com.ep.dao.model.user.User;
@@ -33,6 +36,9 @@ public class WxCommunityController {
 
     @Autowired
     private ICommunityService communityService;
+
+    @Autowired
+    private CommunityMapper communityMapper;
 
     @RequestMapping(value = "/detail")
     @ResponseBody
@@ -87,8 +93,25 @@ public class WxCommunityController {
         filter.setOnline(Bool.Y);
 
         List<Community> communities = communityService.getCommunityList(filter);
-
         response.setData(CommunityVO.toVOs(communities));
+
+        return response;
+    }
+
+    @RequestMapping(value = "/space/list")
+    @ResponseBody
+    public PagingResponse spaceList(PagingRequest request, Boolean activity) {
+        CommunitySpaceFilter filter = new CommunitySpaceFilter();
+        filter.setSize(request.getPageSize());
+        filter.setStart((request.getPageNumber() - 1) * request.getPageSize());
+        filter.setOnline(Boolean.TRUE);
+        filter.setType(1);
+        if (activity != null && activity) {
+            filter.setType(0);
+        }
+        List<ActivityMeetingSpace> spaces = communityMapper.selectActivityMeetingSpaceList(filter);
+        PagingResponse<List<ActivityMeetingSpace>> response = new PagingResponse<>();
+        response.setData(spaces);
 
         return response;
     }

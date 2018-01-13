@@ -8,6 +8,7 @@ import com.ep.dao.model.common.PagingFilter;
 public class CommunitySpaceFilter extends PagingFilter {
     private Integer type;
     private Integer communityId;
+    private Boolean online;
 
     public Integer getType() {
         return type;
@@ -23,6 +24,14 @@ public class CommunitySpaceFilter extends PagingFilter {
 
     public void setCommunityId(Integer communityId) {
         this.communityId = communityId;
+    }
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
     }
 }
 
