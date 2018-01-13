@@ -47,9 +47,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public String createUser(String openCode, String mobile, String name) {
-        String openId = "";
-        String token = null;
+    public String getToken(String openCode){
+        String openId = null;
         try {
             AccessTokenAndOpenId andOpenId = weChatService.getAccessTokenAndOpenId(openCode);
             if (andOpenId != null) {
@@ -57,8 +56,15 @@ public class UserService implements IUserService {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            openId = null;
         }
+        return openId;
+    }
 
+    @Override
+    public String createUser(String openCode, String mobile, String name) {
+        String openId = getTokenByOpenId(openCode);
+        String token = null;
         if (openId != null) {
             token = userMapper.selectTokenByOpenId(openId);
 

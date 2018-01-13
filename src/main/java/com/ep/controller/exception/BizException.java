@@ -32,5 +32,6 @@ public class BizException extends RuntimeException {
 	}
 
 	public static final BizException PARAM_ERR = new BizException("10001", "参数错误");
+	public static final BizException BIND_MOBILE = new BizException("10002", "请绑定手机号");
 
 }

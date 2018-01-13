@@ -44,6 +44,7 @@
             <mvc:exclude-mapping path="/wx/community/**"/>
             <mvc:exclude-mapping path="/wx/user/openid"/>
             <mvc:exclude-mapping path="/wx/user/bind"/>
+            <mvc:exclude-mapping path="/wx/user/token"/>
             <mvc:exclude-mapping path="/wx/activity/list"/>
             <mvc:exclude-mapping path="/wx/activity/detail"/>
             <mvc:exclude-mapping path="/wx/pay/we_chat/notify"/>

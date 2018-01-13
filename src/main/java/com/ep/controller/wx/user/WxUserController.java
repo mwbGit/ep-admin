@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ep.controller.exception.BizException;
+import com.ep.dao.mapper.UserMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class WxUserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private WeChatService weChatService;
@@ -75,23 +80,36 @@ public class WxUserController {
         User user = ApplicationContextUtils.getUser();
         user = userService.getUserById(user.getId());
 
-        response.setName(user.getName());
-        response.setCompany(user.getCompany());
-        response.setMobile(user.getMobile());
-        response.setOpenId(user.getOpenId());
-        response.setRemark(user.getRemark());
-        response.setSex(user.getSex());
-        response.setDeleted(user.getDeleted().getValue());
+        if (user != null) {
+            response.setName(user.getName());
+            response.setCompany(user.getCompany());
+            response.setMobile(user.getMobile());
+            response.setOpenId(user.getOpenId());
+            response.setRemark(user.getRemark());
+            response.setSex(user.getSex());
+            response.setDeleted(user.getDeleted().getValue());
+        }
 
         return response;
     }
 
     @RequestMapping(value = "/token")
     @ResponseBody
-    public UserTokenResponse getToken(@RequestParam("openId") String openId) {
+    public UserTokenResponse getToken(@RequestParam("openCode") String openCode) {
         UserTokenResponse response = new UserTokenResponse();
-        String token = userService.getTokenByOpenId(openId);
-        response.setToken(token);
+
+        String openId = userService.getTokenByOpenId(openCode);
+        if (openId != null) {
+            String token = userMapper.selectTokenByOpenId(openId);
+
+            if (token != null) {
+                response.setToken(token);
+            } else {
+                throw BizException.BIND_MOBILE;
+            }
+        } else {
+            throw BizException.PARAM_ERR;
+        }
 
         return response;
     }
