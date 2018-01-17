@@ -4,6 +4,7 @@ import com.ep.controller.common.PagingRequest;
 import com.ep.controller.common.PagingResponse;
 import com.ep.controller.community.api.CommunityDeviceVO;
 import com.ep.controller.user.api.UserVO;
+import com.ep.controller.wx.community.api.ActivityMeetingSpaceInfoResponse;
 import com.ep.controller.wx.community.api.CommunityInfoResponse;
 import com.ep.controller.wx.community.api.CommunityVO;
 import com.ep.dao.filter.CommunityFilter;
@@ -113,6 +114,36 @@ public class WxCommunityController {
         PagingResponse<List<ActivityMeetingSpace>> response = new PagingResponse<>();
         response.setData(spaces);
 
+        return response;
+    }
+
+    @RequestMapping(value = "/space/detail")
+    @ResponseBody
+    public ActivityMeetingSpaceInfoResponse spaceDetail(@RequestParam("id") Integer id) {
+        ActivityMeetingSpaceInfoResponse response = new ActivityMeetingSpaceInfoResponse();
+
+        ActivityMeetingSpace space = communityMapper.selectActivityMeetingSpaceById(id);
+        Community community = communityMapper.selectCommunityById(id);
+        List<Device> devices = communityMapper.selectActivityMeetingSpaceByCommunityId(id);
+
+        if (space != null) {
+            response.setName(space.getName());
+            response.setPosition(space.getPosition());
+            response.setImg(space.getImg());
+            response.setCapacity(space.getCapacity());
+            response.setCommunityId(community.getId());
+            response.setCommunityName(community.getName());
+            List<CommunityDeviceVO> vos = new ArrayList<>();
+            response.setDevices(vos);
+            if (CollectionUtils.isNotEmpty(devices)) {
+                for (Device device : devices) {
+                    CommunityDeviceVO vo = new CommunityDeviceVO();
+                    vo.setName(device.getName());
+                    vo.setImg(device.getImg());
+                    vos.add(vo);
+                }
+            }
+        }
         return response;
     }
 }

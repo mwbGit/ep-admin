@@ -81,4 +81,6 @@ public interface CommunityMapper {
 
     List<Integer> selectActivityMeetingSpaceDevice(@Param("spaceId") Integer spaceId);
 
+    List<Device> selectActivityMeetingSpaceByCommunityId(@Param("spaceId") Integer spaceId);
+
 }

@@ -146,6 +146,15 @@
 		WHERE cd.community_id = #{communityId} AND u.is_deleted = 'N'
 	</select>
 
+	<select id="selectActivityMeetingSpaceByCommunityId" resultMap="deviceResult">
+		SELECT
+			<include refid="deviceColumns"/>
+		FROM
+			t_activity_meeting_space_device cd
+		INNER JOIN t_device u ON  u.id = cd.device_id
+		WHERE cd.space_id = #{spaceId} AND u.is_deleted = 'N'
+	</select>
+
 	<select id="selectCommunityUserByCommunityId" resultMap="userResult">
 		SELECT
 			<include refid="userColumns"/>
